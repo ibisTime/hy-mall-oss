@@ -1,13 +1,13 @@
 $('title', window.parent.document).html(OSS.systemName);
 $(function() {
     if (!sessionStorage.getItem('token')) {
-        location.href = 'signin.html';
+        location.href = 'signin.html?kind=' + (sessionStorage.getItem('loginKind') || 'P')
         return;
     }
 
     // 获取用户
     reqApi({
-        code: '805056',
+        code: '805121',
         cache: true,
         sync: true,
         json: {
@@ -39,7 +39,7 @@ $(function() {
         code: '805026',
         json: data,
         sync: true
-    }).done(function(data) {
+    }, true).done(function(data) {
         var firstMenuCode = null;
         $.each(data, function(i, item) {
             if (i == 0) {
@@ -72,13 +72,14 @@ $(function() {
                 window.sessionStorage.setItem('userId', '');
                 window.sessionStorage.setItem('userName', '');
                 window.sessionStorage.setItem('roleCode', '');
-                location.href = 'signin.html?kind=' + (sessionStorage.getItem('loginKind') || '01')
+                window.sessionStorage.setItem('qiniuUrl', '');
+                location.href = 'signin.html?kind=' + (sessionStorage.getItem('loginKind') || 'P')
             }
         });
     });
 
     $('#change-pwd').on('click', function() {
-        parent.frames["rightFrame"].window.location.href = 'security/user_pwd_change.html';
+        parent.frames["rightFrame"].window.location.href = 'system/user_pwd_change.html';
     });
 });
 

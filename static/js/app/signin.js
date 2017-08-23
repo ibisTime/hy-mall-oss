@@ -7,7 +7,7 @@ function getQueryString(name) {
     }
     return '';
 }
-sessionStorage.setItem('loginKind', getQueryString('kind') || '01');
+sessionStorage.setItem('loginKind', getQueryString('kind') || 'P');
 sessionStorage.setItem('listSearchs', '');
 $(function() {
 	$('#hello-text').html(OSS.systemName);
@@ -34,16 +34,29 @@ $(function() {
             if (r != null) {
                 data.kind = decodeURIComponent(r[2]);
             } else {
-                data.kind = '01';
+                data.kind = 'P';
             }
 
             $.each(t, function() {
                 data[this.name] = this.value;
             });
-
+			
+			//获取七牛地址
+			reqApi({
+	            code: '805917',
+	            json: {
+	            	ckey:'qiniu_domain'
+	            },
+				sync: true
+	        }).then(function(data) {
+	            window.sessionStorage.setItem('qiniuUrl', 'http://'+data.cvalue);
+	        });
+			
+			//获取用户详情
             reqApi({
-                code: '805043',
-                json: data
+                code: '805050',
+                json: data,
+				sync: true
             }).then(function(data) {
                 location.href = "main.html";
                 window.sessionStorage.setItem('token', data.token || data.userId);
@@ -51,7 +64,7 @@ $(function() {
             });
         }
     }
-
+    
     // 登录
     $('#loginBtn').click(function() {
         login();

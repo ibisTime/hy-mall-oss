@@ -14,8 +14,8 @@ $(function() {
 		reqApi({
 			code: '805026',
 			json: data,
-			sync: true
-		}).then(function(data) {
+			sync: true 
+		}, true).then(function(data) {
 			data = data.sort(function(d, d1){
 				return +d.orderNo - +d1.orderNo;
 			})
@@ -37,7 +37,7 @@ $(function() {
 							type: '1',
 							roleCode: sessionStorage.getItem('roleCode')
 						}
-					}).then(function(data) {
+					}, true).then(function(data) {
 						// 二级菜单
 						var html = '';
 						$.each(data, function(i, nextItem) {
