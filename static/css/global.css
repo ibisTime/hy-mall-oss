@@ -1053,7 +1053,8 @@ li input[type="radio"] {
 	padding-left: 0px;
 	margin: auto;
 	position: absolute;
-	top: 0;
+	top: 20px;
+	left: 20px;
 	-webkit-transform: translate(-50%, -50%);
 	font-size: 40px;
 	color: #505050;

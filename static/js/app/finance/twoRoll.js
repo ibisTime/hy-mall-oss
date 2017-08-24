@@ -63,6 +63,7 @@ $(function() {
 		field2 : 'dateEnd',
 		type2:'datetime',
 		search: true,
+        twoDate: true,
 		visible: false
 	},{
 		field : 'workDate',

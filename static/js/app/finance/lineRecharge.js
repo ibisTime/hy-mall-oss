@@ -64,6 +64,7 @@ $(function() {
 		type1:'datetime',
 		field2 : 'applyDateEnd',
 		type2:'datetime',
+        twoDate: true,
 		search: true
 	}, {
 		field1 : 'payDateStart',
@@ -71,6 +72,7 @@ $(function() {
 		type1:'datetime',
 		field2 : 'payDateEnd',
 		type2:'datetime',
+        twoDate: true,
 		search: true,
 		visible: false
 	}, {

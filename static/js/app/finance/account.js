@@ -52,6 +52,7 @@ $(function() {
 		type1:'datetime',
 		field2 : 'dateEnd',
 		type2:'datetime',
+        twoDate: true,
 		search: true,
 	}];
 	buildList({

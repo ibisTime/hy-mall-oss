@@ -66,6 +66,7 @@ $(function() {
 		type1:'datetime',
 		field2 : 'applyDateEnd',
 		type2:'datetime',
+        twoDate: true,
 		search: true
 	},{
 		field : 'approveDatetime',
@@ -76,6 +77,7 @@ $(function() {
 		type1:'datetime',
 		field2 : 'approveDateEnd',
 		type2:'datetime',
+        twoDate: true,
 		search: true,
 	}, {
 		field : 'payDatetime',
@@ -86,6 +88,7 @@ $(function() {
 		type1:'datetime',
 		field2 : 'payDateEnd',
 		type2:'datetime',
+        twoDate: true,
 		search: true,
 	}];
 	buildList({
