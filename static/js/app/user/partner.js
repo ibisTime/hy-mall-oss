@@ -5,14 +5,21 @@ $(function() {
 		title : '',
 		checkbox : true
 	},{
-		field : 'loginName',
-		title : '登录账号',
+		field: 'loginName',
+		title: '登录账号',
 		search: true
-	},{
+	}, {
+		field: 'realName',
+		title: '自提点名称',
+		search: true
+	}, {
+		field: 'remark',
+		title: '联系方式',
+		search: true
+	}, {
 		field : 'province',
-		title : '辖区',
+		title : '所在地区',
 		formatter: function(v, r) {
-			r = r.userExt || {};
 			var res = $.unique([r.province, r.city, r.area]).reverse();
 			return res.join(' / ');
 		}
@@ -20,27 +27,9 @@ $(function() {
 		field : 'status',
 		title : '状态',
 		type: 'select',
-		key: 'partner_status',
-		formatter: Dict.getNameForList('partner_status'),
+		key: 'user_status',
+		formatter: Dict.getNameForList('user_status'),
 		search: true
-	},{
-		field: 'userRefereeName',
-		title: '推荐人',
-	},{
-		field: 'userReferee',
-		title: '推荐人',
-		search: true,
-		type: 'select',
-		pageCode1: '805120',
-		params: {
-			kind: '11',
-			updater:'',
-			companyCode: OSS.company
-		},
-		keyName: 'userId',
-		valueName: 'loginName',
-		searchName: 'loginName',
-		visible: false
 	},{
 		field : 'createDatetime',
 		title : '注册时间',
@@ -51,15 +40,12 @@ $(function() {
         field2: 'dateEnd',
         type2: 'date',
         search: true,
-	},{
-		field : 'remark',
-		title : '备注'
 	}];
 	buildList({
 		columns: columns,
 		pageCode: '805120',
 		searchParams: {
-			kind: '11',
+			kind: 'PA',
 			companyCode: OSS.company
 		},
 		uid: ['userId'],
