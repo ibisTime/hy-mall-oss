@@ -50,48 +50,76 @@ $(function() {
 		searchParams: {
 			kind: 'C',
 			companyCode: OSS.company
+		},
+		beforeDetail:function(data){
+window.location.href = "customer_addedit.html?v=1&userId=" + data.userId;
 		}
 	});
-	$('#lockBtn').click(function() {
+	//激活
+	$('#activeBtn').click(function() {
 		var selRecords = $('#tableList').bootstrapTable('getSelections');
 		if(selRecords.length <= 0){
 			toastr.info("请选择记录");
 			return;
 		}
-		confirm("确认执行该操作？").then(function() {
-			reqApi({
-				code: '805052',
+		
+		if(selRecords[0].status == 0){
+			toastr.info("已激活");
+			return;
+		}
+		
+		
+		confirm("确定激活？").then(function() {
+	    	reqApi({
+				code: '805091',
 				json: {
 					userId: selRecords[0].userId,
-					toStatus: selRecords[0].status != '0' ? '0' : '2'
+					toStatus: '0',
+					remark: selRecords[0].remark
 				}
 			}).then(function() {
 				sucList();
 			});
+		
+		},function() {})
+	});
+	
+	//注销
+	$('#rockBtn').click(function() {
+		var selRecords = $('#tableList').bootstrapTable('getSelections');
+		if(selRecords.length <= 0){
+			toastr.info("请选择记录");
+			return;
+		}
+		
+		if(selRecords[0].status == 2){
+			toastr.info("已注销");
+			return;
+		}
+		
+		confirm("确定注销？").then(function() {
+			reqApi({
+				code: '805091',
+				json: {
+					userId: selRecords[0].userId,
+					toStatus: '2',
+					remark: selRecords[0].remark
+				}
+			}).then(function() {
+				sucList();
+			});
+		
+		},function() {})
+	});
+		$('#accountBtn').click(function() {
+				var selRecords = $('#tableList').bootstrapTable('getSelections');
+				if(selRecords.length <= 0){
+					toastr.info("请选择记录");
+					return;
+				}
+				
+				window.location.href = "bankCard.html?c=1&userId="+selRecords[0].userId;
 		});
-	});
-	
-	
-	$('#detail2Btn').click(function() {
-		var selRecords = $('#tableList').bootstrapTable('getSelections');
-		if(selRecords.length <= 0){
-			toastr.info("请选择记录");
-			return;
-		}
-		
-		window.location.href = "customer_addedit.html?v=1&userId=" + selRecords[0].userId;
-	});
-	
-	//查看银行卡
-	$('#bankCardBtn').click(function() {
-		var selRecords = $('#tableList').bootstrapTable('getSelections');
-		if(selRecords.length <= 0){
-			toastr.info("请选择记录");
-			return;
-		}
-		
-		window.location.href = "bankCard.html?c=1&userId="+selRecords[0].userId;
-	});
 	
 	//查看推荐关系
 	$('#userRefereeBtn').click(function() {
