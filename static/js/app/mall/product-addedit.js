@@ -9,6 +9,8 @@ $(function() {
 	
 	var provinceData={};
 	var typeData={};
+	var productSpecsFields = [];
+	var fields = [];
 	
 	$.get(__uri('../../lib/province_data.xml'),function(xml){
 		
@@ -24,7 +26,9 @@ $(function() {
 	//商品类别
 	//积分商品修改
 	if(type==OSS.JFProductType){
-		typeData[OSS.JFProductType]='积分商品'
+		typeData[OSS.JFProductType]='积分商品';
+		
+		setFields();
 	}else{
 		reqApi({
 			code:'808007',
@@ -34,161 +38,165 @@ $(function() {
 				parentCode: 0,
 			},
 			sync: true
-		}).done(function(d){
-			d.forEach(function(i, d){
+		}).done(function(data){
+			data.forEach(function(d, i){
 				if(code){
 					//修改页类别
-					if(type!=OSS.JFProductType){
+					if(d.code!=OSS.JFProductType){
 						typeData[d.code]=d.name
 					}
 				}else{
 					typeData[d.code]=d.name
 				}
 			})
+			
+			setFields();
 		})
 	}
 	
-	//规格
-	var productSpecsFields = [{
-        field: 'name',
-        title: '规格名称',
-		required: true,
-    }, {
-        field: 'originalPrice',
-        title: '原价/市场价',
-        required: true,
-        amount: true,
-        formatter: moneyFormat,
-    }, type==OSS.JFProductType ?{
-        field: 'price2',
-        title: '价格',
-        amount: true,
-        formatter: moneyFormat,
-        required: true,
-    }:{
-        field: 'price1',
-        title: '价格',
-        amount: true,
-        formatter: moneyFormat,
-        required: true,
-    }, {
-		field: 'quantity',
-		title: '库存',
-		required: true,
-		number: true
-	}, {
-		field: 'province',
-		title: '发货地',
-		type:'select',
-		onlyProvince: true,
-		data:provinceData,
-		required: true,
-	}, {
-		field: 'weight',
-		title: '重量（kg）',
-		required: true,
-		number: true
-	}, {
-		field: 'orderNo',
-		title: '序号',
-		required: true,
-		number: true
-	}]
 	
-	
-	//详情
-	var fields = [{
-		field: 'kind',
-		type: 'hidden',
-		value: '1'
-	}, {
-        field: 'type',
-        title: '类别',
-		type: 'select',
-		data: typeData,
-        required: true,
-    }, {
-        field: 'name',
-        title: '商品名称',
-        required: true,
-        maxlength: 50
-    }, {
-        field: 'slogan',
-        title: '广告语',
-        required: true,
-        maxlength: 250,
-    }, {
-        field: 'advPic',
-        title: '广告图',
-        type : 'img',
-        single: true,
-		required: true
-    }, {
-        field: 'pic',
-        title: '展示图',
-        type : 'img',
-		required: true
-    }, {
-        title: '商品详述',
-        field: 'description',
-        type: 'textarea',
-        required: true,
-        maxlength: 255,
-    },{
-        field: 'remark',
-        title: '备注',
-    }];
-	
-	buildDetail({
-		fields: fields,
-		code: code,
-		detailCode: '808026',
-		addCode: '808010',
-		editCode: '808012',
-		buttons: {},
-	});
-	
-	$('#tableList').bootstrapTable({
-	    columns: [{
-			field : '',
-			title : '',
-			checkbox: true
-		},{  
+	function setFields(){
+		//规格
+		productSpecsFields = [{
 	        field: 'name',
 	        title: '规格名称',
+			required: true,
 	    }, {
 	        field: 'originalPrice',
 	        title: '原价/市场价',
+	        required: true,
 	        amount: true,
 	        formatter: moneyFormat,
-	    }, type==OSS.JFProductType?{
+	    }, type==OSS.JFProductType ?{
 	        field: 'price2',
 	        title: '价格',
+	        amount: true,
 	        formatter: moneyFormat,
+	        required: true,
 	    }:{
 	        field: 'price1',
 	        title: '价格',
+	        amount: true,
 	        formatter: moneyFormat,
+	        required: true,
 	    }, {
 			field: 'quantity',
 			title: '库存',
+			required: true,
+			number: true
 		}, {
 			field: 'province',
 			title: '发货地',
+			type:'select',
+			onlyProvince: true,
+			data:provinceData,
+			required: true,
 		}, {
 			field: 'weight',
 			title: '重量（kg）',
+			required: true,
+			number: true
 		}, {
 			field: 'orderNo',
 			title: '序号',
-		}],
-		singleSelect: true,//禁止多选
-		clickToSelect: true,//自动选中
-		uniqueId: 'id',
-		onClickRow : function(row, $element) {
-		    paramIndex = $element.data('index')
-		}
-	});
+			required: true,
+			number: true
+		}]
+		
+		
+		//详情
+		fields = [{
+			field: 'kind',
+			type: 'hidden',
+			value: '1'
+		}, {
+	        field: 'type',
+	        title: '类别',
+			type: 'select',
+			data: typeData,
+	        required: true,
+	    }, {
+	        field: 'name',
+	        title: '商品名称',
+	        required: true,
+	        maxlength: 50
+	    }, {
+	        field: 'slogan',
+	        title: '广告语',
+	        required: true,
+	        maxlength: 250,
+	    }, {
+	        field: 'advPic',
+	        title: '广告图',
+	        type : 'img',
+	        single: true,
+			required: true
+	    }, {
+	        field: 'pic',
+	        title: '展示图',
+	        type : 'img',
+			required: true
+	    }, {
+	        title: '商品详述',
+	        field: 'description',
+	        type: 'textarea',
+	        required: true,
+	    },{
+	        field: 'remark',
+	        title: '备注',
+	    }];
+		
+		buildDetail({
+			fields: fields,
+			code: code,
+			detailCode: '808026',
+			addCode: '808010',
+			editCode: '808012',
+			buttons: {},
+		});
+		
+		$('#tableList').bootstrapTable({
+		    columns: [{
+				field : '',
+				title : '',
+				checkbox: true
+			},{  
+		        field: 'name',
+		        title: '规格名称',
+		    }, {
+		        field: 'originalPrice',
+		        title: '原价/市场价',
+		        amount: true,
+		        formatter: moneyFormat,
+		    }, type==OSS.JFProductType?{
+		        field: 'price2',
+		        title: '价格',
+		        formatter: moneyFormat,
+		    }:{
+		        field: 'price1',
+		        title: '价格',
+		        formatter: moneyFormat,
+		    }, {
+				field: 'quantity',
+				title: '库存',
+			}, {
+				field: 'province',
+				title: '发货地',
+			}, {
+				field: 'weight',
+				title: '重量（kg）',
+			}, {
+				field: 'orderNo',
+				title: '序号',
+			}],
+			singleSelect: true,//禁止多选
+			clickToSelect: true,//自动选中
+			uniqueId: 'id',
+			onClickRow : function(row, $element) {
+			    paramIndex = $element.data('index')
+			}
+		});
+	}
 	
 	if(code){
 		reqApi({code:'808026',json:{code:code}}).done(function(d){

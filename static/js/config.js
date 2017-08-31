@@ -2,9 +2,9 @@ var OSS = {};
 // mainUrl
 OSS.mainUrl = '/mainUrl';
 // system
-OSS.system = 'CD-CHY000015';
+OSS.system = 'CD-CHW000015';
 // companyCode
-OSS.company = 'CD-CHY000015';
+OSS.company = 'CD-CHW000015';
 // system name
 OSS.systemName = '户外电商管理平台';
 // company name

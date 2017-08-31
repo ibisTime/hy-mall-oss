@@ -55,7 +55,7 @@ $(function () {
         },
 		type: 'select',
         search: true,
-		pageCode1: '805054',
+		pageCode1: '805120',
 		params: {
 			kind: 'f1',
     		updater: '',
@@ -70,9 +70,8 @@ $(function () {
         formatter: dateTimeFormat,
 		field1 : 'dateStart',
 		title1 : '下单时间',
-		type1:'date',
+		type:'date',
 		field2 : 'dateEnd',
-		type2:'date',
 		search: true,
     }];
 

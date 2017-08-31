@@ -63,9 +63,8 @@ $(function() {
 		formatter: dateTimeFormat,
 		field1 : 'applyDateStart',
 		title1 : '申请时间',
-		type1:'datetime',
+		type:'datetime',
 		field2 : 'applyDateEnd',
-		type2:'datetime',
         twoDate: true,
 		search: true
 	},{
@@ -74,20 +73,18 @@ $(function() {
 		formatter: dateTimeFormat, 
 		field1 : 'approveDateStart',
 		title1 : '审核时间',
-		type1:'datetime',
+		type:'datetime',
 		field2 : 'approveDateEnd',
-		type2:'datetime',
         twoDate: true,
 		search: true,
 	}, {
 		field : 'payDatetime',
 		title : '回录时间',
 		formatter: dateTimeFormat, 
+		type:'datetime',
 		field1 : 'payDateStart',
 		title1 : '回录时间',
-		type1:'datetime',
 		field2 : 'payDateEnd',
-		type2:'datetime',
         twoDate: true,
 		search: true,
 	}];

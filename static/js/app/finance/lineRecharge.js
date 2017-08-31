@@ -61,17 +61,15 @@ $(function() {
 		formatter: dateTimeFormat,
 		field1 : 'applyDateStart',
 		title1 : '申请时间',
-		type1:'datetime',
+		type:'datetime',
 		field2 : 'applyDateEnd',
-		type2:'datetime',
         twoDate: true,
 		search: true
 	}, {
 		field1 : 'payDateStart',
 		title1 : '审核时间',
-		type1:'datetime',
+		type:'datetime',
 		field2 : 'payDateEnd',
-		type2:'datetime',
         twoDate: true,
 		search: true,
 		visible: false

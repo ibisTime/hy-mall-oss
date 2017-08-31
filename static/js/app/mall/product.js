@@ -59,20 +59,22 @@ $(function () {
             return;
         }
         
-        confirm("确认上架？").then(function() {
-            reqApi({
-                code: '808013',
-                json: { 
-                	'code': selRecords[0].code,
-					'originalPrice': '0',
-					'location': '1',
-					'orderNo':'1'
-                }
-            }).then(function() {
-                toastr.info("操作成功");
-                $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
-            });
-        },function(){});
+        
+        window.location.href = "product_up.html?Code=" + selRecords[0].code+"&v=1";
+//      confirm("确认上架？").then(function() {
+//          reqApi({
+//              code: '808013',
+//              json: { 
+//              	'code': selRecords[0].code,
+//					'originalPrice': '0',
+//					'location': '1',
+//					'orderNo':'1'
+//              }
+//          }).then(function() {
+//              toastr.info("操作成功");
+//              $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+//          });
+//      },function(){});
 
     });
     

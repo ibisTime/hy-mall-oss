@@ -63,9 +63,8 @@ $(function() {
 	},{
 		field1 : 'dateStart',
 		title1 : '创建时间',
-		type1:'datetime',
+		type:'datetime',
 		field2 : 'dateEnd',
-		type2:'datetime',
         twoDate: true,
 		search: true,
 		visible: false
