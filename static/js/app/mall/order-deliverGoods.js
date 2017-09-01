@@ -1,12 +1,7 @@
 $(function() {
-
     var code = getQueryString('code');
 
     var fields = [{
-        field: 'kind',
-        type: 'hidden',
-        value: '2'
-    }, {
         field: 'orderCode',
         title: '发货单号',
         type: "hidden",
@@ -37,6 +32,7 @@ $(function() {
         field: 'pdf',
         title: '物流单',
         type: 'img',
+        single: true
     }, {
         field: 'remark',
         title: '备注',

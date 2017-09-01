@@ -1,124 +1,139 @@
 $(function() {
-	
-	var code = getQueryString('code');
-	var type = getQueryString('type')||'';
-	var typeDataFields;
-	
-	reqApi({
-        code: '808007',
-        json: {
-			status: '1',
-        	parentCode: OSS.categoryCode
-        },
-        sync: true
-    }).done(function(d) {
-    	var data1 = [];
-    	if(d.length){
-    		
-    		d.forEach(function(v,i){
-    			var tmpl = {'dkey':v.code,'dvalue': v.name}
-    			data1.push(tmpl) ;
-    		})
-    	}
-    	
-    	typeDataFields = data1;
-    });
-	
-	reqApi({
-		code:'808066',
-		json:{
-			code:code
-		},
-        sync: true
-	}).done(function(data){
-		
-		//订单编号
-		$("#orderCode").text(data.code);
-		//订单状态
-		$("#status").text(Dict.getNameForList1("order_status","808907",data.status));
-		//时间
-		if(data.status==4){
-			$("#statusTimeTxt").html("收货时间:");
-			$("#statusTime").text(dateTimeFormat(data.updateDatetime));
-			if(data.updater=='system'){
-				$("#updater").text("系统自动收货");
-			}else{
-				$("#updater").text(data.user.mobile);				
-			}
-			
-			$(".shouhuoTxt").removeClass("hidden");
-			$(".statusTimeTxt").removeClass("hidden");
-		}else if(data.status==91||data.status==92){
-			$("#statusTimeTxt").html("取消时间:");
-			$("#statusTime").text(dateTimeFormat(data.updateDatetime));
-			$(".statusTimeTxt").removeClass("hidden");
-		}
-		//下单用户
-		$("#applyUser").text(data.user.mobile);
-		//下单说明
-		$("#applyNote").text(data.applyNote);
-		//下单时间
-		$("#applyDatetime").text(dateTimeFormat(data.applyDatetime));
-		//购买数量
-		$("#quantity").text(data.quantity);
-		//支付方式
-		if(data.status==1){
-			$(".payType").hide();
-		}else{
-			$("#payType").text(Dict.getNameForList1("pay_type","808907",data.payType));
-		}
-		
-		//已支付人民币总额
-		
-		if(type=='20'){
-			$("#payAmount1").text(data.payAmount1/1000+"礼品券");
-		}else if(type=='21'){
-			$("#payAmount1").text(data.payAmount1/1000+"联盟券");
-		}else{
-			$("#payAmount1").text(data.payAmount1/1000+"分润+"+data.payAmount11/1000+"贡献奖励");
-		}
 
-		//运费
-		$("#yunfei").text(moneyFormat(data.yunfei));
-		
-		
-		//商品名称
-		$("#name").text(data.productName);
-		
-		//商品类别
-		$("#productType").text(Dict.findName(typeDataFields,data.productType));
-		
-		//规格名称
-		$("#paramName").text(data.productSpecsName);
-		//价格
-		$("#amount1").text(moneyFormat(data.amount1));
-		
-		
-		//收货人姓名
-		$("#receiver").text(data.receiver);
-		//收件人电话
-		$("#reMobile").text(data.reMobile);
-		//收货地址
-		$("#reAddress").text(data.reAddress);
-		
-		if(data.deliveryDatetime){
-			//发货人
-			$("#deliverer").text(data.store.name);
-			//发货时间
-			$("#deliveryDatetime").text(dateTimeFormat(data.deliveryDatetime));
-		}
-		
-		//物流编号
-		$("#logisticsCode").text(data.logisticsCode);
-		//物流公司
-		$("#logisticsCompany").text(data.logisticsCompany);
-		//备注
-		$("#remark").text(data.remark);
-		
-	})
-	
-	$('#backBtn').on('click', function() {
-		goBack();
-	});
-	
+    var code = getQueryString('code');
+
+    var fields = [{
+        title: "订单信息",
+        type: "title"
+    }, {
+        field: 'code1',
+        title: '订单编号',
+        formatter: function(v, data) {
+            return data.code;
+        },
+        readonly: true,
+    }, {
+        field: 'receiver',
+        title: '收件人',
+        readonly: true,
+    }, {
+        field: 'reMobile',
+        title: '收件人联系方式',
+        readonly: true,
+    }, {
+        field: 'reAddress',
+        title: '收货地址',
+        readonly: true,
+    }, {
+        title: '下单人',
+        field: 'mobile',
+        readonly: true,
+        formatter: function(v, data) {
+            return data.user.mobile;
+        }
+    }, {
+        field: 'applyDatetime',
+        title: '下单时间',
+        formatter: dateTimeFormat,
+        readonly: true
+    }, {
+        field: 'payAmount1',
+        title: '总额',
+        formatter: function(v, data) {
+            if (v && !data.payAmount2) {
+                return "人民币：" + moneyFormat(v)
+            } else if (v && data.payAmount2) {
+                return "人民币：" + moneyFormat(v) + "、积分：" + moneyFormat(data.payAmount2);
+            }
+        },
+        readonly: true
+    }, {
+        field: 'payDatetime',
+        title: '支付时间',
+        formatter: dateTimeFormat,
+        readonly: true
+    }, {
+        title: "商品信息",
+        type: "title"
+    }, {
+        title: "商品信息",
+        field: "productOrderList",
+        type: "o2m",
+        readonly: true,
+        columns: [{
+            title: "商品名称",
+            field: "name",
+            formatter: function(v, data) {
+                return data.product.name;
+            }
+        }, {
+            title: "商品价格",
+            field: "price1",
+            formatter: function(v, data) {
+                if (v) {
+                    return moneyFormat(v) + "人民币"
+                } else if (data.price2) {
+                    return moneyFormat(data.price2) + "积分"
+                }
+            }
+        }, {
+            title: "产品规格",
+            field: "productSpecsName"
+        }, {
+            title: "数量",
+            field: "quantity"
+        }]
+    }, {
+        title: "发货信息",
+        type: "title"
+    }, {
+        //     field: 'orderCode',
+        //     title: '发货单号',
+        //     formatter: function(v, data) {
+        //         return data.productOrderList[0].orderCode;
+        //     },
+        //     readonly: true,
+        // }, {
+        title: '物流公司',
+        field: 'logisticsCompany',
+        type: 'select',
+        key: 'kd_company',
+        keyCode: "808907",
+        readonly: true,
+    }, {
+        title: '物流单号',
+        field: 'logisticsCode',
+        readonly: true,
+    }, {
+        field: 'deliverer',
+        title: '发货人',
+        readonly: true,
+    }, {
+        field: 'deliveryDatetime',
+        title: '发货时间',
+        formatter: dateTimeFormat,
+        readonly: true,
+    }, {
+        field: 'pdf',
+        title: '物流单',
+        type: "img",
+        readonly: true
+    }, {
+        field: 'yunfei',
+        title: '运费',
+        formatter: moneyFormat,
+        readonly: true,
+    }, {
+        field: 'remark',
+        title: '备注',
+        readonly: true
+    }];
+
+    buildDetail({
+        fields: fields,
+        code: code,
+        detailCode: '808066',
+        view: true
+    });
+
 });
