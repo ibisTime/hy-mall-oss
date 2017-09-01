@@ -50,7 +50,7 @@ $(function() {
 		fields: fields,
 		code: code,
 		addCode: '805042',
-		editCode: '805181',
+		editCode: '805081',
 		detailCode: '805121',
 		beforeDetail: function(data) {
 			data.userId = data.code;
