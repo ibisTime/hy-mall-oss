@@ -1,14 +1,4 @@
 $(function() {
-    var query=getQueryString('Q')||"";
-    var searchParams;
-    if  (query){
-        searchParams={};
-    }else{
-        searchParams={
-            toUser: OSS.SYS_USER
-        }
-    }
-
     var columns = [{
         field: '',
         title: '',
@@ -83,20 +73,24 @@ $(function() {
         field: "remark"
     }];
     buildList({
+        router:"order",
         columns: columns,
         pageCode: '808065',
         singleSelect: false,
-        searchParams: searchParams
+        searchParams: {
+            toUser: getUserId()
+        }
     });
-    //物流发货
-    $("#deliverGoodsBtn").off('click').click(function() {
+   
+    //现场发货
+    $("#formStoresBtn").off('click').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
+            toastr.warning("请选择记录");
             return;
         }
         if (selRecords.length > 1) {
-            toastr.info("请选择一条记录");
+            toastr.warning("请选择一条记录");
             return;
         }
         if (selRecords[0].status != 2) {
@@ -104,33 +98,12 @@ $(function() {
             return;
         }
         if (selRecords[0].toUser == OSS.SYS_USER) {
-            window.location.href = "order_deliverGoods.html?code=" + selRecords[0].code;
-
-        } else {
-            toastr.warning("不是可以物流发货的订单");
+            toastr.warning("不是可以现场发货的订单");
             return;
-        }
-
-    });
-    //取消订单
-    $("#cancelBtn").click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.warning("请选择记录");
-            return;
-        }
-        var codeList = []
-
-        for (var i = 0; i < selRecords.length; i++) {
-            codeList.push(selRecords[i].code)
-            if (selRecords[i].status == 1 || selRecords[i].status == 4 || selRecords[i].status == 91 || selRecords[i].status == 92 || selRecords[i].status == 93) {
-                toastr.warning(selRecords[i].code + "不是能取消订单的状态!");
-                return;
-            }
         }
         var dw = dialog({
             content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">取消订单</li>' +
+                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">现场发货</li>' +
                 '<li><label>备注：</label><input id="remark" name="remark" class="control-def"></input></li>' +
                 '<li><input id="subBtn" name="subBtn"type="button" class="btn margin-left-100 submit" value="确定"><li><input id="goBackBtn" name="goBackBtn" type="button" class=" btn margin-left-20 goBack" value="返回"></ul>' +
                 '</form>'
@@ -147,10 +120,10 @@ $(function() {
             });
             if ($('#popForm').valid()) {
                 var data = $('#popForm').serializeObject();
-                data.codeList = codeList;
+                data.code = selRecords[0].code;
                 data.remark = $("#remark").val();
                 reqApi({
-                    code: "808056",
+                    code: "808055",
                     json: data
                 }).done(function() {
                     toastr.info("操作成功");
@@ -169,6 +142,6 @@ $(function() {
         });
         dw.__center();
 
-    })
+    });
 
 });

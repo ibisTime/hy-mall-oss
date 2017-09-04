@@ -87,23 +87,28 @@ $(function() {
         title: "发货信息",
         type: "title"
     }, {
-        //     field: 'orderCode',
-        //     title: '发货单号',
-        //     formatter: function(v, data) {
-        //         return data.productOrderList[0].orderCode;
-        //     },
-        //     readonly: true,
-        // }, {
         title: '物流公司',
         field: 'logisticsCompany',
         type: 'select',
         key: 'kd_company',
         keyCode: "808907",
         readonly: true,
+
     }, {
         title: '物流单号',
         field: 'logisticsCode',
         readonly: true,
+         formatter:function(v,data){
+            if(v){
+                return v
+            }else{
+                $("#logisticsCompany").parent().hide();
+                 $("#logisticsCode").parent().hide();
+                  $("#deliverer").parent().hide();
+                   $("#deliveryDatetime").parent().hide();
+                    $("#pdf").parent().hide();
+            }
+        }
     }, {
         field: 'deliverer',
         title: '发货人',
@@ -118,12 +123,7 @@ $(function() {
         title: '物流单',
         type: "img",
         readonly: true
-    }, {
-        field: 'yunfei',
-        title: '运费',
-        formatter: moneyFormat,
-        readonly: true,
-    }, {
+    },  {
         field: 'remark',
         title: '备注',
         readonly: true
