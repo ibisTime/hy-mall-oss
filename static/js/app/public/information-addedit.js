@@ -53,21 +53,12 @@ $(function() {
             "1": "上架",
             "2": "下架"
         }
-    }, {
-        field: 'location',
-        title: '位置',
-        type: 'select',
-        data: {
-            "1": "热门",
-            "0": "普通"
-        },
-        readonly: true
-    }, {
+    },  {
         field: 'orderNo',
         title: 'UI次序',
         number: true,
         readonly: true
-    }, , {
+    },  {
         title: '备注',
         field: 'remark',
         readonly: true

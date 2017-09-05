@@ -20,7 +20,18 @@ $(function () {
 		keyName: 'code',
 		valueName: 'name',
         search: true
-    }, {
+    },{
+        field: 'location',
+        title: '位置',
+        type:'select',
+        key:"product_location",
+        keyCode:'808907',
+        formatter:Dict.getNameForList("product_location","808907"),
+        search: true,
+    },{
+        field: 'orderNo',
+        title: '序号'
+    },{
         field: 'status',
         title: '状态',
         type: "select",

@@ -6,7 +6,7 @@ $(function() {
 	var fields = [{
 		field: 'kind',
 		type: 'hidden',
-		value: '11'
+		value: 'PA'
 	}, {
 		field: 'newLoginPwd',
 		title: '新登录密码',

@@ -1931,7 +1931,7 @@
         	json.start = 1;
         }
         if (!json.limit) {
-        	json.limit = 10000000;
+        	json.limit = 1000;
         }
         data.json = JSON.stringify(json);
 

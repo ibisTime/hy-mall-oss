@@ -32,15 +32,6 @@ $(function() {
 		required: true,
 		hidden: view
 	}, {
-		title: '所在地区',
-		field: 'citySelect1',
-		formatter: function(v, r) {
-			r = r.userExt || {};
-			var res = $.unique([r.province, r.city, r.area]).reverse();
-			return res.join(' / ');
-		},
-		hidden: !view
-	},{
 		field: 'address',
 		title: '详细地址',
 		required: true,

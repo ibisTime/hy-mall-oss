@@ -94,6 +94,22 @@ $(function() {
         title: '备注',
         readonly: view
     }];
+    var viewList = [{
+        field: 'location',
+        title: '位置',
+        type:'select',
+        key:"product_location",
+        keyCode:'808907',
+        formatter:Dict.getNameForList("product_location","808907"),
+    },  {
+        field: 'orderNo',
+        title: 'UI次序',
+        number: true,
+        readonly: true
+    }]
+    if (view) {
+        fields = fields.concat(viewList)
+    }
 	
 	buildDetail({
 		fields: fields,
