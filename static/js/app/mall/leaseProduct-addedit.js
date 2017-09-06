@@ -94,7 +94,8 @@ $(function() {
             columns: [{
                 field: '',
                 title: '',
-                checkbox: true
+                checkbox: true,
+                type:"hidden"
             }, {
                 field: 'name',
                 title: '名称',

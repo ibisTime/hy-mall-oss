@@ -67,6 +67,9 @@ $(function() {
                 return data.product.name;
             }
         }, {
+            title: "产品规格",
+            field: "productSpecsName"
+        }, {
             title: "商品价格",
             field: "price1",
             formatter: function(v, data) {
@@ -76,9 +79,6 @@ $(function() {
                     return moneyFormat(data.price2) + "积分"
                 }
             }
-        }, {
-            title: "产品规格",
-            field: "productSpecsName"
         }, {
             title: "数量",
             field: "quantity"

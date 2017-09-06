@@ -19,9 +19,6 @@ $(function() {
 		field : 'payCardInfo',
 		title : '开户行',
 	},{
-		field : 'channelBank',
-		title : '行号',
-	},{
 		field : 'payCardNo',
 		title : '银行卡号',
 	},{
