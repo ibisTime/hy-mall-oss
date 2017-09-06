@@ -2407,6 +2407,8 @@ function buildDetail1(options) {
                 '') + '" class="form-title">' + item.title + '</div>';
         } else if (item.type == 'hidden') {
             html = '<input type="hidden" id="' + item.field + '-model" name="' + item.field + '"/>' + html;
+        } else if (item.addeditType == 'hidden') {
+            html = '<input type="hidden" id="' + item.field + '-model" name="' + item.field + '"/>' + html;
         } else if (item.readonly) {
             if (item.hidden1) {
                 html = '<input type="hidden" id="' + item.field + '-model" name="' + item.field + '"/>' + html;
