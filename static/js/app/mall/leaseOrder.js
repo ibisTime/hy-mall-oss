@@ -5,7 +5,7 @@ $(function() {
         searchParams = {};
     } else {
         searchParams = {
-
+            toUser: OSS.SYS_USER
         }
     }
 
@@ -20,12 +20,9 @@ $(function() {
         field: 'status',
         title: '订单状态',
         type: "select",
-        data: {
-            "1": "待支付",
-            "2": "待发货",
-            "3": "待收货",
-            "4": "待评价",
-        },
+        key: "rorder_status",
+        keyCode: '810907',
+        formatter: Dict.getNameForList("rorder_status", "810907"),
         search: true,
     }, {
         field: 'productName',
@@ -42,8 +39,8 @@ $(function() {
         field: 'payType',
         title: '买单方式',
         key: 'pay_type',
-        keyCode: "808907",
-        formatter: Dict.getNameForList("pay_type", '808907'),
+        keyCode: "810907",
+        formatter: Dict.getNameForList("pay_type", '810907'),
         type: 'select',
         search: true,
     }, {
@@ -63,7 +60,7 @@ $(function() {
         },
         type: 'select',
         search: true,
-        pageCode: '805120',
+        pageCode1: '805120',
         params: {
             kind: 'C',
             updater: '',
@@ -89,10 +86,7 @@ $(function() {
         columns: columns,
         pageCode: '808065',
         singleSelect: false,
-        searchParams: {
-            toUser: OSS.SYS_USER,
-            statusList: ["1", "2", "3", "4"]
-        }
+        searchParams: searchParams
     });
     //物流发货
     $("#deliverGoodsBtn").off('click').click(function() {
@@ -176,5 +170,31 @@ $(function() {
         dw.__center();
 
     })
+    $('#downBtn').click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.info("请选择记录");
+            return;
+        }
 
+        if (selRecords.length > 1) {
+            toastr.info("不能多选");
+            return;
+        }
+
+        if (selRecords[0].status != 3) {
+            toastr.info("该商品状态不可下架");
+            return;
+        }
+        confirm("确认下架？").then(function() {
+            reqApi({
+                code: '810014',
+                json: { "code": selRecords[0].code }
+            }).then(function() {
+                toastr.info("操作成功");
+                $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+            });
+        }, function() {});
+
+    });
 });

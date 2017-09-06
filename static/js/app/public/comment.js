@@ -45,7 +45,7 @@ $(function() {
             if (data.status == "D") {
                 window.location.href = 'comment_addedit.html?code=' + data.code;
             } else {
-                toastr.waning("不是待审核的状态")
+                toastr.warning("不是待审核的状态")
             }
 
         }

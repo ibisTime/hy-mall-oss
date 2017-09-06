@@ -15,14 +15,6 @@ $(function() {
         field: 'idNo',
         title: '证件号码'
     }, {
-        field: 'province',
-        title: '注册地',
-        formatter: function(v, r) {
-            r = r.userExt || {};
-            var res = $.unique([r.province, r.city, r.area]).reverse();
-            return res.join(' / ');
-        }
-    }, {
         field: 'status',
         title: '状态',
         type: 'select',

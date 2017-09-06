@@ -10,9 +10,9 @@ $(function() {
     }, {
         title: '图片',
         field: 'pic',
-        type: 'img',
-        single: true,
-        readonly: view
+        value: "0",
+        hidden: true,
+        required: true
     }, {
         field: 'orderNo',
         title: '次序',
@@ -24,8 +24,8 @@ $(function() {
         title: "状态",
         field: "status",
         key: "category_status",
-        keyCode: '808907',
-        formatter: Dict.getNameForList("category_status", "808907")
+        keyCode: '810907',
+        formatter: Dict.getNameForList("category_status", "810907")
     }];
     if (view) {
         fields = fields.concat(viewList);
@@ -33,13 +33,13 @@ $(function() {
     buildDetail({
         fields: fields,
         code: code,
-        detailCode: '808006',
-        addCode: '808000',
-        editCode: '808002',
+        detailCode: '810006',
+        addCode: '810000',
+        editCode: '810002',
         view: view,
         beforeSubmit: function(data) {
             data.parentCode = 0;
-            data.type = "1";
+            data.type = "4";
             return data;
         }
     });

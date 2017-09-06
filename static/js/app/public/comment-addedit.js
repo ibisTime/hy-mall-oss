@@ -33,14 +33,7 @@ $(function() {
     }];
     var fields = [{
         title: '针对内容',
-        field: 'coachRealName',
-        formatter: function(v, data) {
-            if (v) {
-                return "私课教练：" + v;
-            } else {
-                return "团课：" + data.courseName;
-            }
-        },
+        field: 'entityName',
         readonly: true
     }, {
         title: "评论内容",
@@ -48,7 +41,7 @@ $(function() {
         readonly: true
     }, {
         title: '评论人',
-        field: 'commerRealName',
+        field: 'nickname',
         readonly: true
     }, {
         title: '评论时间',
@@ -122,7 +115,7 @@ $(function() {
         code: code,
         view: true,
         buttons: buttons,
-        detailCode: '622146',
+        detailCode: '801026',
     };
     buildDetail(options);
 });

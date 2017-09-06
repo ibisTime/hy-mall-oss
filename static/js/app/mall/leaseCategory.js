@@ -11,9 +11,9 @@ $(function() {
         field: 'status',
         title: '状态',
         key: "category_status",
-        keyCode: '808907',
+        keyCode: '810907',
         search: true,
-        formatter: Dict.getNameForList("category_status", "808907"),
+        formatter: Dict.getNameForList("category_status", "810907"),
     }, {
         field: 'orderNo',
         title: '次序',
@@ -22,9 +22,9 @@ $(function() {
 
     buildList({
         columns: columns,
-        pageCode: '808005',
+        pageCode: '810005',
         searchParams: {
-            type: "1",
+            type: "4",
             companyCode: OSS.company
         }
     });
@@ -41,7 +41,7 @@ $(function() {
         }
         confirm("确认上架？").then(function() {
             reqApi({
-                code: '808003',
+                code: '810003',
                 json: { "code": selRecords[0].code }
             }).then(function() {
                 toastr.info("操作成功");
@@ -63,13 +63,13 @@ $(function() {
         }
         confirm("确认下架？").then(function() {
             reqApi({
-                code: '808004',
+                code: '810004',
                 json: { "code": selRecords[0].code }
             }).then(function() {
                 toastr.info("操作成功");
                 $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
             });
         });
-    });
 
+    });
 });
