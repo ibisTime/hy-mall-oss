@@ -492,7 +492,7 @@ textarea {
 }
 
 .form-info li label {
-    width: 120px;;
+    width: 180px;
     line-height: 33px;
     display: block;
     float: left;
@@ -1254,15 +1254,18 @@ svg circle:hover {
 #pic {
     overflow: hidden;
 }
-.modal-title{
+
+.modal-title {
     margin-left: 200px !important;
 }
-.closeBtn{
-    margin-right:281px;
-    color: #fff  !important;
+
+.closeBtn {
+    margin-right: 281px;
+    color: #fff !important;
     background-color: #337ab7 !important;
     border-color: #2e6da4 !important;
 }
-.submitBtn{
+
+.submitBtn {
     margin-right: 50px;
 }

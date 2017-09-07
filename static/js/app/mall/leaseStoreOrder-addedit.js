@@ -1,5 +1,4 @@
 $(function() {
-
     var code = getQueryString('code');
 
     var fields = [{
@@ -76,37 +75,20 @@ $(function() {
         },
         readonly: true
     }, {
-        field: 'receiver',
-        title: '收件人',
-        readonly: true,
-    }, {
-        field: 'reMobile',
-        title: '联系方式',
-        readonly: true,
-    }, {
-        field: 'reAddress',
-        title: '收货地址',
-        readonly: true,
-    }, {
         title: '下单人',
-        field: 'applyUser',
+        field: 'mobile',
         readonly: true,
         formatter: function(v, data) {
             return data.user.mobile;
-        }
+        },
     }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
         readonly: true
     }, {
-        title: "运费",
-        field: "yunfei",
-        formatter: moneyFormat,
-        readonly: true
-    }, {
         field: 'payAmount1',
-        title: '支付总额',
+        title: '总额',
         formatter: function(v, data) {
             if (v) {
                 return "人民币：" + moneyFormat(v)
@@ -115,6 +97,13 @@ $(function() {
             }
         },
         readonly: true
+    }, {
+        field: 'takeType',
+        title: '提货方式',
+        readonly: true,
+        type: "select",
+        key: "take_type",
+        keyCode: "810907"
     }, {
         field: 'payDatetime',
         title: '支付时间',
@@ -140,57 +129,19 @@ $(function() {
         title: "订单状态",
         field: "status",
         type: "select",
-        readonly: true,
-        key: "rorder_status",
         keyCode: "810907",
+        key: "rorder_status"
     }, {
-        field: 'promptTimes',
-        title: '提示次数',
+        field: 'takeStore',
+        title: '提货店铺',
+        readonly: true,
+        formatter: function(v, data) {
+            return data.storeUser.loginName
+        }
+    }, {
+        title: "提货地址",
+        field: "takeAddress",
         readonly: true
-    }, {
-        title: "收发货信息",
-        type: "title"
-    }, {
-        title: '物流公司',
-        field: 'logisticsCompany',
-        type: 'select',
-        key: 'kd_company',
-        keyCode: "808907",
-        readonly: true,
-
-    }, {
-        title: '物流单号',
-        field: 'logisticsCode',
-        readonly: true
-    }, {
-        field: 'deliverer',
-        title: '发货人',
-        readonly: true,
-    }, {
-        field: 'deliveryDatetime',
-        title: '发货时间',
-        formatter: dateTimeFormat,
-        readonly: true,
-    }, {
-        field: 'pdf',
-        title: '物流单',
-        type: "img",
-        readonly: true
-    }, {
-        title: "签收日期",
-        field: "signDatetime",
-        formatter: dateTimeFormat,
-        readonly: true,
-    }, {
-        title: "租赁开始时间",
-        field: "rstartDatetime",
-        formatter: dateTimeFormat,
-        readonly: true,
-    }, {
-        title: "租赁结束时间",
-        field: "rendDatetime",
-        formatter: dateTimeFormat,
-        readonly: true,
     }, {
         title: "逾期信息",
         type: "title"

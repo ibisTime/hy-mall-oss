@@ -111,12 +111,11 @@ $(function() {
         {
             field: 'remark',
             title: '备注',
-            required: true,
             maxlength: 255,
             readonly: view
         }
     ];
-$("#myModalLabel").find(".-model").css("display","none");
+
     buildDetail({
         fields: fields,
         code: code,

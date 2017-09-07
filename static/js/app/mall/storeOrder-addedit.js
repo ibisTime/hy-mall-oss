@@ -13,18 +13,6 @@ $(function() {
         },
         readonly: true,
     }, {
-        field: 'receiver',
-        title: '收件人',
-        readonly: true,
-    }, {
-        field: 'reMobile',
-        title: '联系方式',
-        readonly: true,
-    }, {
-        field: 'reAddress',
-        title: '收货地址',
-        readonly: true,
-    }, {
         title: '下单人',
         field: 'mobile',
         readonly: true,
@@ -52,6 +40,10 @@ $(function() {
         title: '支付时间',
         formatter: dateTimeFormat,
         readonly: true
+    }, {
+        field: 'takeAddress',
+        title: '提货地址',
+        readonly: true,
     }, {
         title: "商品信息",
         type: "title"
@@ -83,50 +75,6 @@ $(function() {
             title: "数量",
             field: "quantity"
         }]
-    }, {
-        title: "发货信息",
-        type: "title"
-    }, {
-        title: '物流公司',
-        field: 'logisticsCompany',
-        type: 'select',
-        key: 'kd_company',
-        keyCode: "808907",
-        readonly: true,
-
-    }, {
-        title: '物流单号',
-        field: 'logisticsCode',
-        readonly: true,
-        formatter: function(v, data) {
-            if (v) {
-                return v
-            } else {
-                $("#logisticsCompany").parent().hide();
-                $("#logisticsCode").parent().hide();
-                $("#deliverer").parent().hide();
-                $("#deliveryDatetime").parent().hide();
-                $("#pdf").parent().hide();
-            }
-        }
-    }, {
-        field: 'deliverer',
-        title: '发货人',
-        readonly: true,
-    }, {
-        field: 'deliveryDatetime',
-        title: '发货时间',
-        formatter: dateTimeFormat,
-        readonly: true,
-    }, {
-        field: 'pdf',
-        title: '物流单',
-        type: "img",
-        readonly: true
-    }, {
-        field: 'remark',
-        title: '备注',
-        readonly: true
     }];
 
     buildDetail({

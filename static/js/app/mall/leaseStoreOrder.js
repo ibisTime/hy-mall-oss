@@ -1,4 +1,5 @@
 $(function() {
+    var query = getQueryString('Q') || "";
 
     var columns = [{
         field: '',
@@ -7,6 +8,14 @@ $(function() {
     }, {
         field: 'code',
         title: '订单编号',
+    }, {
+        field: 'status',
+        title: '订单状态',
+        type: "select",
+        key: "rorder_status",
+        keyCode: '810907',
+        formatter: Dict.getNameForList("rorder_status", "810907"),
+        search: true,
     }, {
         field: 'productName',
         title: '商品名称'
@@ -22,7 +31,7 @@ $(function() {
         }
     }, {
         field: 'payType',
-        title: '支付方式',
+        title: '买单方式',
         key: 'pay_type',
         keyCode: "810907",
         formatter: Dict.getNameForList("pay_type", '810907'),
@@ -55,31 +64,6 @@ $(function() {
         valueName: 'mobile',
         searchName: 'mobile',
     }, {
-        title: "提货方式",
-        field: "takeType",
-        type: "select",
-        key: "take_type",
-        keyCode: "810907",
-        formatter: Dict.getNameForList("take_type", '810907'),
-        search: true
-    }, {
-        field: 'status',
-        title: '订单状态',
-        type: "select",
-        data: {
-            "1": "待支付",
-            "2": "已支付待发货",
-            "3": "已发货待收货",
-            "4": "已收货体验中",
-            "5": '已归还,待确认',
-            "6": "逾期中",
-            "7": "已结算"
-        },
-        // key: "rorder_status",
-        // keyCode: '810907',
-        // formatter: Dict.getNameForList("rorder_status", "810907"),
-        search: true,
-    }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -87,7 +71,6 @@ $(function() {
         title1: '下单时间',
         type: 'date',
         field2: 'dateEnd',
-        twoDate: true,
         search: true,
     }, {
         title: "备注",
@@ -98,42 +81,72 @@ $(function() {
         pageCode: '810055',
         singleSelect: false,
         searchParams: {
-            companyCode: OSS.company,
-            statusList: ["1", "2", "3", "4", "5", "6", "7"]
-        },
-        beforeDetail: function(data) {
-            if (data.takeType == "2") {
-                window.location.href = "leaseOrder_addedit.html?&v=1&code=" + data.code;
-            } else if (data.takeType == "1") {
-                window.location.href = "leaseStoreOrder_addedit.html?&v=1&code=" + data.code;
-            }
+            takeType: "1",
+            toUser: getUserId(),
+            companyCode: OSS.company
         }
     });
-    //物流发货
-    $("#deliverGoodsBtn").off('click').click(function() {
+    //现场发货
+    $("#formStoresBtnBtn").off('click').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
+            toastr.warning("请选择记录");
             return;
         }
         if (selRecords.length > 1) {
-            toastr.info("请选择一条记录");
+            toastr.warning("请选择一条记录");
             return;
         }
         if (selRecords[0].status != 2) {
-            toastr.warning("不是可以物流发货的状态");
+            toastr.warning("不是可以发货的状态");
             return;
         }
         if (selRecords[0].takeType == "2") {
-            window.location.href = "leaseOrder_deliverGoods.html?code=" + selRecords[0].code;
-
-        } else {
-            toastr.warning("不是可以物流发货的订单");
+            toastr.warning("不是可以现场发货的订单");
             return;
         }
+        var dw = dialog({
+            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
+                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">现场发货</li>' +
+                '<li><label>备注：</label><input id="remark" name="remark" class="control-def"></input></li>' +
+                '<li><input id="subBtn" name="subBtn"type="button" class="btn margin-left-100 submit" value="确定"><li><input id="goBackBtn" name="goBackBtn" type="button" class=" btn margin-left-20 goBack" value="返回"></ul>' +
+                '</form>'
+        });
+        dw.showModal();
+        $(document).on('click', '#subBtn', function() {
+            $('#popForm').validate({
+                // 'rules': {
+                //     remark: {
+                //         required: true,
+                //         maxlength: 255
+                //     }
+                // }
+            });
+            if ($('#popForm').valid()) {
+                var data = $('#popForm').serializeObject();
+                data.code = selRecords[0].code;
+                data.remark = $("#remark").val();
+                reqApi({
+                    code: "810046",
+                    json: data
+                }).done(function() {
+                    toastr.info("操作成功");
+                    $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+                    setTimeout(function() {
+                        dw.close().remove();
+                    }, 500)
+                });
+            }
+        });
+        $(document).on('click', '#goBackBtn', function() {
+            setTimeout(function() {
+                dw.close().remove();
+            }, 500)
+
+        });
+        dw.__center();
 
     });
-
     //取消订单
     $("#cancelBtn").click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -145,7 +158,7 @@ $(function() {
 
         for (var i = 0; i < selRecords.length; i++) {
             codeList.push(selRecords[i].code)
-            if (selRecords[i].status != 2 || selRecords[i].status != 3) {
+            if (selRecords[i].status == 4 || selRecords[i].status == 5 || selRecords[i].status == 91 || selRecords[i].status == 92 || selRecords[i].status == 93) {
                 toastr.warning(selRecords[i].code + "不是能取消订单的状态!");
                 return;
             }
@@ -172,7 +185,7 @@ $(function() {
                 data.codeList = codeList;
                 data.remark = $("#remark").val();
                 reqApi({
-                    code: "810047",
+                    code: "808056",
                     json: data
                 }).done(function() {
                     toastr.info("操作成功");
@@ -190,59 +203,7 @@ $(function() {
 
         });
         dw.__center();
-    });
-    // 确认收货
-    $("#finishBtn").click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.warning("请选择记录");
-            return;
-        }
-        if (selRecords.length > 1) {
-            toastr.warning("请选择一条记录");
-            return;
-        }
-        if (selRecords[0].status != 3) {
-            toastr.warning("不是可以确认收货的状态");
-            return;
-        }
-        // window.location.href = "leaseOrder_addedit.html?&v=1&F=1&code=" + selRecords[0].code;
-        confirm("确认收货了？").then(function() {
-            reqApi({
-                code: '810048',
-                json: { "code": selRecords[0].code }
-            }).then(function() {
-                toastr.info("操作成功");
-                $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
-            });
-        }, function() {});
 
-    });
-    // 确认归还
-    $("#returnBtn").click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.warning("请选择记录");
-            return;
-        }
-        if (selRecords.length > 1) {
-            toastr.warning("请选择一条记录");
-            return;
-        }
-        if (selRecords[0].status != 5) {
-            toastr.warning("不是可以确认归还的状态");
-            return;
-        }
-        // window.location.href = "leaseOrder_addedit.html?&v=1&F=1&code=" + selRecords[0].code;
-        confirm("确认该商品已经归还了？").then(function() {
-            reqApi({
-                code: '810050',
-                json: { "code": selRecords[0].code, "remark": "已经归还" }
-            }).then(function() {
-                toastr.info("操作成功");
-                $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
-            });
-        }, function() {});
+    })
 
-    });
 });

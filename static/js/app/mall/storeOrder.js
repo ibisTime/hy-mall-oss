@@ -73,7 +73,6 @@ $(function() {
         field: "remark"
     }];
     buildList({
-        router:"order",
         columns: columns,
         pageCode: '808065',
         singleSelect: false,
@@ -81,7 +80,7 @@ $(function() {
             toUser: getUserId()
         }
     });
-   
+
     //现场发货
     $("#formStoresBtn").off('click').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');

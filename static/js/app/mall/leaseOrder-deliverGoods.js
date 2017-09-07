@@ -2,7 +2,7 @@ $(function() {
     var code = getQueryString('code');
 
     var fields = [{
-        field: 'orderCode',
+        field: 'code',
         title: '发货单号',
         type: "hidden",
         value: code,
@@ -74,7 +74,7 @@ $(function() {
             }
             data.code = code;
             reqApi({
-                code: '808054',
+                code: '810045',
                 json: data
             }).then(function() {
                 sucDetail();

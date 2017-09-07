@@ -88,16 +88,10 @@ $(function() {
         searchParams: {
             channelType: '90',
             companyCode: OSS.company
+        },
+        beforeDetail: function(data) {
+            location.href = "lineRecharge_check.html?code=" + data.code + "&detail=1";
         }
-    });
-
-    $("#detail1Btn").click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-        location.href = "lineRecharge_check.html?code=" + selRecords[0].code + "&detail=1";
     });
 
     //审核

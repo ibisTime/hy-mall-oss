@@ -79,11 +79,17 @@ $(function() {
         field: "remark"
     }];
     buildList({
-        router: "order",
         columns: columns,
         pageCode: '808065',
         searchParams: {
             statusList: ["5", "91", "92", "93"]
+        },
+        beforeDetail:function(data){
+            if(data.toUser==OSS.company){
+                window.location.href="order_addedit.html?&v=1&code="+data.code;
+            }else{
+                window.location.href="storeOrder_addedit.html?&v=1&code="+data.code;
+            }
         }
     });
 });
