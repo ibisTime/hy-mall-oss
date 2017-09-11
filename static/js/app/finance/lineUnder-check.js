@@ -135,7 +135,7 @@ $(function() {
         field: 'applyUser',
         title: '申请人',
         formatter: function(v, data) {
-            if (data.user.kind == '01' || data.user.kind == '11') {
+            if (data.user.kind == 'P' || data.user.kind == 'PA') {
                 return data.user.loginName;
             } else {
                 return data.user.mobile;

@@ -12,15 +12,6 @@ $(function() {
         title: "关键字",
         field: "keywords"
     }, {
-        field: 'location',
-        title: '位置',
-        type: 'select',
-        data: {
-            "1": "热门",
-            "0": "普通"
-        },
-        search: true
-    }, {
         field: 'orderNo',
         title: 'UI次序'
     }, {

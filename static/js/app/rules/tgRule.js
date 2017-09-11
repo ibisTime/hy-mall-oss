@@ -5,25 +5,23 @@ $(function() {
         title: '',
         checkbox: true
     }, {
-        field: 'remark',
-        title: '规则名称'
-    }, {
         field: 'ckey',
-        title: '参数',
+        title: '参数名',
         search: true
     }, {
         field: 'cvalue',
-        title: '数值'
-    }];
+        title: '参数值'
+    }, {
+        field: 'remark',
+        title: '备注'
+    }, ];
     buildList({
+        router: "userRule",
         columns: columns,
-        pageCode: '802025',
+        pageCode: '805915',
         searchParams: {
-            type: '3',
+            type: 'gift',
             companyCode: OSS.company
         },
-        beforeEdit: function(r) {
-            location.href = 'enchashmentRule_addedit.html?code=' + r.id + "&t=" + r.type;
-        }
     });
 });

@@ -95,7 +95,7 @@ $(function() {
                 field: '',
                 title: '',
                 checkbox: true,
-                type:"hidden"
+                hidden: true
             }, {
                 field: 'name',
                 title: '名称',
