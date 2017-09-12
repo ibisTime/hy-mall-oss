@@ -4,7 +4,10 @@ $(function() {
     var fields = [{
         field: 'applyUser',
         title: '申请人',
-        readonly: true
+        readonly: true,
+        formatter: function(v, data) {
+            return data.user.mobile
+        }
     }, {
         field: 'applyDatetime',
         title: '申请时间',
@@ -16,14 +19,6 @@ $(function() {
         type: "img",
         readonly: true
     }, {
-        field: 'authArg2',
-        title: '证件号',
-        readonly: true
-    }, {
-        field: 'authArg3',
-        title: '姓名',
-        readonly: true
-    }, {
         field: 'status',
         title: '状态',
         type: 'select',
@@ -32,8 +27,7 @@ $(function() {
         readonly: true
     }, {
         title: "毕业时间",
-        field: "gradDatetime",
-        type: "date",
+        field: "result",
         readonly: true
     }, {
         title: "审核人",
@@ -41,6 +35,7 @@ $(function() {
         readonly: true
     }, {
         title: "审核时间",
+        field: "approveDatetime",
         formatter: dateTimeFormat,
         readonly: true
     }, {

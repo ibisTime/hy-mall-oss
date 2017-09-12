@@ -12,7 +12,6 @@ $(function() {
         field: 'logisticsCompany',
         type: 'select',
         key: 'kd_company',
-        keyCode: "808907",
         required: true,
     }, {
         title: '物流单号',

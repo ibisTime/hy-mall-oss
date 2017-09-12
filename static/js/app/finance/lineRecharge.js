@@ -16,8 +16,7 @@ $(function() {
         title: '币种',
         type: 'select',
         key: 'currency',
-        keyCode: "802006",
-        formatter: Dict.getNameForList("currency", '802006'),
+        formatter: Dict.getNameForList("currency"),
         search: true
     }, {
         field: 'amount',
@@ -28,8 +27,7 @@ $(function() {
         title: '业务类型',
         type: 'select',
         key: 'biz_type',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('biz_type', '802006'),
+        formatter: Dict.getNameForList('biz_type'),
         search: true
     }, {
         field: 'payCardInfo',
@@ -42,8 +40,7 @@ $(function() {
         title: '状态',
         type: 'select',
         key: 'charge_status',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('charge_status', '802006'),
+        formatter: Dict.getNameForList('charge_status'),
         search: true
     }, {
         field: 'applyUser',

@@ -16,24 +16,21 @@ $(function() {
         title: '币种',
         type: 'select',
         key: 'currency',
-        keyCode: "802006",
-        formatter: Dict.getNameForList("currency", '802006'),
+        formatter: Dict.getNameForList("currency"),
         search: true
     }, {
         field: 'type',
         title: '类型',
         type: 'select',
         key: 'account_type',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('account_type', '802006'),
+        formatter: Dict.getNameForList('account_type'),
         search: true
     }, {
         field: 'status',
         title: '状态',
         type: 'select',
         key: 'account_status',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('account_status', '802006'),
+        formatter: Dict.getNameForList('account_status'),
         search: true
     }, {
         field: 'amount',

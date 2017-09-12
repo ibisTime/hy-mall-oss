@@ -91,7 +91,6 @@ $(function() {
         field: 'logisticsCompany',
         type: 'select',
         key: 'kd_company',
-        keyCode: "808907",
         readonly: true,
 
     }, {

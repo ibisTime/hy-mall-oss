@@ -97,8 +97,8 @@ $(function() {
         title: '账户类型',
         type: 'select',
         key: 'account_type',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('account_type', '802006'),
+
+        formatter: Dict.getNameForList('account_type'),
         required: true
     }, {
         field: 'amount',
@@ -114,8 +114,8 @@ $(function() {
         title: '支付渠道',
         type: 'select',
         key: 'channel_type',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('channel_type', '802006'),
+
+        formatter: Dict.getNameForList('channel_type'),
         search: true
     }, {
         field: 'payCardInfo',
@@ -128,8 +128,8 @@ $(function() {
         title: '状态',
         type: 'select',
         key: 'jour_status',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('jour_status', '802006'),
+
+        formatter: Dict.getNameForList('jour_status'),
         search: true
     }, {
         field: 'applyUser',

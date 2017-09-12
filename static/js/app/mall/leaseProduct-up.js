@@ -7,7 +7,6 @@ $(function() {
         title: '位置',
         type: 'select',
         key: "rent_prod_location",
-        keyCode: '810907',
         required: true,
     }, {
         field: 'orderNo',

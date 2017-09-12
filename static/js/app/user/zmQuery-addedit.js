@@ -4,6 +4,9 @@ $(function() {
     var fields = [{
         field: 'applyUser',
         title: '申请人',
+        formatter: function(v, data) {
+            return data.authArg3
+        },
         readonly: true
     }, {
         field: 'applyDatetime',
@@ -34,9 +37,7 @@ $(function() {
         readonly: true
     }, {
         title: "芝麻分值",
-        field: "gradDatetime",
-        type: "date",
-        formatter: dateFormat,
+        field: "result",
         readonly: true
     }, {
         title: "审核人",
@@ -44,6 +45,7 @@ $(function() {
         readonly: true
     }, {
         title: "审核时间",
+        field: "approveDatetime",
         formatter: dateTimeFormat,
         readonly: true
     }, {

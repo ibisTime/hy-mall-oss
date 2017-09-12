@@ -7,13 +7,6 @@ $(function() {
     }, {
         title: '针对内容',
         field: 'coachRealName',
-        formatter: function(v, data) {
-            if (v) {
-                return "私课教练：" + v;
-            } else {
-                return "团课：" + data.courseName;
-            }
-        }
     }, {
         field: 'content',
         title: '评论内容',

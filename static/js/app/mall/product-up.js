@@ -11,7 +11,6 @@ $(function() {
         title: '位置',
         type: 'select',
         key: "product_location",
-        keyCode: '808907',
         required: true,
     }, {
         field: 'orderNo',

@@ -6,7 +6,10 @@ $(function() {
         checkbox: true
     }, {
         field: 'applyUser',
-        title: '申请人'
+        title: '申请人',
+        formatter:function(v,data){
+            return data.authArg3
+        }
     }, {
         field: 'applyDatetime',
         title: '申请时间',

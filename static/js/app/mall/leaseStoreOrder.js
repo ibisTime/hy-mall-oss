@@ -13,8 +13,8 @@ $(function() {
         title: '订单状态',
         type: "select",
         key: "rorder_status",
-        keyCode: '810907',
-        formatter: Dict.getNameForList("rorder_status", "810907"),
+
+        formatter: Dict.getNameForList("rorder_status"),
         search: true,
     }, {
         field: 'productName',
@@ -33,8 +33,7 @@ $(function() {
         field: 'payType',
         title: '买单方式',
         key: 'pay_type',
-        keyCode: "810907",
-        formatter: Dict.getNameForList("pay_type", '810907'),
+        formatter: Dict.getNameForList("pay_type"),
         type: 'select',
         search: true,
     }, {

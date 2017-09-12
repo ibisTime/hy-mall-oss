@@ -12,8 +12,8 @@ $(function() {
         title: '角色类型',
         type: 'select',
         key: 'account_type',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('account_type', '802006'),
+
+        formatter: Dict.getNameForList('account_type'),
         search: true
     }, {
         field: 'payCardInfo',
@@ -34,14 +34,14 @@ $(function() {
         title: '状态',
         type: 'select',
         key: 'withdraw_status',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('withdraw_status', '802006'),
+
+        formatter: Dict.getNameForList('withdraw_status'),
         search: true
     }, {
         field: 'applyUser',
         title: '申请人',
         formatter: function(v, data) {
-            if (data.user.kind == '01' || data.user.kind == '11') {
+            if (data.user.kind == 'P') {
                 return data.user.loginName;
             } else {
                 return data.user.mobile;

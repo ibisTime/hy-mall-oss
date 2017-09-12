@@ -6,7 +6,10 @@ $(function() {
         checkbox: true
     }, {
         field: 'applyUser',
-        title: '申请人'
+        title: '申请人',
+        formatter: function(v, data) {
+            return data.user.mobile
+        }
     }, {
         field: 'applyDatetime',
         title: '申请时间',
@@ -24,17 +27,11 @@ $(function() {
             return v && '<img  style="width:40px;height:40px" src="' + OSS.picBaseUrl + '/' + v + '" >' || "-"
         }
     }, {
-        field: 'authArg2',
-        title: '证件号'
-    }, {
-        field: 'authArg3',
-        title: '姓名'
+        title: "毕业时间",
+        field: "result"
     }, {
         title: "审核人",
         field: "approveUser",
-    }, {
-        title: "毕业时间",
-        field: "result"
     }, {
         field: 'status',
         title: '状态',

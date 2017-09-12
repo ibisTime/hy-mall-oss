@@ -11,9 +11,9 @@ $(function() {
         field: 'status',
         title: '状态',
         key: "category_status",
-        keyCode: '810907',
+
         search: true,
-        formatter: Dict.getNameForList("category_status", "810907"),
+        formatter: Dict.getNameForList("category_status"),
     }, {
         field: 'orderNo',
         title: '次序',

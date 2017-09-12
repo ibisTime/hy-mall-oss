@@ -9,7 +9,7 @@ $(function() {
         required: true,
         type: 'select',
         pageCode: userId ? '802503' : '802500',
-        keyCode1: '802006',
+        keyCode1: '801907',
         dict: [
             ['currency', 'currency'],
             ['type', 'account_type']
@@ -21,10 +21,16 @@ $(function() {
         keyName: 'accountNumber',
         valueName: '{{realName.DATA}} - {{currencyName.DATA}} - {{typeName.DATA}}',
         searchName: 'realName',
-        help: '支持户名查询'
+        help: '支持户名查询',
+        onChange: function(v, data) {
+            if (v != "CNY") {
+                $("#payCardInfo").parent().remove();
+                $("#payCardNo").parent().remove();
+            }
+        }
     }, {
+        title: "充值数量",
         field: 'amount',
-        title: '充值金额',
         required: true,
         amount: true,
         formatter: moneyFormat

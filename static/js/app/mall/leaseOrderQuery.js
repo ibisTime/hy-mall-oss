@@ -24,8 +24,7 @@ $(function() {
         field: 'payType',
         title: '买单方式',
         key: 'pay_type',
-        keyCode: "810907",
-        formatter: Dict.getNameForList("pay_type", '810907'),
+        formatter: Dict.getNameForList("pay_type"),
         type: 'select',
         search: true,
     }, {
@@ -59,23 +58,20 @@ $(function() {
         field: "takeType",
         type: "select",
         key: "take_type",
-        keyCode: "810907",
-        formatter: Dict.getNameForList("take_type", '810907'),
+        formatter: Dict.getNameForList("take_type"),
         search: true
     }, {
         field: 'status',
         title: '订单状态',
         type: "select",
         data: {
+            "7": "已结算",
             "8": "不归还",
             "9": "已评论",
             "91": "用户异常",
             "92": '商户异常',
             "93": "快递异常"
         },
-        // key: "rorder_status",
-        // keyCode: '810907',
-        // formatter: Dict.getNameForList("rorder_status", "810907"),
         search: true,
     }, {
         field: 'applyDatetime',

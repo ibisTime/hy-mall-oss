@@ -24,8 +24,8 @@ $(function() {
         title: "状态",
         field: "status",
         key: "category_status",
-        keyCode: '810907',
-        formatter: Dict.getNameForList("category_status", "810907")
+
+        formatter: Dict.getNameForList("category_status")
     }];
     if (view) {
         fields = fields.concat(viewList);

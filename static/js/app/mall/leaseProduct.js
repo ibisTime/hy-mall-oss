@@ -43,8 +43,8 @@ $(function() {
         title: '位置',
         type: 'select',
         key: "rent_prod_location",
-        keyCode: '810907',
-        formatter: Dict.getNameForList("rent_prod_location", "810907"),
+
+        formatter: Dict.getNameForList("rent_prod_location"),
         search: true,
     }, {
         field: 'orderNo',
@@ -54,8 +54,7 @@ $(function() {
         title: '状态',
         type: "select",
         key: "rent_prod_status",
-        keyCode: "810907",
-        formatter: Dict.getNameForList("rent_prod_status", "810907"),
+        formatter: Dict.getNameForList("rent_prod_status"),
         search: true
     }, {
         field: 'remark',
@@ -69,7 +68,7 @@ $(function() {
             companyCode: OSS.company
         }
     });
-
+    //上架
     $('#upBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
@@ -89,7 +88,7 @@ $(function() {
         window.location.href = "leaseProduct_up.html?Code=" + selRecords[0].code + "&v=1";
 
     });
-
+    //下架
     $('#downBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
@@ -117,5 +116,19 @@ $(function() {
         }, function() {});
 
     });
+    //一键新增
+    $('#copyBtn').click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.info("请选择记录");
+            return;
+        }
+        if (selRecords.length > 1) {
+            toastr.info("不能多选");
+            return;
+        }
 
+        window.location.href = "leaseProduct_addeditCopy.html?code=" + selRecords[0].code;
+
+    });
 });

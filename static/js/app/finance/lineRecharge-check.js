@@ -98,25 +98,30 @@ $(function() {
         title: '币种',
         type: 'select',
         key: 'currency',
-        keyCode: "802006",
-        formatter: Dict.getNameForList("currency", '802006'),
+        formatter: Dict.getNameForList("currency"),
     }, {
         field: 'bizType',
         title: '业务类型',
         type: 'select',
         key: 'biz_type',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('biz_type', '802006'),
+        formatter: Dict.getNameForList('biz_type'),
     }, {
         field: 'channelType',
         title: '支付渠道',
         type: 'select',
         key: 'channel_type',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('channel_type', '802006'),
+        formatter: Dict.getNameForList('channel_type'),
     }, {
         field: 'payCardInfo',
         title: '开户行',
+        formatter: function(v, data) {
+            if (v) {
+                return v
+            } else {
+                $("#payCardInfo").parent().remove();
+                $("#payCardNo").parent().remove();
+            }
+        }
     }, {
         field: 'payCardNo',
         title: '银行卡号',
@@ -125,8 +130,7 @@ $(function() {
         title: '状态',
         type: 'select',
         key: 'charge_status',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('charge_status', '802006'),
+        formatter: Dict.getNameForList('charge_status'),
     }, {
         field: 'applyUser',
         title: '申请人',

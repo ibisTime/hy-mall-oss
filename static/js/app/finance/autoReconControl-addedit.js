@@ -22,24 +22,24 @@ $(function() {
         title: '币种',
         type: 'select',
         key: 'currency',
-        keyCode: "802006",
-        formatter: Dict.getNameForList("currency", '802006'),
+
+        formatter: Dict.getNameForList("currency"),
         readonly: true,
     }, {
         field: 'channelType',
         title: '渠道类型',
         type: 'select',
         key: 'channel_type',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('channel_type', '802006'),
+
+        formatter: Dict.getNameForList('channel_type'),
         readonly: true
     }, {
         field: 'bizType',
         title: '业务类型',
         type: 'select',
         key: 'biz_type',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('biz_type', '802006'),
+
+        formatter: Dict.getNameForList('biz_type'),
         readonly: true,
     }, {
         field: 'bizNote',
@@ -70,8 +70,8 @@ $(function() {
         title: '状态',
         type: 'select',
         key: 'jour_status',
-        keyCode: '802006',
-        formatter: Dict.getNameForList('jour_status', '802006'),
+
+        formatter: Dict.getNameForList('jour_status'),
         readonly: true
     }, {
         field: 'workDate',

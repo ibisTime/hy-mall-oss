@@ -35,8 +35,7 @@ $(function() {
         field: 'payType',
         title: '买单方式',
         key: 'pay_type',
-        keyCode: "808907",
-        formatter: Dict.getNameForList("pay_type", '808907'),
+        formatter: Dict.getNameForList("pay_type"),
         type: 'select',
         search: true,
     }, {
@@ -84,11 +83,11 @@ $(function() {
         searchParams: {
             statusList: ["5", "91", "92", "93"]
         },
-        beforeDetail:function(data){
-            if(data.toUser==OSS.company){
-                window.location.href="order_addedit.html?&v=1&code="+data.code;
-            }else{
-                window.location.href="storeOrder_addedit.html?&v=1&code="+data.code;
+        beforeDetail: function(data) {
+            if (data.toUser == OSS.SYS_USER) {
+                window.location.href = "order_addedit.html?&v=1&code=" + data.code;
+            } else {
+                window.location.href = "storeOrder_addedit.html?&v=1&code=" + data.code;
             }
         }
     });

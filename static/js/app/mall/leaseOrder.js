@@ -24,8 +24,7 @@ $(function() {
         field: 'payType',
         title: '支付方式',
         key: 'pay_type',
-        keyCode: "810907",
-        formatter: Dict.getNameForList("pay_type", '810907'),
+        formatter: Dict.getNameForList("pay_type"),
         type: 'select',
         search: true,
     }, {
@@ -59,8 +58,7 @@ $(function() {
         field: "takeType",
         type: "select",
         key: "take_type",
-        keyCode: "810907",
-        formatter: Dict.getNameForList("take_type", '810907'),
+        formatter: Dict.getNameForList("take_type"),
         search: true
     }, {
         field: 'status',
@@ -72,13 +70,13 @@ $(function() {
             "3": "已发货待收货",
             "4": "已收货体验中",
             "5": '已归还,待确认',
-            "6": "逾期中",
-            "7": "已结算"
+            "6": "逾期中"
         },
-        // key: "rorder_status",
-        // keyCode: '810907',
-        // formatter: Dict.getNameForList("rorder_status", "810907"),
         search: true,
+    }, {
+        field: 'promptTimes',
+        title: '催货次数',
+        readonly: true
     }, {
         field: 'applyDatetime',
         title: '下单时间',
@@ -145,8 +143,8 @@ $(function() {
 
         for (var i = 0; i < selRecords.length; i++) {
             codeList.push(selRecords[i].code)
-            if (selRecords[i].status != 2 || selRecords[i].status != 3) {
-                toastr.warning(selRecords[i].code + "不是能取消订单的状态!");
+            if (selRecords[i].status == 1 || selRecords[i].status == 4 || selRecords[i].status == 5 || selRecords[i].status == 6 || selRecords[i].status == 7) {
+                toastr.warning(selRecords[i].code + "不是能取消订单的状态!,只有已支付待发货和已发货待收货的状态才可以取消订单");
                 return;
             }
         }

@@ -41,7 +41,10 @@ $(function() {
     }, {
         field: 'bookDatetime',
         title: '预定时间',
-        formatter: dateTimeFormat,
+        formatter: function(v, data) {
+            return dateTimeFormat(v)
+        },
+        // formatter: dateTimeFormat,
         readonly: true
     }, {
         field: 'rentDay',
@@ -52,8 +55,7 @@ $(function() {
         title: '抵扣方式',
         readonly: true,
         type: "select",
-        key: "deduct_type",
-        keyCode: "810907"
+        key: "deduct_type"
     }, {
         field: 'deductAmount',
         title: '抵扣金额',
@@ -65,13 +67,13 @@ $(function() {
         readonly: true,
         formatter: moneyFormat
     }, {
-        field: 'amount1',
+        field: 'amount2',
         title: '订单金额',
         formatter: function(v, data) {
             if (v) {
-                return "人民币：" + moneyFormat(v)
-            } else if (data.amount2) {
-                return "积分：" + moneyFormat(data.amount2);
+                return "人民币：" + moneyFormat(data.amount1) + ",积分" + moneyFormat(v)
+            } else if (data.amount1) {
+                return "人民币：" + moneyFormat(data.amount1);
             }
         },
         readonly: true
@@ -105,13 +107,13 @@ $(function() {
         formatter: moneyFormat,
         readonly: true
     }, {
-        field: 'payAmount1',
+        field: 'payAmount2',
         title: '支付总额',
         formatter: function(v, data) {
-            if (v) {
-                return "人民币：" + moneyFormat(v)
-            } else if (data.payAmount2) {
-                return "积分：" + moneyFormat(data.payAmount2);
+            if (v != "0") {
+                return "人民币：" + moneyFormat(data.payAmount1) + "，积分" + moneyFormat(v)
+            } else if (data.payAmount1) {
+                return "人民币：" + moneyFormat(data.payAmount1);
             }
         },
         readonly: true
@@ -124,8 +126,7 @@ $(function() {
         field: 'payType',
         title: '支付方式',
         key: 'pay_type',
-        keyCode: "810907",
-        formatter: Dict.getNameForList("pay_type", '810907'),
+        formatter: Dict.getNameForList("pay_type"),
         type: 'select',
         readonly: true
     }, {
@@ -142,10 +143,9 @@ $(function() {
         type: "select",
         readonly: true,
         key: "rorder_status",
-        keyCode: "810907",
     }, {
         field: 'promptTimes',
-        title: '提示次数',
+        title: '催单次数',
         readonly: true
     }, {
         title: "收发货信息",
@@ -155,7 +155,6 @@ $(function() {
         field: 'logisticsCompany',
         type: 'select',
         key: 'kd_company',
-        keyCode: "808907",
         readonly: true,
 
     }, {
@@ -205,6 +204,11 @@ $(function() {
         formatter: dateTimeFormat,
         readonly: true,
     }, {
+        title: "日逾期费用(元)",
+        field: "overdueAmount",
+        formatter: moneyFormat,
+        readonly: true,
+    }, {
         title: "逾期天数",
         field: "overdueDay",
         readonly: true,
@@ -227,7 +231,6 @@ $(function() {
         readonly: true,
         type: "select",
         key: "take_type",
-        keyCode: "810907"
     }, {
         title: "归还地址",
         field: 'backAddress',
@@ -237,7 +240,6 @@ $(function() {
         field: 'backLogisticsCompany',
         type: 'select',
         key: 'kd_company',
-        keyCode: "808907",
         readonly: true
     }, {
         title: '归还物流单号',

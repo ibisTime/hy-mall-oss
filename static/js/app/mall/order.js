@@ -42,8 +42,7 @@ $(function() {
         field: 'payType',
         title: '买单方式',
         key: 'pay_type',
-        keyCode: "808907",
-        formatter: Dict.getNameForList("pay_type", '808907'),
+        formatter: Dict.getNameForList("pay_type"),
         type: 'select',
         search: true,
     }, {

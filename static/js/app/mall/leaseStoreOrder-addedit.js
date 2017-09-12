@@ -51,8 +51,7 @@ $(function() {
         title: '抵扣方式',
         readonly: true,
         type: "select",
-        key: "deduct_type",
-        keyCode: "810907"
+        key: "deduct_type"
     }, {
         field: 'deductAmount',
         title: '抵扣金额',
@@ -64,13 +63,13 @@ $(function() {
         readonly: true,
         formatter: moneyFormat
     }, {
-        field: 'amount1',
+        field: 'amount2',
         title: '订单金额',
         formatter: function(v, data) {
             if (v) {
-                return "人民币：" + moneyFormat(v)
-            } else if (data.amount2) {
-                return "积分：" + moneyFormat(data.amount2);
+                return "人民币：" + moneyFormat(data.amount1) + ",积分" + moneyFormat(v)
+            } else if (data.amount1) {
+                return "人民币：" + moneyFormat(data.amount1);
             }
         },
         readonly: true
@@ -87,13 +86,13 @@ $(function() {
         formatter: dateTimeFormat,
         readonly: true
     }, {
-        field: 'payAmount1',
-        title: '总额',
+        field: 'payAmount2',
+        title: '支付总额',
         formatter: function(v, data) {
-            if (v) {
-                return "人民币：" + moneyFormat(v)
-            } else if (data.payAmount2) {
-                return "积分：" + moneyFormat(data.payAmount2);
+            if (v != "0") {
+                return "人民币：" + moneyFormat(data.payAmount1) + "，积分" + moneyFormat(v)
+            } else if (data.payAmount1) {
+                return "人民币：" + moneyFormat(data.payAmount1);
             }
         },
         readonly: true
@@ -102,8 +101,7 @@ $(function() {
         title: '提货方式',
         readonly: true,
         type: "select",
-        key: "take_type",
-        keyCode: "810907"
+        key: "take_type"
     }, {
         field: 'payDatetime',
         title: '支付时间',
@@ -113,8 +111,7 @@ $(function() {
         field: 'payType',
         title: '支付方式',
         key: 'pay_type',
-        keyCode: "810907",
-        formatter: Dict.getNameForList("pay_type", '810907'),
+        formatter: Dict.getNameForList("pay_type"),
         type: 'select',
         readonly: true
     }, {
@@ -129,7 +126,6 @@ $(function() {
         title: "订单状态",
         field: "status",
         type: "select",
-        keyCode: "810907",
         key: "rorder_status"
     }, {
         field: 'takeStore',
@@ -156,6 +152,11 @@ $(function() {
         formatter: dateTimeFormat,
         readonly: true,
     }, {
+        title: "日逾期费用(元)",
+        field: "overdueAmount",
+        formatter: moneyFormat,
+        readonly: true,
+    }, {
         title: "逾期天数",
         field: "overdueDay",
         readonly: true,
@@ -177,8 +178,7 @@ $(function() {
         title: '归还方式',
         readonly: true,
         type: "select",
-        key: "take_type",
-        keyCode: "810907"
+        key: "take_type"
     }, {
         title: "归还地址",
         field: 'backAddress',
@@ -188,7 +188,6 @@ $(function() {
         field: 'backLogisticsCompany',
         type: 'select',
         key: 'kd_company',
-        keyCode: "808907",
         readonly: true
     }, {
         title: '归还物流单号',

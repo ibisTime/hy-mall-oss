@@ -13,13 +13,13 @@ $(function() {
         required: true,
         type: 'select',
         pageCode: '802500',
-        keyCode1: '802006',
+        keyCode1: '801907',
         dict: [
             ['currency', 'currency'],
             ['type', 'account_type']
         ],
         params: {
-            currency: ['CNY', "XJK"],
+            currencyList: ['CNY', "XJK"],
             userId: userId
         },
         keyName: 'accountNumber',
