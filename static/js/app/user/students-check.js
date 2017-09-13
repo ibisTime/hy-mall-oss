@@ -4,7 +4,10 @@ $(function() {
     var fields = [{
         field: 'applyUser',
         title: '申请人',
-        readonly: true
+        readonly: true,
+        formatter: function(v, data) {
+            return data.user.mobile
+        }
     }, {
         field: 'applyDatetime',
         title: '申请时间',
@@ -14,14 +17,6 @@ $(function() {
         field: 'authArg1',
         title: '学信网图片',
         type: "img",
-        readonly: true
-    }, {
-        field: 'authArg2',
-        title: '证件号',
-        readonly: true
-    }, {
-        field: 'authArg3',
-        title: '姓名',
         readonly: true
     }, {
         field: 'status',

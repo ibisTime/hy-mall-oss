@@ -13,8 +13,23 @@ $(function() {
             } else {
                 return "-"
             }
+        }
+    }, {
+        title: "手机号",
+        field: "userId",
+        type: "select",
+        type: 'select',
+        search: true,
+        pageCode: '805120',
+        params: {
+            kind: 'C',
+            updater: '',
+            companyCode: OSS.company
         },
-        search: true
+        keyName: 'userId',
+        valueName: 'mobile',
+        searchName: 'mobile',
+        visible: false
     }, {
         field: 'realName',
         title: '姓名',
@@ -55,9 +70,12 @@ $(function() {
         },
         search: true
     }, {
-        field: 'createDatetime',
+        field: 'createDatetime11',
         title: '注册时间',
-        formatter: dateTimeFormat
+        formatter: function(v, data) {
+                return dateTimeFormat(data.user.createDatetime)
+            }
+            // formatter: dateTimeFormat
     }, {
         field: 'remark',
         title: '备注'

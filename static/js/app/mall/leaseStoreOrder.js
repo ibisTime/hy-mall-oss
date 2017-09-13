@@ -53,7 +53,7 @@ $(function() {
         },
         type: 'select',
         search: true,
-        pageCode1: '805120',
+        pageCode: '805120',
         params: {
             kind: 'C',
             updater: '',
@@ -63,6 +63,10 @@ $(function() {
         valueName: 'mobile',
         searchName: 'mobile',
     }, {
+        field: 'promptTimes',
+        title: '催货次数',
+        readonly: true
+    },{
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -71,6 +75,7 @@ $(function() {
         type: 'date',
         field2: 'dateEnd',
         search: true,
+        twoDate:true
     }, {
         title: "备注",
         field: "remark"

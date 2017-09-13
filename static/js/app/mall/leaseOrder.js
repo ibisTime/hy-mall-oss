@@ -44,7 +44,7 @@ $(function() {
         },
         type: 'select',
         search: true,
-        pageCode1: '805120',
+        pageCode: '805120',
         params: {
             kind: 'C',
             updater: '',
@@ -97,7 +97,7 @@ $(function() {
         singleSelect: false,
         searchParams: {
             companyCode: OSS.company,
-            statusList: ["1", "2", "3", "4", "5", "6", "7"]
+            statusList: ["1", "2", "3", "4", "5", "6"]
         },
         beforeDetail: function(data) {
             if (data.takeType == "2") {

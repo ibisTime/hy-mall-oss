@@ -35,7 +35,9 @@ $(function() {
     }, {
         title: "关键字",
         field: "keywords",
-        maxlength: 255
+        type: "hidden",
+        value: "0",
+        required: true
     }, {
         title: '图文详述',
         field: 'content',
@@ -53,12 +55,12 @@ $(function() {
             "1": "上架",
             "2": "下架"
         }
-    },  {
+    }, {
         field: 'orderNo',
         title: 'UI次序',
         number: true,
         readonly: true
-    },  {
+    }, {
         title: '备注',
         field: 'remark',
         readonly: true

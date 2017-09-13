@@ -9,9 +9,6 @@ $(function() {
         maxlength: 255,
         search: true
     }, {
-        title: "关键字",
-        field: "keywords"
-    }, {
         field: 'orderNo',
         title: 'UI次序'
     }, {

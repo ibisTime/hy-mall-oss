@@ -53,6 +53,13 @@ $(function() {
         formatter: dateTimeFormat,
         readonly: true
     }, {
+        field: 'promptTimes',
+        title: '催货次数',
+        readonly: true,
+        formatter: function(v, data) {
+            return data.promptTimes
+        }
+    }, {
         title: "商品信息",
         type: "title"
     }, {
@@ -126,6 +133,48 @@ $(function() {
         field: 'remark',
         title: '备注',
         readonly: true
+    }, {
+        title: "评论信息",
+        type: "title"
+    }, {
+        title: "评论信息",
+        field: "productOrderListCom",
+        type: "o2m",
+        pageCode: '801025',
+        o2mvalue: {
+            orderCode: code,
+            limit: 100,
+            start: 0,
+            companyCode: OSS.company
+        },
+        readonly: true,
+        columns: [{
+            title: "针对产品",
+            field: "entityName",
+        }, {
+            title: "内容",
+            field: "content"
+        }, {
+            title: "星级",
+            field: "score",
+            formatter: function(v, data) {
+                if (v == 1) {
+                    return "1颗星"
+                } else if (v == 2) {
+                    return "2颗星"
+                } else if (v == 3) {
+                    return "3颗星"
+                } else if (v == 4) {
+                    return "4颗星"
+                } else if (v == 5) {
+                    return "5颗星"
+                }
+            },
+        }, {
+            title: "评论时间",
+            field: "commentDatetime",
+            formatter: dateTimeFormat
+        }]
     }];
 
     buildDetail({

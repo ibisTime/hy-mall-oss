@@ -28,18 +28,13 @@ $(function() {
     }, {
         field: 'userReferee',
         title: '推荐人',
-        pageCode: '805120',
-        detailCode: '805056',
-        params: {
-            kind: 'f1',
-            updater: '',
-            companyCode: OSS.company
+        formatter: function(v, data) {
+            if (data.refereeUser) {
+                return data.refereeUser.mobile;
+            } else {
+                return "-"
+            }
         },
-        type: 'select',
-        keyName: 'userId',
-        valueName: '{{loginName.DATA}}',
-        searchName: 'loginName',
-        readonly: view,
         required: true
     }, {
         title: "状态",
@@ -59,14 +54,14 @@ $(function() {
             field: 'realName',
             title: '真实名称',
         }, {
+            field: 'bankName',
+            title: '银行类型',
+        }, {
+            field: 'payCardInfo',
+            title: '开户行',
+        }, {
             field: 'bankcardNumber',
             title: '银行卡号',
-        }, {
-            field: 'bankName',
-            title: '银行名称',
-        }, {
-            field: 'subbranch',
-            title: '开户支行',
         }, {
             field: 'bindMobile',
             title: '预留手机号',

@@ -15,6 +15,16 @@ $(function() {
         field: 'idNo',
         title: '证件号码'
     }, {
+        title: "推荐人",
+        field: "tj",
+        formatter: function(v, data) {
+            if (data.refereeUser) {
+                return data.refereeUser.mobile;
+            } else {
+                return "-"
+            }
+        }
+    }, {
         field: 'status',
         title: '状态',
         type: 'select',
@@ -31,9 +41,6 @@ $(function() {
         field2: 'dateEnd',
         type2: 'date',
         search: true,
-    }, {
-        field: 'remark',
-        title: '备注'
     }];
     buildList({
         router: 'customer',

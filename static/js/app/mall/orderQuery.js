@@ -46,6 +46,10 @@ $(function() {
         field: 'amount2',
         title: '积分总价',
         formatter: moneyFormat
+    },{
+        field: 'promptTimes',
+        title: '催货次数',
+        readonly: true
     }, {
         field: 'applyUser',
         title: '下单用户',
@@ -72,6 +76,7 @@ $(function() {
         title1: '下单时间',
         type: 'date',
         field2: 'dateEnd',
+        twoDate:true,
         search: true,
     }, {
         title: "备注",

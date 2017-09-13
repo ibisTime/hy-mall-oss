@@ -14,7 +14,7 @@ $(function() {
         field: 'remark',
         readonly: true,
         maxlength: 250
-    }, {
+    },{
         title: '数值',
         field: 'cvalue',
         required: true,
@@ -27,7 +27,7 @@ $(function() {
         detailCode: '810916',
         editCode: '810910',
         beforeSubmit: function(data) {
-            data.remark = $('#remark').val();
+            data.remark = $('#remark').html();
             data.type = type;
             return data;
         }

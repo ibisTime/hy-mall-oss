@@ -23,9 +23,12 @@ $(function() {
         searchName: 'realName',
         help: '支持户名查询',
         onChange: function(v, data) {
-            if (v != "CNY") {
+            if (data.currency != "CNY") {
                 $("#payCardInfo").parent().remove();
                 $("#payCardNo").parent().remove();
+            } else if (data.currency == "CNY") {
+                $("#payCardInfo").parent().css("display", "block");
+                $("#payCardNo").parent().css("display", "block");
             }
         }
     }, {

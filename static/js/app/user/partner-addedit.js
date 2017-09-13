@@ -23,10 +23,6 @@ $(function() {
         required: true,
         maxlength: 255,
     }, {
-        field: 'remark',
-        title: '联系方式',
-        required: true,
-    }, {
         title: '所在地区',
         type: 'citySelect',
         required: true,

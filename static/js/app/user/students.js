@@ -10,17 +10,7 @@ $(function() {
         formatter: function(v, data) {
             return data.user.mobile
         }
-    }, {
-        field: 'applyDatetime',
-        title: '申请时间',
-        formatter: dateTimeFormat,
-        field1: 'dateStart',
-        title1: '申请时间',
-        type: 'date',
-        field2: 'dateEnd',
-        twoDate: true,
-        search: true,
-    }, {
+    },  {
         field: 'authArg1',
         title: '学信网图片',
         formatter: function(v, data) {
@@ -40,6 +30,16 @@ $(function() {
         formatter: Dict.getNameForList('auth_status'),
         search: true
     }, {
+        field: 'applyDatetime',
+        title: '申请时间',
+        formatter: dateTimeFormat,
+        field1: 'dateStart',
+        title1: '申请时间',
+        type: 'date',
+        field2: 'dateEnd',
+        twoDate: true,
+        search: true,
+    },{
         title: "备注",
         field: "remark"
     }];

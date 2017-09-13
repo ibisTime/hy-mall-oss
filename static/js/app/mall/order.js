@@ -1,13 +1,5 @@
 $(function() {
-    var query = getQueryString('Q') || "";
-    var searchParams;
-    if (query) {
-        searchParams = {};
-    } else {
-        searchParams = {
 
-        }
-    }
 
     var columns = [{
         field: '',
@@ -72,6 +64,10 @@ $(function() {
         valueName: 'mobile',
         searchName: 'mobile',
     }, {
+        field: 'promptTimes',
+        title: '催货次数',
+        readonly: true
+    }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -79,6 +75,7 @@ $(function() {
         title1: '下单时间',
         type: 'date',
         field2: 'dateEnd',
+        twoDate: true,
         search: true,
     }, {
         title: "备注",
@@ -128,7 +125,7 @@ $(function() {
 
         for (var i = 0; i < selRecords.length; i++) {
             codeList.push(selRecords[i].code)
-            if (selRecords[i].status == 4 || selRecords[i].status == 5 || selRecords[i].status == 91 || selRecords[i].status == 92 || selRecords[i].status == 93) {
+            if (selRecords[i].status == 1 || selRecords[i].status == 4) {
                 toastr.warning(selRecords[i].code + "不是能取消订单的状态!");
                 return;
             }

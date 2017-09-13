@@ -28,7 +28,7 @@ $(function() {
         detailCode: '808916',
         editCode: '808910',
         beforeSubmit: function(data) {
-            data.remark = $('#remark').val();
+            data.remark = $('#remark').html();
             data.type = type;
 
             return data;

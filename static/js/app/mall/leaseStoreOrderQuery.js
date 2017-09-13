@@ -1,4 +1,5 @@
 $(function() {
+    var query = getQueryString('Q') || "";
 
     var columns = [{
         field: '',
@@ -7,6 +8,19 @@ $(function() {
     }, {
         field: 'code',
         title: '订单编号',
+    }, {
+        field: 'status',
+        title: '订单状态',
+        type: "select",
+        data: {
+            "7": "已结算",
+            "8": "不归还",
+            "9": "已评论",
+            "91": "用户异常",
+            "92": '商户异常',
+            "93": "快递异常"
+        },
+        search: true,
     }, {
         field: 'productName',
         title: '商品名称'
@@ -54,28 +68,9 @@ $(function() {
         valueName: 'mobile',
         searchName: 'mobile',
     }, {
-        title: "提货方式",
-        field: "takeType",
-        type: "select",
-        key: "take_type",
-        formatter: Dict.getNameForList("take_type"),
-        search: true
-    }, {
-        field: 'status',
-        title: '订单状态',
-        type: "select",
-        data: {
-            "7": "已结算",
-            "8": "不归还",
-            "9": "已评论",
-            "91": "用户异常",
-            "92": '商户异常',
-            "93": "快递异常"
-        },
-        search: true,
-    }, {
         field: 'promptTimes',
-        title: '催货次数'
+        title: '催货次数',
+        readonly: true
     }, {
         field: 'applyDatetime',
         title: '下单时间',
@@ -84,8 +79,8 @@ $(function() {
         title1: '下单时间',
         type: 'date',
         field2: 'dateEnd',
-        twoDate: true,
         search: true,
+        twoDate: true
     }, {
         title: "备注",
         field: "remark"
@@ -95,15 +90,10 @@ $(function() {
         pageCode: '810055',
         singleSelect: false,
         searchParams: {
+            takeType: "1",
+            toUser: getUserId(),
             companyCode: OSS.company,
             statusList: ["7", "8", "9", "91", "92", "93"]
-        },
-        beforeDetail: function(data) {
-            if (data.takeType == "2") {
-                window.location.href = "leaseOrder_addedit.html?&v=1&code=" + data.code;
-            } else if (data.takeType == "1") {
-                window.location.href = "leaseStoreOrder_addedit.html?&v=1&code=" + data.code;
-            }
         }
     });
 

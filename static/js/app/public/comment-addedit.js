@@ -44,6 +44,22 @@ $(function() {
         field: 'nickname',
         readonly: true
     }, {
+        title: "星级",
+        field: "score",
+        formatter: function(v, data) {
+            if (v == 1) {
+                return "1颗星"
+            } else if (v == 2) {
+                return "2颗星"
+            } else if (v == 3) {
+                return "3颗星"
+            } else if (v == 4) {
+                return "4颗星"
+            } else if (v == 5) {
+                return "5颗星"
+            }
+        },
+    }, {
         title: '评论时间',
         field: 'commentDatetime',
         readonly: true,

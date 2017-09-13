@@ -13,6 +13,7 @@ $(function() {
         type: 'select',
         key: 'kd_company',
         required: true,
+        value:"SF"
     }, {
         title: '物流单号',
         field: 'logisticsCode',

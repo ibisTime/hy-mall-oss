@@ -40,7 +40,12 @@ $(function() {
     }, {
         field: 'bookDatetime',
         title: '预定时间',
-        formatter: dateTimeFormat,
+        formatter: function(v, data) {
+            var date = new Date(v);
+            var str = date.format('yyyy-MM-dd') + "至";
+            date.setDate(date.getDate() + (data.rentDay - 1));
+            return str + date.format('yyyy-MM-dd');
+        },
         readonly: true
     }, {
         field: 'rentDay',
@@ -123,6 +128,13 @@ $(function() {
         title: '渠道号',
         readonly: true
     }, {
+        field: 'promptTimes',
+        title: '催货次数',
+        readonly: true,
+        formatter: function(v, data) {
+            return data.promptTimes
+        }
+    }, {
         title: "订单状态",
         field: "status",
         type: "select",
@@ -153,7 +165,7 @@ $(function() {
         readonly: true,
     }, {
         title: "日逾期费用(元)",
-        field: "overdueAmount",
+        field: "dayOverdueFee",
         formatter: moneyFormat,
         readonly: true,
     }, {
@@ -178,7 +190,7 @@ $(function() {
         title: '归还方式',
         readonly: true,
         type: "select",
-        key: "take_type"
+        key: "back_type"
     }, {
         title: "归还地址",
         field: 'backAddress',
@@ -187,7 +199,7 @@ $(function() {
         title: '归还物流公司',
         field: 'backLogisticsCompany',
         type: 'select',
-        key: 'kd_company',
+        key: 'back_kd_company',
         readonly: true
     }, {
         title: '归还物流单号',
@@ -216,6 +228,48 @@ $(function() {
         field: 'remark',
         title: '备注',
         readonly: true
+    }, {
+        title: "评论信息",
+        type: "title"
+    }, {
+        title: "评论信息",
+        field: "productOrderListCom",
+        type: "o2m",
+        pageCode: '801025',
+        o2mvalue: {
+            orderCode: code,
+            limit: 100,
+            start: 0,
+            companyCode: OSS.company
+        },
+        readonly: true,
+        columns: [{
+            title: "针对产品",
+            field: "entityName",
+        }, {
+            title: "内容",
+            field: "content"
+        }, {
+            title: "星级",
+            field: "score",
+            formatter: function(v, data) {
+                if (v == 1) {
+                    return "1颗星"
+                } else if (v == 2) {
+                    return "2颗星"
+                } else if (v == 3) {
+                    return "3颗星"
+                } else if (v == 4) {
+                    return "4颗星"
+                } else if (v == 5) {
+                    return "5颗星"
+                }
+            },
+        }, {
+            title: "评论时间",
+            field: "commentDatetime",
+            formatter: dateTimeFormat
+        }]
     }];
 
     buildDetail({
