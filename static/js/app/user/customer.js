@@ -35,11 +35,12 @@ $(function() {
         field: 'createDatetime',
         title: '注册时间',
         formatter: dateTimeFormat,
-        field1: 'dateStart',
+        field1: 'createDatetimeStart',
         title1: '注册时间',
         type1: 'date',
-        field2: 'dateEnd',
+        field2: 'createDatetimeEnd',
         type2: 'date',
+        twoDate: true,
         search: true,
     }];
     buildList({

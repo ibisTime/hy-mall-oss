@@ -59,7 +59,7 @@ $(function() {
     }, {
         field1: 'dateStart',
         title1: '创建时间',
-        type: 'datetime',
+        type: 'date',
         field2: 'dateEnd',
         twoDate: true,
         search: true,
@@ -86,6 +86,14 @@ $(function() {
         searchParams: {
             channelType: 'out',
             companyCode: OSS.company
+        },
+        beforeSearch: function(data) {
+            if (data.workDate) {
+                data.workDate = data.workDate.replace(/-/g, "");;
+                return data;
+            } else {
+                return data;
+            }
         }
     });
 

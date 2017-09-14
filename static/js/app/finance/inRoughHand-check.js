@@ -1,6 +1,7 @@
 $(function() {
     var code = getQueryString('code');
     var view = true;
+    // var currencyDict = Dict.getNameForList("currency");
 
     var fields = [{
         field: 'code1',
@@ -18,7 +19,6 @@ $(function() {
         title: '币种',
         type: 'select',
         key: 'currency',
-
         formatter: Dict.getNameForList("currency"),
         readonly: true
     }, {
@@ -64,58 +64,48 @@ $(function() {
         }, {
             field: 'currency',
             title: '币种',
-            formatter: function(v, data) {
-                return Dict.getNameForList1("currency", data.currency)
-            }
+            type: "select",
+            // keyCode: '802006',
+            key: "currency",
+            formatter: Dict.getNameForList("currency")
         }, {
             field: 'channelType',
             title: '渠道',
             type: 'select',
             key: 'channel_type',
-            formatter: function(v, data) {
-                return Dict.getNameForList1("channel_type", data.channelType)
-            }
+            formatter: Dict.getNameForList('channel_type'),
+            search: true
         }, {
             field: 'bizType',
             title: '业务类型',
             type: 'select',
             key: 'biz_type',
-            formatter: function(v, data) {
-                return Dict.getNameForList1("biz_type", data.bizType)
-            }
+            formatter: Dict.getNameForList('biz_type'),
+            search: true
         }, {
             field: 'transAmount',
             title: '变动金额',
-            formatter: function(v, data) {
-                return moneyFormat(data.transAmount)
-            }
+            formatter: moneyFormat
         }, {
             field: 'preAmount',
             title: '变动前金额',
-            formatter: function(v, data) {
-                return moneyFormat(data.preAmount)
-            }
+            formatter: moneyFormat
         }, {
             field: 'postAmount',
             title: '变动后金额',
-            formatter: function(v, data) {
-                return moneyFormat(data.postAmount)
-            }
+            formatter: moneyFormat
         }, {
             field: 'status',
             title: '状态',
             type: 'select',
             key: 'jour_status',
-            formatter: function(v, data) {
-                return Dict.getNameForList1("jour_status", data.status)
-            }
+            formatter: Dict.getNameForList('jour_status'),
+            search: true
         }, {
             field: 'createDatetime',
             title: '创建时间',
-            formatter: function(v, data) {
-                return dateTimeFormat(data.createDatetime)
-            }
-        }]
+            formatter: dateTimeFormat
+        }, ]
     }, {
         title: '意见说明',
         field: 'adjustNote',

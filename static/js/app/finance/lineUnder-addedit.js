@@ -34,7 +34,7 @@ $(function() {
         formatter: moneyFormat
     }, {
         field: 'payCardInfo',
-        title: '开户行',
+        title: '银行类型',
         required: true,
     }, {
         field: 'payCardNo',

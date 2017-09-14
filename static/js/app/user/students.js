@@ -10,7 +10,7 @@ $(function() {
         formatter: function(v, data) {
             return data.user.mobile
         }
-    },  {
+    }, {
         field: 'authArg1',
         title: '学信网图片',
         formatter: function(v, data) {
@@ -39,7 +39,12 @@ $(function() {
         field2: 'dateEnd',
         twoDate: true,
         search: true,
-    },{
+    }, {
+        title: "审核时间",
+        field: "approveDatetime",
+        formatter: dateTimeFormat,
+        readonly: true
+    }, {
         title: "备注",
         field: "remark"
     }];

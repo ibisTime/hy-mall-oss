@@ -119,7 +119,7 @@ $(function() {
         search: true
     }, {
         field: 'payCardInfo',
-        title: '开户行',
+        title: '银行类型',
     }, {
         field: 'payCardNo',
         title: '银行卡号',

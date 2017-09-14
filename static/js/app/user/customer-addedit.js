@@ -57,9 +57,6 @@ $(function() {
             field: 'bankName',
             title: '银行类型',
         }, {
-            field: 'payCardInfo',
-            title: '开户行',
-        }, {
             field: 'bankcardNumber',
             title: '银行卡号',
         }, {

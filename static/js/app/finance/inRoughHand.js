@@ -41,7 +41,7 @@ $(function() {
         formatter: dateTimeFormat,
         field1: 'applyDateStart',
         title1: '申请时间',
-        type: 'datetime',
+        type: 'date',
         field2: 'applyDateEnd',
         twoDate: true,
         search: true
@@ -54,7 +54,7 @@ $(function() {
         formatter: dateTimeFormat,
         field1: 'approveDateStart',
         title1: '审核时间',
-        type: 'datetime',
+        type: 'date',
         field2: 'approveDateEnd',
         twoDate: true,
         search: true
@@ -68,7 +68,7 @@ $(function() {
     }, {
         field: 'jourCode',
         title: '流水编号',
-        search: true
+        // search: true
     }];
 
     buildList({
@@ -79,7 +79,6 @@ $(function() {
             companyCode: OSS.company
         }
     });
-
     $("#examineBtn").click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {

@@ -99,6 +99,10 @@ $(function() {
             return data.user.mobile;
         }
     }, {
+        title: "下单说明",
+        field: "applyNote",
+        readonly: true
+    }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -109,13 +113,23 @@ $(function() {
         formatter: moneyFormat,
         readonly: true
     }, {
-        field: 'payAmount2',
-        title: '支付总额',
+        field: 'payAmount3',
+        title: '实际支付总额',
         formatter: function(v, data) {
-            if (v != "0") {
-                return "人民币：" + moneyFormat(data.payAmount1) + "，积分" + moneyFormat(v)
-            } else if (data.payAmount1) {
-                return "人民币：" + moneyFormat(data.payAmount1);
+            if (v != "0" && data.payAmount1 != "0" && data.payAmount2 != "0") {
+                return "人民币：" + moneyFormat(data.payAmount1) + "，积分" + moneyFormat(data.payAmount2) + "，小金库" + moneyFormat(data.payAmount3)
+            } else if (v == "0" && data.payAmount1 != "0" && data.payAmount2 != "0") {
+                return "人民币：" + moneyFormat(data.payAmount1) + "，积分" + moneyFormat(data.payAmount2);
+            } else if (v != "0" && data.payAmount1 != "0" && data.payAmount2 == "0") {
+                return "人民币：" + moneyFormat(data.payAmount1) + "，小金库" + moneyFormat(data.payAmount3);
+            } else if (v != "0" && data.payAmount1 == "0" && data.payAmount2 != "0") {
+                return "积分" + moneyFormat(data.payAmount2) + "，小金库" + moneyFormat(data.payAmount3);
+            } else if (v == "0" && data.payAmount1 == "0" && data.payAmount2 != "0") {
+                return "积分" + moneyFormat(data.payAmount2);
+            } else if (v != "0" && data.payAmount1 == "0" && data.payAmount2 == "0") {
+                return "小金库" + moneyFormat(data.payAmount3);
+            } else if (v == "0" && data.payAmount1 != "0" && data.payAmount2 == "0") {
+                return "人民币" + moneyFormat(data.payAmount1);
             }
         },
         readonly: true
@@ -289,7 +303,7 @@ $(function() {
         },
         readonly: true,
         columns: [{
-            title: "针对产品",
+            title: "商品名称",
             field: "entityName",
         }, {
             title: "内容",

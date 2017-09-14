@@ -6,12 +6,12 @@ $(function() {
         title: '',
         checkbox: true
     }, {
-        title: '针对内容',
-        field: 'entityName'
+        title: '商品名称',
+        field: 'entityName',
+        search: true
     }, {
         field: 'content',
-        title: '评论内容',
-        search: true
+        title: '评论内容'
     }, {
         title: "星级",
         field: "score",

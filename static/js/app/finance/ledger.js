@@ -21,7 +21,7 @@ $(function() {
     var refNoField = {
         field: 'refNo',
         title: '关联单号',
-        search: true
+        // search: true
     }
 
     if (yl) {
@@ -41,11 +41,7 @@ $(function() {
             field: 'realName',
             title: '户名',
         }
-        refNoField = {
-            field: 'refNo',
-            title: '关联单号',
-            visible: false
-        }
+
     }
 
     var columns = [{
@@ -92,7 +88,7 @@ $(function() {
     }, {
         field1: 'dateStart',
         title1: '创建时间',
-        type: 'datetime',
+        type: 'date',
         field2: 'dateEnd',
         twoDate: true,
         search: true,

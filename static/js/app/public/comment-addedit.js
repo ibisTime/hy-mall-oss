@@ -32,7 +32,7 @@ $(function() {
         readonly: true
     }];
     var fields = [{
-        title: '针对内容',
+        title: '商品名称',
         field: 'entityName',
         readonly: true
     }, {

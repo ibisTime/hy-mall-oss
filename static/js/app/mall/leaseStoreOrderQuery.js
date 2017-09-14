@@ -86,6 +86,7 @@ $(function() {
         field: "remark"
     }];
     buildList({
+        router: "leaseStoreOrder",
         columns: columns,
         pageCode: '810055',
         singleSelect: false,

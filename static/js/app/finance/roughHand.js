@@ -40,7 +40,7 @@ $(function() {
         formatter: dateTimeFormat,
         field1: 'applyDateStart',
         title1: '申请时间',
-        type: 'datetime',
+        type: 'date',
         field2: 'applyDateEnd',
         twoDate: true,
         search: true
@@ -53,7 +53,7 @@ $(function() {
         formatter: dateTimeFormat,
         field1: 'approveDateStart',
         title1: '审核时间',
-        type: 'datetime',
+        type: 'date',
         field2: 'approveDateEnd',
         twoDate: true,
         search: true
@@ -67,7 +67,7 @@ $(function() {
     }, {
         field: 'jourCode',
         title: '流水编号',
-        search: true
+        // search: true
     }];
     buildList({
         columns: columns,
@@ -78,7 +78,8 @@ $(function() {
         },
         beforeDetail: function(data) {
             location.href = "roughHand_addedit.html?v=1&code=" + data.code + "&jourCode=" + data.jourCode;
-        }
+        },
+
     });
 
     $("#examineBtn").click(function() {

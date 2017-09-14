@@ -66,7 +66,7 @@ $(function() {
         field: 'promptTimes',
         title: '催货次数',
         readonly: true
-    },{
+    }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -75,7 +75,7 @@ $(function() {
         type: 'date',
         field2: 'dateEnd',
         search: true,
-        twoDate:true
+        twoDate: true
     }, {
         title: "备注",
         field: "remark"
@@ -87,7 +87,8 @@ $(function() {
         searchParams: {
             takeType: "1",
             toUser: getUserId(),
-            companyCode: OSS.company
+            companyCode: OSS.company,
+            statusList: ["1", "2", "3", "4", "5", "6"]
         }
     });
     //现场发货
@@ -162,8 +163,8 @@ $(function() {
 
         for (var i = 0; i < selRecords.length; i++) {
             codeList.push(selRecords[i].code)
-            if (selRecords[i].status == 4 || selRecords[i].status == 5 || selRecords[i].status == 91 || selRecords[i].status == 92 || selRecords[i].status == 93) {
-                toastr.warning(selRecords[i].code + "不是能取消订单的状态!");
+            if (selRecords[i].status == 1 || selRecords[i].status == 4 || selRecords[i].status == 5 || selRecords[i].status == 6 || selRecords[i].status == 7) {
+                toastr.warning(selRecords[i].code + "不是能取消订单的状态!,只有已支付待发货和已发货待收货的状态才可以取消订单");
                 return;
             }
         }
@@ -189,7 +190,7 @@ $(function() {
                 data.codeList = codeList;
                 data.remark = $("#remark").val();
                 reqApi({
-                    code: "808056",
+                    code: "810047",
                     json: data
                 }).done(function() {
                     toastr.info("操作成功");
@@ -207,7 +208,32 @@ $(function() {
 
         });
         dw.__center();
+    });
+    // 确认归还
+    $("#returnBtn").click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.warning("请选择记录");
+            return;
+        }
+        if (selRecords.length > 1) {
+            toastr.warning("请选择一条记录");
+            return;
+        }
+        if (selRecords[0].status != 5) {
+            toastr.warning("不是可以确认归还的状态");
+            return;
+        }
+        // window.location.href = "leaseOrder_addedit.html?&v=1&F=1&code=" + selRecords[0].code;
+        confirm("确认该商品已经归还了？").then(function() {
+            reqApi({
+                code: '810050',
+                json: { "code": selRecords[0].code, "remark": "已经归还" }
+            }).then(function() {
+                toastr.info("操作成功");
+                $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+            });
+        }, function() {});
 
-    })
-
+    });
 });

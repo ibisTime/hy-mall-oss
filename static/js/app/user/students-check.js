@@ -1,5 +1,30 @@
 $(function() {
     var code = getQueryString('code');
+    var start = {
+        elem: '#gradDatetime',
+        format: 'YYYY-MM-DD',
+        min: laydate.now(+1),
+        istoday: false,
+        choose: function(datas) {
+            var d = new Date(datas);
+            d.setDate(d.getDate());
+            datas = dateFormat(d);
+            end.min = datas;
+            end.start = datas
+        }
+    };
+    var end = {
+        elem: '#endDatetime',
+        format: 'YYYY-MM-DD',
+        min: laydate.now(),
+        istoday: false,
+        choose: function(datas) {
+            var d = new Date(datas);
+            d.setDate(d.getDate());
+            datas = dateFormat(d);
+            start.max = datas;
+        }
+    };
 
     var fields = [{
         field: 'applyUser',
@@ -29,7 +54,9 @@ $(function() {
         title: "毕业时间",
         field: "gradDatetime",
         type: "date",
-        readonly: false
+        dateOption: start,
+        readonly: false,
+        // min: new Date()
     }, {
         title: "备注",
         field: "remark",

@@ -59,7 +59,7 @@ $(function() {
         type: "select",
         key: "take_type",
         formatter: Dict.getNameForList("take_type"),
-        search: true
+        // search: true
     }, {
         field: 'status',
         title: '订单状态',
@@ -96,6 +96,7 @@ $(function() {
         pageCode: '810055',
         singleSelect: false,
         searchParams: {
+            takeType: "2",
             companyCode: OSS.company,
             statusList: ["1", "2", "3", "4", "5", "6"]
         },

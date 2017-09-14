@@ -16,11 +16,12 @@ $(function() {
         title: '参数值'
     }];
     buildList({
+        router: "leaseRule",
         columns: columns,
         pageCode: '810915',
         searchParams: {
             companyCode: OSS.company,
-            type: "rent"
+            type: "myj"
         },
     });
 });

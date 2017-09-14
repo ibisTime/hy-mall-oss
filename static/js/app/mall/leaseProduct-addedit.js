@@ -9,7 +9,8 @@ $(function() {
         listCode: "810007",
         params: {
             parentCode: "0",
-            type: "4"
+            type: "4",
+            status: "1"
         },
         keyName: "code",
         valueName: "name",

@@ -55,7 +55,7 @@ $(function() {
     }, {
         field1: 'dateStart',
         title1: '创建时间',
-        type: 'datetime',
+        type: 'date',
         field2: 'dateEnd',
         search: true,
         twoDate: true,
@@ -68,7 +68,7 @@ $(function() {
     }, {
         field: 'refNo',
         title: '关联单号',
-        search: true
+        // search: true
     }];
     buildList({
         columns: columns,
@@ -80,7 +80,15 @@ $(function() {
         },
         beforeDetail: function(data) {
             location.href = "ledger_addedit.html?v=1&code=" + data.code;
-        }
+        },
+        beforeSearch: function(data) {
+            if (data.workDate) {
+                data.workDate = data.workDate.replace(/-/g, "");;
+                return data;
+            } else {
+                return data;
+            }
+        },
     });
 
 });

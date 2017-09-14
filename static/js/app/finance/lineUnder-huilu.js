@@ -91,15 +91,6 @@ $(function() {
         title: '手续费',
         formatter: moneyFormat
     }, {
-        field: 'amount1',
-        title: '实际打款金额',
-        formatter: function(v, data) {
-            return moneyFormat(data.amount - data.refAmount1 - data.refAmount2);
-        }
-    }, {
-        field: 'channelBank',
-        title: '渠道银行编号'
-    }, {
         field: 'channelType',
         title: '支付渠道',
         type: 'select',
@@ -108,7 +99,7 @@ $(function() {
         search: true
     }, {
         field: 'payCardInfo',
-        title: '开户行',
+        title: '银行类型',
     }, {
         field: 'payCardNo',
         title: '银行卡号',

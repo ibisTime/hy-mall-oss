@@ -46,7 +46,7 @@ $(function() {
         formatter: dateTimeFormat,
         field1: 'dateStart',
         title1: '创建时间',
-        type: 'datetime',
+        type: 'date',
         field2: 'dateEnd',
         twoDate: true,
         search: true,

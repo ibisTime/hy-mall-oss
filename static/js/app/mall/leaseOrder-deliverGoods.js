@@ -8,12 +8,82 @@ $(function() {
         value: code,
         required: true,
     }, {
+        field: 'code1',
+        title: '订单编号',
+        formatter: function(v, data) {
+            return data.code;
+        },
+        readonly: true,
+    }, {
+        title: "商品类型",
+        field: "productType",
+        formatter: function(v, data) {
+            if (data.productType == "J04") {
+                return "积分"
+            } else {
+                return "普通"
+            }
+        },
+        readonly: true,
+    }, {
+        title: "商品名称",
+        field: "productName",
+        readonly: true,
+    }, {
+        title: "商品价格",
+        field: "price1",
+        formatter: function(v, data) {
+            if (v) {
+                return moneyFormat(v) + "人民币"
+            } else if (data.price2) {
+                return moneyFormat(data.price2) + "积分"
+            }
+        },
+        readonly: true,
+    }, {
+        title: "数量",
+        field: "quantity",
+        readonly: true,
+    }, {
+        field: 'bookDatetime',
+        title: '预定时间',
+        formatter: function(v, data) {
+            var date = new Date(v);
+            var str = date.format('yyyy-MM-dd') + "至";
+            date.setDate(date.getDate() + (data.rentDay - 1));
+            return str + date.format('yyyy-MM-dd');
+        },
+        readonly: true
+    }, {
+        field: 'receiver',
+        title: '收件人',
+        readonly: true,
+    }, {
+        field: 'reMobile',
+        title: '联系方式',
+        readonly: true,
+    }, {
+        field: 'reAddress',
+        title: '收货地址',
+        readonly: true,
+    }, {
+        title: '下单人',
+        field: 'applyUser',
+        readonly: true,
+        formatter: function(v, data) {
+            return data.user.mobile;
+        }
+    }, {
+        title: "下单说明",
+        field: "applyNote",
+        readonly: true
+    }, {
         title: '物流公司',
         field: 'logisticsCompany',
         type: 'select',
         key: 'kd_company',
         required: true,
-        value:"SF"
+        value: "SF"
     }, {
         title: '物流单号',
         field: 'logisticsCode',
@@ -22,11 +92,13 @@ $(function() {
         field: 'deliverer',
         title: '发货人',
         required: true,
+        value: getUserName()
     }, {
         field: 'deliveryDatetime',
         title: '发货时间',
         type: "datetime",
         formatter: dateTimeFormat,
+        value: dateTimeFormat(new Date()),
         required: true,
     }, {
         field: 'pdf',
@@ -41,6 +113,8 @@ $(function() {
 
     buildDetail({
         fields: fields,
+        code: code,
+        detailCode: '810056'
     });
 
     $("#subBtn").off("click").click(function() {

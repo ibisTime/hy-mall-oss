@@ -28,7 +28,7 @@ $(function() {
     }, {
         title: "毕业时间",
         field: "result",
-        readonly: true
+        readonly: true,
     }, {
         title: "审核人",
         field: "approveUser",

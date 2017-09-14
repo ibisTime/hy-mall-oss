@@ -23,12 +23,13 @@ $(function() {
         searchName: 'realName',
         help: '支持户名查询',
         onChange: function(v, data) {
-            if (data.currency != "CNY") {
-                $("#payCardInfo").parent().remove();
-                $("#payCardNo").parent().remove();
-            } else if (data.currency == "CNY") {
+            var accountNumValue = $('#accountNumber option:selected').text();
+            if (accountNumValue.indexOf("人民币") != -1) {
                 $("#payCardInfo").parent().css("display", "block");
                 $("#payCardNo").parent().css("display", "block");
+            } else {
+                $("#payCardInfo").parent().css("display", "none");
+                $("#payCardNo").parent().css("display", "none");
             }
         }
     }, {
