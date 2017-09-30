@@ -6,17 +6,7 @@ $(function() {
     }, {
         field: 'code',
         title: '订单编号',
-    }, {
-        field: 'status',
-        title: '订单状态',
-        type: "select",
-        data: {
-            "91": "用户异常",
-            "92": "商户异常",
-            "93": "快递异常",
-            "5": "已完成",
-        },
-        search: true,
+        search: true
     }, {
         field: 'productName',
         title: '商品名称',
@@ -65,6 +55,17 @@ $(function() {
         field: 'promptTimes',
         title: '催货次数'
     }, {
+        field: 'status',
+        title: '订单状态',
+        type: "select",
+        data: {
+            "91": "用户异常",
+            "92": "商户异常",
+            "93": "快递异常",
+            "5": "已完成",
+        },
+        search: true,
+    }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -74,6 +75,16 @@ $(function() {
         field2: 'dateEnd',
         search: true,
         twoDate: true
+    }, {
+        field: "payDatetime",
+        title: "支付时间",
+        formatter: dateTimeFormat,
+        field1: 'payDateStart',
+        title1: '支付时间',
+        type: 'date',
+        field2: 'payDateEnd',
+        twoDate: true,
+        search: true,
     }, {
         title: "备注",
         field: "remark"

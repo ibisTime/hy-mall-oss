@@ -6,19 +6,7 @@ $(function() {
     }, {
         field: 'code',
         title: '订单编号',
-    }, {
-        field: 'status',
-        title: '订单状态',
-        type: "select",
-        data: {
-            "1": "待支付",
-            "2": "待发货",
-            "3": "待收货",
-            "4": "待评价",
-        },
-        // key: "order_status",
-        // formatter: Dict.getNameForList("order_status"),
-        search: true,
+        search: true
     }, {
         field: 'productName',
         title: '商品名称',
@@ -68,6 +56,19 @@ $(function() {
         title: '催货次数',
         readonly: true
     }, {
+        field: 'status',
+        title: '订单状态',
+        type: "select",
+        data: {
+            "1": "待支付",
+            "2": "待发货",
+            "3": "待收货",
+            "4": "待评价",
+        },
+        // key: "order_status",
+        // formatter: Dict.getNameForList("order_status"),
+        search: true,
+    }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -77,6 +78,16 @@ $(function() {
         field2: 'dateEnd',
         search: true,
         twoDate: true
+    }, {
+        field: "payDatetime",
+        title: "支付时间",
+        formatter: dateTimeFormat,
+        field1: 'payDateStart',
+        title1: '支付时间',
+        type: 'date',
+        field2: 'payDateEnd',
+        twoDate: true,
+        search: true,
     }, {
         title: "备注",
         field: "remark"

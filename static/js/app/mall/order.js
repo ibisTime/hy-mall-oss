@@ -8,17 +8,25 @@ $(function() {
     }, {
         field: 'code',
         title: '订单编号',
+        search: true
     }, {
-        field: 'status',
-        title: '订单状态',
-        type: "select",
-        data: {
-            "1": "待支付",
-            "2": "待发货",
-            "3": "待收货",
-            "4": "待评价",
-        },
+        field: 'applyUser',
+        title: '下单用户',
         search: true,
+        formatter: function(v, data) {
+            return data.user.mobile;
+        },
+        type: 'select',
+        search: true,
+        pageCode: '805120',
+        params: {
+            kind: 'C',
+            updater: '',
+            companyCode: OSS.company
+        },
+        keyName: 'userId',
+        valueName: 'mobile',
+        searchName: 'mobile',
     }, {
         field: 'productName',
         title: '商品名称',
@@ -46,28 +54,6 @@ $(function() {
         title: '积分总价',
         formatter: moneyFormat
     }, {
-        field: 'applyUser',
-        title: '下单用户',
-        search: true,
-        formatter: function(v, data) {
-            return data.user.mobile;
-        },
-        type: 'select',
-        search: true,
-        pageCode: '805120',
-        params: {
-            kind: 'C',
-            updater: '',
-            companyCode: OSS.company
-        },
-        keyName: 'userId',
-        valueName: 'mobile',
-        searchName: 'mobile',
-    }, {
-        field: 'promptTimes',
-        title: '催货次数',
-        readonly: true
-    }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -78,6 +64,31 @@ $(function() {
         twoDate: true,
         search: true,
     }, {
+        field: "payDatetime",
+        title: "支付时间",
+        formatter: dateTimeFormat,
+        field1: 'payDateStart',
+        title1: '支付时间',
+        type: 'date',
+        field2: 'payDateEnd',
+        twoDate: true,
+        search: true,
+    }, {
+        field: 'promptTimes',
+        title: '催货次数',
+        readonly: true
+    }, {
+        field: 'status',
+        title: '订单状态',
+        type: "select",
+        data: {
+            "1": "待支付",
+            "2": "待发货",
+            "3": "待收货",
+            "4": "待评价",
+        },
+        search: true,
+    }, {
         title: "备注",
         field: "remark"
     }];
@@ -86,7 +97,7 @@ $(function() {
         pageCode: '808065',
         singleSelect: false,
         searchParams: {
-            toUser: OSS.SYS_USER,
+            // toUser: OSS.SYS_USER,
             statusList: ["1", "2", "3", "4"]
         }
     });

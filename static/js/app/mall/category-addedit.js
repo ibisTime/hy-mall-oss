@@ -12,7 +12,7 @@ $(function() {
         field: 'pic',
         type: 'img',
         single: true,
-        readonly: view
+        readonly: view,
     }, {
         field: 'orderNo',
         title: '次序',

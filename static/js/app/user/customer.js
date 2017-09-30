@@ -10,10 +10,12 @@ $(function() {
         search: true
     }, {
         field: 'realName',
-        title: '姓名'
+        title: '姓名',
+        search: true
     }, {
         field: 'idNo',
-        title: '证件号码'
+        title: '证件号码',
+        search: true
     }, {
         title: "推荐人",
         field: "tj",
@@ -24,6 +26,20 @@ $(function() {
                 return "-"
             }
         }
+    }, {
+        title: "推荐人",
+        field: "userReferee",
+        type: "select",
+        pageCode: "805120",
+        params: {
+            kind: 'C',
+            update: ""
+        },
+        keyName: "userId",
+        valueName: "{{mobile.DATA}}--{{nickname.DATA}}",
+        searchName: "mobile",
+        search: true,
+        visible: false
     }, {
         field: 'status',
         title: '状态',

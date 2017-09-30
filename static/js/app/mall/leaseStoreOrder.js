@@ -8,14 +8,7 @@ $(function() {
     }, {
         field: 'code',
         title: '订单编号',
-    }, {
-        field: 'status',
-        title: '订单状态',
-        type: "select",
-        key: "rorder_status",
-
-        formatter: Dict.getNameForList("rorder_status"),
-        search: true,
+        search: true
     }, {
         field: 'productName',
         title: '商品名称'
@@ -67,6 +60,13 @@ $(function() {
         title: '催货次数',
         readonly: true
     }, {
+        field: 'status',
+        title: '订单状态',
+        type: "select",
+        key: "rorder_status",
+        formatter: Dict.getNameForList("rorder_status"),
+        search: true,
+    }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -76,6 +76,16 @@ $(function() {
         field2: 'dateEnd',
         search: true,
         twoDate: true
+    }, {
+        field: "payDatetime",
+        title: "支付时间",
+        formatter: dateTimeFormat,
+        field1: 'payDateStart',
+        title1: '支付时间',
+        type: 'date',
+        field2: 'payDateEnd',
+        twoDate: true,
+        search: true,
     }, {
         title: "备注",
         field: "remark"
@@ -114,6 +124,7 @@ $(function() {
             content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
                 '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">现场发货</li>' +
                 '<li><label>备注：</label><input id="remark" name="remark" class="control-def"></input></li>' +
+                '<li class="clearfix" type="" style=""><label><b></b>物流单（单）:</label><div class="btn-file"><span>选择文件</span><input type="file" tabindex="1" id="pdfImg" name="pdfImg" style="z-index: 1;"></div><div id="pdf" style="margin-left: 195px; position: relative;"><div id="html5_1br92so43kfugev1eqim92uml3_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 405px; left: 235px; width: 108px; height: 33px; overflow: hidden; z-index: 0;"><input id="html5_1br92so43kfugev1eqim92uml3" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/jpeg,image/gif,image/png,image/bmp"></div></div></li>' +
                 '<li><input id="subBtn" name="subBtn"type="button" class="btn margin-left-100 submit" value="确定"><li><input id="goBackBtn" name="goBackBtn" type="button" class=" btn margin-left-20 goBack" value="返回"></ul>' +
                 '</form>'
         });

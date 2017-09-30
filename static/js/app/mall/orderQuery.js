@@ -8,18 +8,25 @@ $(function() {
     }, {
         field: 'code',
         title: '订单编号',
+        search: true
     }, {
-        field: 'status',
-        title: '订单状态',
-        type: "select",
-        // key: "order_status",
-        data: {
-            "91": "用户异常",
-            "92": "商户异常",
-            "93": "快递异常",
-            "5": "已完成",
-        },
+        field: 'applyUser',
+        title: '下单用户',
         search: true,
+        formatter: function(v, data) {
+            return data.user.mobile;
+        },
+        type: 'select',
+        search: true,
+        pageCode: '805120',
+        params: {
+            kind: 'C',
+            updater: '',
+            companyCode: OSS.company
+        },
+        keyName: 'userId',
+        valueName: 'mobile',
+        searchName: 'mobile',
     }, {
         field: 'productName',
         title: '商品名称',
@@ -46,28 +53,6 @@ $(function() {
         field: 'amount2',
         title: '积分总价',
         formatter: moneyFormat
-    },{
-        field: 'promptTimes',
-        title: '催货次数',
-        readonly: true
-    }, {
-        field: 'applyUser',
-        title: '下单用户',
-        search: true,
-        formatter: function(v, data) {
-            return data.user.mobile;
-        },
-        type: 'select',
-        search: true,
-        pageCode: '805120',
-        params: {
-            kind: 'C',
-            updater: '',
-            companyCode: OSS.company
-        },
-        keyName: 'userId',
-        valueName: 'mobile',
-        searchName: 'mobile',
     }, {
         field: 'applyDatetime',
         title: '下单时间',
@@ -76,7 +61,33 @@ $(function() {
         title1: '下单时间',
         type: 'date',
         field2: 'dateEnd',
-        twoDate:true,
+        twoDate: true,
+        search: true,
+    }, {
+        field: "payDatetime",
+        title: "支付时间",
+        formatter: dateTimeFormat,
+        field1: 'payDateStart',
+        title1: '支付时间',
+        type: 'date',
+        field2: 'payDateEnd',
+        twoDate: true,
+        search: true,
+    }, {
+        field: 'promptTimes',
+        title: '催货次数',
+        readonly: true
+    }, {
+        field: 'status',
+        title: '订单状态',
+        type: "select",
+        // key: "order_status",
+        data: {
+            "91": "用户异常",
+            "92": "商户异常",
+            "93": "快递异常",
+            "5": "已完成",
+        },
         search: true,
     }, {
         title: "备注",

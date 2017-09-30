@@ -7,6 +7,7 @@ $(function() {
     }, {
         field: 'code',
         title: '订单编号',
+        search: true
     }, {
         field: 'productName',
         title: '商品名称'
@@ -59,7 +60,11 @@ $(function() {
         type: "select",
         key: "take_type",
         formatter: Dict.getNameForList("take_type"),
-        // search: true
+        search: true
+    }, {
+        field: 'promptTimes',
+        title: '催货次数',
+        readonly: true
     }, {
         field: 'status',
         title: '订单状态',
@@ -74,10 +79,6 @@ $(function() {
         },
         search: true,
     }, {
-        field: 'promptTimes',
-        title: '催货次数',
-        readonly: true
-    }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -85,6 +86,16 @@ $(function() {
         title1: '下单时间',
         type: 'date',
         field2: 'dateEnd',
+        twoDate: true,
+        search: true,
+    }, {
+        field: "payDatetime",
+        title: "支付时间",
+        formatter: dateTimeFormat,
+        field1: 'payDateStart',
+        title1: '支付时间',
+        type: 'date',
+        field2: 'payDateEnd',
         twoDate: true,
         search: true,
     }, {
@@ -96,7 +107,7 @@ $(function() {
         pageCode: '810055',
         singleSelect: false,
         searchParams: {
-            takeType: "2",
+            // takeType: "2",
             companyCode: OSS.company,
             statusList: ["1", "2", "3", "4", "5", "6"]
         },

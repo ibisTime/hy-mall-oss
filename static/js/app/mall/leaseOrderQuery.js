@@ -7,6 +7,25 @@ $(function() {
     }, {
         field: 'code',
         title: '订单编号',
+        search: true
+    }, {
+        field: 'applyUser',
+        title: '下单用户',
+        search: true,
+        formatter: function(v, data) {
+            return data.user.mobile;
+        },
+        type: 'select',
+        search: true,
+        pageCode: '805120',
+        params: {
+            kind: 'C',
+            updater: '',
+            companyCode: OSS.company
+        },
+        keyName: 'userId',
+        valueName: 'mobile',
+        searchName: 'mobile',
     }, {
         field: 'productName',
         title: '商品名称'
@@ -36,30 +55,15 @@ $(function() {
         title: '积分总价',
         formatter: moneyFormat
     }, {
-        field: 'applyUser',
-        title: '下单用户',
-        search: true,
-        formatter: function(v, data) {
-            return data.user.mobile;
-        },
-        type: 'select',
-        search: true,
-        pageCode: '805120',
-        params: {
-            kind: 'C',
-            updater: '',
-            companyCode: OSS.company
-        },
-        keyName: 'userId',
-        valueName: 'mobile',
-        searchName: 'mobile',
-    }, {
         title: "提货方式",
         field: "takeType",
         type: "select",
         key: "take_type",
         formatter: Dict.getNameForList("take_type"),
         search: true
+    }, {
+        field: 'promptTimes',
+        title: '催货次数'
     }, {
         field: 'status',
         title: '订单状态',
@@ -74,9 +78,6 @@ $(function() {
         },
         search: true,
     }, {
-        field: 'promptTimes',
-        title: '催货次数'
-    }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -84,6 +85,16 @@ $(function() {
         title1: '下单时间',
         type: 'date',
         field2: 'dateEnd',
+        twoDate: true,
+        search: true,
+    }, {
+        field: "payDatetime",
+        title: "支付时间",
+        formatter: dateTimeFormat,
+        field1: 'payDateStart',
+        title1: '支付时间',
+        type: 'date',
+        field2: 'payDateEnd',
         twoDate: true,
         search: true,
     }, {

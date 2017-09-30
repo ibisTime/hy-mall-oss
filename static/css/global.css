@@ -485,6 +485,10 @@ textarea {
 .form-info li {
     margin-bottom: 13px;
     clear: both;
+    padding-right: 20px;
+}
+.ui-dialog .form-info li{
+    text-align: center;
 }
 
 .form-info input[type=checkbox]+input[type=checkbox] {
@@ -492,7 +496,7 @@ textarea {
 }
 
 .form-info li label {
-    width: 180px;
+    width: 194px;
     line-height: 33px;
     display: block;
     float: left;
@@ -834,6 +838,9 @@ td {
     margin-left: 0px;
 }
 
+#jsForm .form-body {
+    min-width: 600px;
+}
 #jsForm .form-body li .bootstrap-table {
     margin-left: 0px;
 }
@@ -980,6 +987,9 @@ input[type=file] {
 
 .pop-form .form-info .btn {
     margin-left: 10px;
+}
+.pop-form .form-info .btn:first-child{
+    margin-left: 40px;
 }
 
 .pop-form .form-body {
@@ -1245,27 +1255,14 @@ svg circle:hover {
     padding-top: 50px;
     font-size: 14px;
 }
-
 .center-img-wrap {
     max-width: 300px;
     position: relative;
 }
 
-#pic {
+#pic{
     overflow: hidden;
 }
-
-.modal-title {
-    margin-left: 200px !important;
-}
-
-.closeBtn {
-    margin-right: 281px;
-    color: #fff !important;
-    background-color: #337ab7 !important;
-    border-color: #2e6da4 !important;
-}
-
-.submitBtn {
-    margin-right: 50px;
+.search-form-li-date{
+    min-width: 455px !important;
 }
