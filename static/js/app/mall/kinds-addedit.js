@@ -3,8 +3,23 @@ $(function() {
     var code = getQueryString('code');
 
     var fields = [{
+        title: "父类",
+        field: "parentCode",
+        type: 'select',
+        listCode: "808007",
+        keyName: "code",
+        valueName: "name",
+        searchName: "name",
+        searchParams: {
+            type: "1",
+            parentCode: "0",
+            status: "1"
+        },
+        required: true,
+        readonly: view
+    }, {
         field: 'name',
-        title: '大别名称',
+        title: '小类名称',
         required: true,
         readonly: view
     }, {
@@ -38,7 +53,7 @@ $(function() {
         editCode: '808002',
         view: view,
         beforeSubmit: function(data) {
-            data.parentCode = 0;
+            // data.parentCode = 0;
             data.type = "1";
             return data;
         }

@@ -97,7 +97,7 @@ $(function() {
         pageCode: '808065',
         singleSelect: false,
         searchParams: {
-            // toUser: OSS.SYS_USER,
+            toUser: OSS.SYS_USER,
             statusList: ["1", "2", "3", "4"]
         }
     });
@@ -182,6 +182,15 @@ $(function() {
         });
         dw.__center();
 
-    })
+    });
+    //流水查询
+    $("#ledgerBtn").click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.warning("请选择记录");
+            return;
+        };
+        window.location.href = "order_ledger.html?refNo=" + selRecords[0].code;
+    });
 
 });

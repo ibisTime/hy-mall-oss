@@ -3,16 +3,30 @@ $(function() {
     var code = getQueryString('code');
 
     var fields = [{
+        title: "父类",
+        field: "parentCode",
+        type: 'select',
+        listCode: "810007",
+        keyName: "code",
+        valueName: "name",
+        searchName: "name",
+        searchParams: {
+            parentCode: "0",
+            status: "1"
+        },
+        required: true,
+        readonly: view
+    }, {
         field: 'name',
-        title: '大别名称',
+        title: '小类名称',
         required: true,
         readonly: view
     }, {
         title: '图片',
         field: 'pic',
-        type: 'img',
-        single: true,
-        readonly: view,
+        value: "0",
+        hidden: true,
+        required: true
     }, {
         field: 'orderNo',
         title: '次序',
@@ -24,7 +38,6 @@ $(function() {
         title: "状态",
         field: "status",
         key: "category_status",
-
         formatter: Dict.getNameForList("category_status")
     }];
     if (view) {
@@ -33,13 +46,12 @@ $(function() {
     buildDetail({
         fields: fields,
         code: code,
-        detailCode: '808006',
-        addCode: '808000',
-        editCode: '808002',
+        detailCode: '810006',
+        addCode: '810000',
+        editCode: '810002',
         view: view,
         beforeSubmit: function(data) {
-            data.parentCode = 0;
-            data.type = "1";
+            data.type = "4";
             return data;
         }
     });

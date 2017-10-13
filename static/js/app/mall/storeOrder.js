@@ -1,4 +1,5 @@
 $(function() {
+    var kind = getQueryString('k');
     var columns = [{
         field: '',
         title: '',
@@ -97,8 +98,8 @@ $(function() {
         pageCode: '808065',
         singleSelect: false,
         searchParams: {
-            toUser: getUserId(),
-            statusList: ["1", "2", "3", "4"]
+            toUser: kind ? "" : getUserId(),
+            statusList: kind ? ["1", "2", "3", "4", "5", "91", "92", "93"] : ["1", "2", "3", "4"]
         }
     });
 
@@ -121,47 +122,7 @@ $(function() {
             toastr.warning("不是可以现场发货的订单");
             return;
         }
-        var dw = dialog({
-            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">现场发货</li>' +
-                '<li><label>备注：</label><input id="remark" name="remark" class="control-def"></input></li>' +
-                '<li><input id="subBtn" name="subBtn"type="button" class="btn margin-left-100 submit" value="确定"><li><input id="goBackBtn" name="goBackBtn" type="button" class=" btn margin-left-20 goBack" value="返回"></ul>' +
-                '</form>'
-        });
-        dw.showModal();
-        $(document).on('click', '#subBtn', function() {
-            $('#popForm').validate({
-                // 'rules': {
-                //     remark: {
-                //         required: true,
-                //         maxlength: 255
-                //     }
-                // }
-            });
-            if ($('#popForm').valid()) {
-                var data = $('#popForm').serializeObject();
-                data.code = selRecords[0].code;
-                data.remark = $("#remark").val();
-                reqApi({
-                    code: "808055",
-                    json: data
-                }).done(function() {
-                    toastr.info("操作成功");
-                    $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
-                    setTimeout(function() {
-                        dw.close().remove();
-                    }, 500)
-                });
-            }
-        });
-        $(document).on('click', '#goBackBtn', function() {
-            setTimeout(function() {
-                dw.close().remove();
-            }, 500)
-
-        });
-        dw.__center();
-
+        window.location.href = "./storeOrder_Shipment.html?code=" + selRecords[0].code;
     });
     //取消订单
     $("#cancelBtn").click(function() {
@@ -220,5 +181,14 @@ $(function() {
         });
         dw.__center();
 
-    })
+    });
+    //流水查询
+    $("#ledgerBtn").click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.warning("请选择记录");
+            return;
+        };
+        window.location.href = "order_ledger.html?refNo=" + selRecords[0].code;
+    });
 });

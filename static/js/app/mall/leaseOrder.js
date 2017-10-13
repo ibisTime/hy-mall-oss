@@ -60,7 +60,7 @@ $(function() {
         type: "select",
         key: "take_type",
         formatter: Dict.getNameForList("take_type"),
-        search: true
+        // search: true
     }, {
         field: 'promptTimes',
         title: '催货次数',
@@ -107,7 +107,7 @@ $(function() {
         pageCode: '810055',
         singleSelect: false,
         searchParams: {
-            // takeType: "2",
+            takeType: "2",
             companyCode: OSS.company,
             statusList: ["1", "2", "3", "4", "5", "6"]
         },
@@ -254,5 +254,14 @@ $(function() {
             });
         }, function() {});
 
+    });
+    //流水查询
+    $("#ledgerBtn").click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.warning("请选择记录");
+            return;
+        };
+        window.location.href = "order_ledger.html?refNo=" + selRecords[0].code;
     });
 });

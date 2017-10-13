@@ -1,5 +1,5 @@
 $(function() {
-    var query = getQueryString('Q') || "";
+    var kind = getQueryString('k') || "";
 
     var columns = [{
         field: '',
@@ -60,6 +60,13 @@ $(function() {
         title: '催货次数',
         readonly: true
     }, {
+        title: "提货方式",
+        field: "takeType",
+        type: "select",
+        key: "take_type",
+        formatter: Dict.getNameForList("take_type"),
+        // search: true
+    }, {
         field: 'status',
         title: '订单状态',
         type: "select",
@@ -96,9 +103,9 @@ $(function() {
         singleSelect: false,
         searchParams: {
             takeType: "1",
-            toUser: getUserId(),
+            toUser: kind ? "" : getUserId(),
             companyCode: OSS.company,
-            statusList: ["1", "2", "3", "4", "5", "6"]
+            statusList: kind ? ["1", "2", "3", "4", "5", "6", "7", "8", "9", "91", "92", "93"] : ["1", "2", "3", "4", "5", "6"]
         }
     });
     //现场发货
@@ -120,47 +127,8 @@ $(function() {
             toastr.warning("不是可以现场发货的订单");
             return;
         }
-        var dw = dialog({
-            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">现场发货</li>' +
-                '<li><label>备注：</label><input id="remark" name="remark" class="control-def"></input></li>' +
-                '<li class="clearfix" type="" style=""><label><b></b>物流单（单）:</label><div class="btn-file"><span>选择文件</span><input type="file" tabindex="1" id="pdfImg" name="pdfImg" style="z-index: 1;"></div><div id="pdf" style="margin-left: 195px; position: relative;"><div id="html5_1br92so43kfugev1eqim92uml3_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 405px; left: 235px; width: 108px; height: 33px; overflow: hidden; z-index: 0;"><input id="html5_1br92so43kfugev1eqim92uml3" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/jpeg,image/gif,image/png,image/bmp"></div></div></li>' +
-                '<li><input id="subBtn" name="subBtn"type="button" class="btn margin-left-100 submit" value="确定"><li><input id="goBackBtn" name="goBackBtn" type="button" class=" btn margin-left-20 goBack" value="返回"></ul>' +
-                '</form>'
-        });
-        dw.showModal();
-        $(document).on('click', '#subBtn', function() {
-            $('#popForm').validate({
-                // 'rules': {
-                //     remark: {
-                //         required: true,
-                //         maxlength: 255
-                //     }
-                // }
-            });
-            if ($('#popForm').valid()) {
-                var data = $('#popForm').serializeObject();
-                data.code = selRecords[0].code;
-                data.remark = $("#remark").val();
-                reqApi({
-                    code: "810046",
-                    json: data
-                }).done(function() {
-                    toastr.info("操作成功");
-                    $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
-                    setTimeout(function() {
-                        dw.close().remove();
-                    }, 500)
-                });
-            }
-        });
-        $(document).on('click', '#goBackBtn', function() {
-            setTimeout(function() {
-                dw.close().remove();
-            }, 500)
+        window.location.href = "./leaseStoreOrder_Shipment.html?code=" + selRecords[0].code;
 
-        });
-        dw.__center();
 
     });
     //取消订单
@@ -246,5 +214,14 @@ $(function() {
             });
         }, function() {});
 
+    });
+    //流水查询
+    $("#ledgerBtn").click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.warning("请选择记录");
+            return;
+        };
+        window.location.href = "order_ledger.html?refNo=" + selRecords[0].code;
     });
 });

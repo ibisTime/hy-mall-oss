@@ -4,14 +4,26 @@ $(function() {
         title: '',
         checkbox: true
     }, {
+        title: "父类",
+        field: "parentCode",
+        type: 'select',
+        listCode: "810007",
+        keyName: "code",
+        valueName: "name",
+        searchName: "name",
+        searchParams: {
+            type: "4",
+            parentCode: "0"
+        },
+        search: true
+    }, {
         field: 'name',
-        title: '大别名称',
+        title: '小类名称',
         search: true,
     }, {
         field: 'status',
         title: '状态',
         key: "category_status",
-
         search: true,
         formatter: Dict.getNameForList("category_status"),
     }, {
@@ -22,11 +34,11 @@ $(function() {
 
     buildList({
         columns: columns,
-        pageCode: '808005',
+        pageCode: '810005',
         searchParams: {
-            type: "1",
+            type: "4",
             companyCode: OSS.company,
-            parentCode: "0"
+            parentCode: "1"
         }
     });
 
@@ -42,7 +54,7 @@ $(function() {
         }
         confirm("确认上架？").then(function() {
             reqApi({
-                code: '808003',
+                code: '810003',
                 json: { "code": selRecords[0].code }
             }).then(function() {
                 toastr.info("操作成功");
@@ -64,13 +76,13 @@ $(function() {
         }
         confirm("确认下架？").then(function() {
             reqApi({
-                code: '808004',
+                code: '810004',
                 json: { "code": selRecords[0].code }
             }).then(function() {
                 toastr.info("操作成功");
                 $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
             });
         });
-    });
 
+    });
 });

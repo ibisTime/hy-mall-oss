@@ -4,14 +4,26 @@ $(function() {
         title: '',
         checkbox: true
     }, {
+        title: "父类",
+        field: "parentCode",
+        type: 'select',
+        listCode: "808007",
+        keyName: "code",
+        valueName: "name",
+        searchName: "name",
+        searchParams: {
+            type: "1",
+            parentCode: "0",
+        },
+        search: true
+    }, {
         field: 'name',
-        title: '大别名称',
+        title: '小类名称',
         search: true,
     }, {
         field: 'status',
         title: '状态',
         key: "category_status",
-
         search: true,
         formatter: Dict.getNameForList("category_status"),
     }, {
@@ -26,7 +38,7 @@ $(function() {
         searchParams: {
             type: "1",
             companyCode: OSS.company,
-            parentCode: "0"
+            parentCode: "1"
         }
     });
 
