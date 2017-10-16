@@ -7,7 +7,6 @@ $(function() {
     reqApi({
         code: '808007'
     }).done(function(d) {
-
         d.forEach(function(v, i) {
             typeData[v.code] = v.name;
         })
@@ -18,14 +17,17 @@ $(function() {
         type: 'hidden',
         value: '1'
     }, {
-        field: 'type',
-        title: '类别',
+        field: 'category',
+        title: '大类',
         type: 'select',
-        listCode: '808007',
-        readonly: view,
         data: typeData,
-        keyName: 'code',
-        valueName: 'name',
+        readonly: view
+    }, {
+        title: "小类",
+        field: "type",
+        data: typeData,
+        type: "select",
+        readonly: view
     }, {
         field: 'name',
         title: '商品名称',

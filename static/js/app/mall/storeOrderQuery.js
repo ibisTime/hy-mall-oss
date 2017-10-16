@@ -76,13 +76,12 @@ $(function() {
         search: true,
         twoDate: true
     }, {
-        field: "payDatetime",
         title: "支付时间",
         formatter: dateTimeFormat,
-        field1: 'payDateStart',
+        field1: 'payDatetimeStart',
         title1: '支付时间',
         type: 'date',
-        field2: 'payDateEnd',
+        field2: 'payDatetimeEnd',
         twoDate: true,
         search: true,
     }, {

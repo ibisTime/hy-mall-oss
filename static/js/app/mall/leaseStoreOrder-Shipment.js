@@ -68,6 +68,7 @@ $(function() {
     }, {
         title: "附件",
         type: "img",
+        field:"takePdf"
     }, {
         field: 'remark',
         title: '备注',

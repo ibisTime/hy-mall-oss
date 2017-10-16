@@ -38,7 +38,7 @@ $(function() {
         searchParams: {
             type: "4",
             companyCode: OSS.company,
-            parentCode: "1"
+            // parentCode: "1"
         }
     });
 

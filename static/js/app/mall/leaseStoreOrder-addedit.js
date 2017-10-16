@@ -165,6 +165,11 @@ $(function() {
         field: "takeAddress",
         readonly: true
     }, {
+        title:"附件",
+        field:"takePdf",
+        type:"img",
+        readonly: true
+    },{
         title: "逾期信息",
         type: "title"
     }, {

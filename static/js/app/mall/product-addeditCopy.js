@@ -1,7 +1,7 @@
 $(function() {
 
     var code = getQueryString('code');
-    var type = getQueryString('type')
+    var category = getQueryString('category')
     var view = getQueryString('v');
     var pcode;
     var codeInd = 0;
@@ -25,8 +25,8 @@ $(function() {
 
     //商品类别
     //积分商品修改
-    if (type == OSS.JFProductType) {
-        typeData[OSS.JFProductType] = '积分商品';
+    if (category == OSS.JFProductCategory) {
+        typeData[OSS.JFProductCategory] = '积分商品';
 
         setFields();
     } else {
@@ -42,7 +42,7 @@ $(function() {
             data.forEach(function(d, i) {
                 if (code) {
                     //修改页类别
-                    if (d.code != OSS.JFProductType) {
+                    if (d.code != OSS.JFProductCategory) {
                         typeData[d.code] = d.name
                     }
                 } else {
@@ -67,7 +67,7 @@ $(function() {
             required: true,
             amount: true,
             formatter: moneyFormat,
-        }, type == OSS.JFProductType ? {
+        }, category == OSS.JFProductCategory ? {
             field: 'price2',
             title: '价格',
             amount: true,
@@ -110,10 +110,28 @@ $(function() {
             type: 'hidden',
             value: '1'
         }, {
-            field: 'type',
-            title: '类别',
+            field: 'category',
+            title: '大类',
             type: 'select',
             data: typeData,
+            required: true,
+            onChange: function(v, data) {
+                $("#type").renderDropdown({
+                    listCode: '808007',
+                    params: {
+                        type: "1",
+                        parentCode: v,
+                        status: "1"
+                    },
+                    keyName: 'code',
+                    valueName: 'name',
+                    searchName: 'name'
+                })
+            },
+        }, {
+            title: "小类",
+            field: "type",
+            type: "select",
             required: true,
         }, {
             field: 'name',
@@ -168,7 +186,7 @@ $(function() {
                 title: '原价/市场价',
                 amount: true,
                 formatter: moneyFormat,
-            }, type == OSS.JFProductType ? {
+            }, category == OSS.JFProductCategory ? {
                 field: 'price2',
                 title: '价格',
                 formatter: moneyFormat,

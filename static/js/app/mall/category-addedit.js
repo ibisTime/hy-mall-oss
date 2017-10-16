@@ -4,7 +4,7 @@ $(function() {
 
     var fields = [{
         field: 'name',
-        title: '大别名称',
+        title: '大类名称',
         required: true,
         readonly: view
     }, {
@@ -12,6 +12,7 @@ $(function() {
         field: 'pic',
         type: 'img',
         single: true,
+        required: true,
         readonly: view,
     }, {
         field: 'orderNo',

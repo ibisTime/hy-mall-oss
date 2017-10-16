@@ -15,7 +15,7 @@ $(function() {
         listCode: '810007',
         params: {
             type: '4',
-            parentCode: 0,
+            // parentCode: 0,
         },
         keyName: 'code',
         valueName: 'name',

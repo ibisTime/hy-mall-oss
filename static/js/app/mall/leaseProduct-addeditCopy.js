@@ -2,21 +2,21 @@ $(function() {
     var code = getQueryString('code');
     var view = getQueryString('v');
 
-    var fields = [{
+    var fields = [ {
         field: 'type',
         title: '类别',
         type: 'select',
-        listCode: "810007",
+        listCode: '810007',
         params: {
             parentCode: "0",
-            type: "4"
+            type: "4",
+            status: "1"
         },
-        keyName: "code",
-        valueName: "name",
-        searchName: "name",
+        keyName: 'code',
+        valueName: 'name',
         required: true,
         readonly: view
-    }, {
+    },  {
         field: 'name',
         title: '商品名称',
         required: true,

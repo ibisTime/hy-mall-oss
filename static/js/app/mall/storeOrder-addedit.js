@@ -65,6 +65,11 @@ $(function() {
         field: 'takeAddress',
         title: '提货地址',
         readonly: true,
+    },{
+        title:"附件",
+        field:"takePdf",
+        type:"img",
+        readonly: true
     }, {
         title: "状态",
         field: "status",

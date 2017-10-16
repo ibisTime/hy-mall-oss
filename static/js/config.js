@@ -20,4 +20,4 @@ OSS.userValidTime = 30;
 //系统userid
 OSS.SYS_USER = 'SYS_USER_HW';
 //积分商品类别
-OSS.JFProductType = 'J01';
+OSS.JFProductCategory = 'J01';

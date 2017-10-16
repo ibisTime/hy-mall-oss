@@ -110,7 +110,8 @@ $(function() {
         }]
     }, {
         title: "附件",
-        type: "img",
+        field: "takePdf",
+        type:"img"
     }, {
         field: 'remark',
         title: '备注',

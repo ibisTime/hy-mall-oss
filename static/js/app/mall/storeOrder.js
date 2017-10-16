@@ -56,7 +56,17 @@ $(function() {
         field: 'promptTimes',
         title: '催货次数',
         readonly: true
-    }, {
+    },
+    // {
+    //     field: 'receiver',
+    //     title: '收件人',
+    //     search:true
+    // },{
+    //     field: 'reMobile',
+    //     title: '收件人电话',
+    //     search:true
+    // },
+     {
         field: 'status',
         title: '订单状态',
         type: "select",
@@ -66,8 +76,6 @@ $(function() {
             "3": "待收货",
             "4": "待评价",
         },
-        // key: "order_status",
-        // formatter: Dict.getNameForList("order_status"),
         search: true,
     }, {
         field: 'applyDatetime',
@@ -80,13 +88,12 @@ $(function() {
         search: true,
         twoDate: true
     }, {
-        field: "payDatetime",
         title: "支付时间",
         formatter: dateTimeFormat,
-        field1: 'payDateStart',
+        field1: 'payDatetimeStart',
         title1: '支付时间',
         type: 'date',
-        field2: 'payDateEnd',
+        field2: 'payDatetimeEnd',
         twoDate: true,
         search: true,
     }, {

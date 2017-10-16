@@ -54,6 +54,14 @@ $(function() {
         title: '积分总价',
         formatter: moneyFormat
     }, {
+        field: 'receiver',
+        title: '收件人',
+        search:true
+    },{
+        field: 'reMobile',
+        title: '收件人电话',
+        search:true
+    },{
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -67,10 +75,10 @@ $(function() {
         field: "payDatetime",
         title: "支付时间",
         formatter: dateTimeFormat,
-        field1: 'payDateStart',
+        field1: 'payDatetimeStart',
         title1: '支付时间',
         type: 'date',
-        field2: 'payDateEnd',
+        field2: 'payDatetimeEnd',
         twoDate: true,
         search: true,
     }, {

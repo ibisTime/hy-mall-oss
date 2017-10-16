@@ -9,13 +9,25 @@ $(function() {
         title: '商品名称',
         search: true,
     }, {
-        field: 'type',
-        title: '类型',
+        field: 'category',
+        title: '大类',
         type: 'select',
         listCode: '808007',
         params: {
             type: '1',
             parentCode: 0,
+        },
+        keyName: 'code',
+        valueName: 'name',
+        search: true
+    }, {
+        field: 'type',
+        title: '小类',
+        type: 'select',
+        listCode: '808007',
+        params: {
+            type: '1',
+            parentCode: "1",
         },
         keyName: 'code',
         valueName: 'name',
@@ -58,7 +70,7 @@ $(function() {
                 toastr.info("已上架，不可修改");
                 return;
             }
-            window.location.href = "product_addedit.html?Code=" + data.code + '&type=' + data.type;
+            window.location.href = "product_addedit.html?Code=" + data.code + '&category=' + data.category;
         }
     });
     //上架
