@@ -27,7 +27,6 @@ $(function() {
     //积分商品修改
     if (category == OSS.JFProductCategory) {
         typeData[OSS.JFProductCategory] = '积分商品';
-
         setFields();
     } else {
         reqApi({
@@ -86,7 +85,7 @@ $(function() {
             number: true
         }, {
             field: 'province',
-            title: '发货地',
+            title: '产地',
             type: 'select',
             onlyProvince: true,
             data: provinceData,
@@ -199,7 +198,7 @@ $(function() {
                 title: '库存',
             }, {
                 field: 'province',
-                title: '发货地',
+                title: '产地',
             }, {
                 field: 'weight',
                 title: '重量（kg）',
@@ -365,7 +364,7 @@ $(function() {
             data['id'] = data['code'];
             data.productSpecsList = $('#tableList').bootstrapTable("getData", { useCurrentPage: true });
 
-            if (!code && data.type == 'J01') {
+            if (!code && data.category == 'J01') {
                 data.productSpecsList.each(function(v, i) {
                     data.productSpecsList[i].price2 = data.productSpecsList[i].price1;
                     data.productSpecsList[i].price1 = 0;

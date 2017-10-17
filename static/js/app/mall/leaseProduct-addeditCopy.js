@@ -2,7 +2,7 @@ $(function() {
     var code = getQueryString('code');
     var view = getQueryString('v');
 
-    var fields = [ {
+    var fields = [{
         field: 'type',
         title: '类别',
         type: 'select',
@@ -16,7 +16,7 @@ $(function() {
         valueName: 'name',
         required: true,
         readonly: view
-    },  {
+    }, {
         field: 'name',
         title: '商品名称',
         required: true,
@@ -81,6 +81,12 @@ $(function() {
         title: '商品详述',
         field: 'description',
         type: 'textarea',
+        required: true,
+        readonly: view
+    }, {
+        title: "单件重量（kg）",
+        field: "weight",
+        number: true,
         required: true,
         readonly: view
     }, {

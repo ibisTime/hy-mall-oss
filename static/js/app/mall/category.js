@@ -5,7 +5,7 @@ $(function() {
         checkbox: true
     }, {
         field: 'name',
-        title: '大别名称',
+        title: '大类名称',
         search: true,
     }, {
         field: 'status',

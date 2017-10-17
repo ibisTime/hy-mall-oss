@@ -33,7 +33,7 @@ $(function() {
         pageCode: "805120",
         params: {
             kind: 'C',
-            update: ""
+            updater: ""
         },
         keyName: "userId",
         valueName: "{{mobile.DATA}}--{{nickname.DATA}}",

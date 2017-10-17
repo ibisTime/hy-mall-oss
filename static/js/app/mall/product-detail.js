@@ -95,7 +95,7 @@ $(function() {
             title: '库存',
         }, {
             field: 'province',
-            title: '发货地',
+            title: '产地',
         }, {
             field: 'weight',
             title: '重量（kg）',

@@ -19,7 +19,21 @@ $(function() {
         },
         keyName: 'code',
         valueName: 'name',
-        search: true
+        search: true,
+        onChange: function(v, data) {
+            if (v) {
+                $("#type").renderDropdown({
+                    listCode: "808007",
+                    params: {
+                        type: "1",
+                        parentCode: v,
+                    },
+                    keyName: "code",
+                    valueName: "name",
+                    searchName: "name"
+                });
+            }
+        },
     }, {
         field: 'type',
         title: '小类',
@@ -131,7 +145,7 @@ $(function() {
             toastr.info("不能多选");
             return;
         }
-        window.location.href = "product_addeditCopy.html?code=" + selRecords[0].code + '&type=' + selRecords[0].type;
+        window.location.href = "product_addeditCopy.html?code=" + selRecords[0].code + '&category=' + selRecords[0].category;
     });
 
 });

@@ -56,12 +56,12 @@ $(function() {
     }, {
         field: 'receiver',
         title: '收件人',
-        search:true
-    },{
+        search: true
+    }, {
         field: 'reMobile',
         title: '收件人电话',
-        search:true
-    },{
+        search: true
+    }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
@@ -132,6 +132,23 @@ $(function() {
             return;
         }
 
+    });
+    //物流发货
+    $("#yunfeiBtn").off('click').click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.info("请选择记录");
+            return;
+        }
+        if (selRecords.length > 1) {
+            toastr.info("请选择一条记录");
+            return;
+        }
+        if (selRecords[0].status != 1) {
+            toastr.warning("只有未支付状态可以修改运费");
+            return;
+        }
+        window.location.href = "order_yunfei.html?code=" + selRecords[0].code;
     });
     //取消订单
     $("#cancelBtn").click(function() {
