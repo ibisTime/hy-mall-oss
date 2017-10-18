@@ -76,22 +76,46 @@ $(function() {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
-        field1: 'dateStart',
-        title1: '下单时间',
-        type: 'date',
-        field2: 'dateEnd',
+        // field1: 'dateStart',
+        // title1: '下单时间',
+        // type: 'date',
+        // field2: 'dateEnd',
+        // search: true,
+        // twoDate: true
+    }, {
+        title: "下单时间",
+        field: "dateStart",
+        type: "date",
         search: true,
-        twoDate: true
+        visible: false,
+    }, {
+        title: "~",
+        field: "dateEnd",
+        type: "date",
+        search: true,
+        visible: false,
     }, {
         field: "payDatetime",
         title: "支付时间",
         formatter: dateTimeFormat,
-        field1: 'payDateStart',
-        title1: '支付时间',
-        type: 'date',
-        field2: 'payDateEnd',
-        twoDate: true,
+        // field1: 'payDatetimeStart',
+        // title1: '支付时间',
+        // type: 'date',
+        // field2: 'payDatetimeEnd',
+        // twoDate: true,
+        // search: true,
+    }, {
+        title: "支付时间",
+        field: "payDatetimeStart",
+        type: "date",
         search: true,
+        visible: false,
+    }, {
+        title: "~",
+        field: "payDatetimeEnd",
+        type: "date",
+        search: true,
+        visible: false,
     }, {
         title: "备注",
         field: "remark"
@@ -108,5 +132,13 @@ $(function() {
             statusList: ["7", "8", "9", "91", "92", "93"]
         }
     });
-
+    //流水查询
+    $("#ledgerBtn").click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.warning("请选择记录");
+            return;
+        };
+        window.location.href = "order_ledger.html?refNo=" + selRecords[0].code;
+    });
 });

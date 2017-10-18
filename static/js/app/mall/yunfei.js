@@ -21,13 +21,13 @@ $(function() {
             data: provinceData,
             search: true
         }, {
+            field: 'startWeight',
+            title: '首重重量（kg）',
+        }, {
             title: "首重价格（元）",
             field: "startPrice",
             amount: true,
             formatter: moneyFormat,
-        }, {
-            field: 'startWeight',
-            title: '首重质量（kg）',
         }, {
             field: "addWeight",
             title: "递增重量(kg)",

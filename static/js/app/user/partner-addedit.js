@@ -23,6 +23,11 @@ $(function() {
         required: true,
         maxlength: 255,
     }, {
+        title: "联系电话",
+        field: "mobile",
+        tm: true,
+        required: true,
+    }, {
         title: '所在地区',
         type: 'citySelect',
         required: true,

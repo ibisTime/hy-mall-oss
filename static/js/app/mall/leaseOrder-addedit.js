@@ -69,6 +69,11 @@ $(function() {
         readonly: true,
         formatter: moneyFormat
     }, {
+        title: "运费",
+        field: "yunfei",
+        formatter: moneyFormat,
+        readonly: true
+    }, {
         field: 'amount2',
         title: '订单金额',
         formatter: function(v, data) {
@@ -106,11 +111,6 @@ $(function() {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
-        readonly: true
-    }, {
-        title: "运费",
-        field: "yunfei",
-        formatter: moneyFormat,
         readonly: true
     }, {
         field: 'payAmount3',

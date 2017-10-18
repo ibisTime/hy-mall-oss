@@ -62,6 +62,11 @@ $(function() {
         },
         readonly: true
     }, {
+        title: "运费",
+        field: "yunfei",
+        formatter: moneyFormat,
+        readonly: true
+    }, {
         field: 'payDatetime',
         title: '支付时间',
         formatter: dateTimeFormat,
@@ -73,6 +78,10 @@ $(function() {
         formatter: function(v, data) {
             return data.promptTimes
         }
+    }, {
+        field: 'remark',
+        title: '备注',
+        readonly: true
     }, {
         title: "商品信息",
         type: "title"
@@ -142,10 +151,6 @@ $(function() {
         field: 'pdf',
         title: '物流单',
         type: "img",
-        readonly: true
-    }, {
-        field: 'remark',
-        title: '备注',
         readonly: true
     }, {
         title: "评论信息",

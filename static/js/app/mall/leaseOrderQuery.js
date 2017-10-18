@@ -55,15 +55,58 @@ $(function() {
         title: '积分总价',
         formatter: moneyFormat
     }, {
+        title: "运费",
+        field: "yunfei",
+        formatter: moneyFormat,
+    }, {
         title: "提货方式",
         field: "takeType",
         type: "select",
         key: "take_type",
         formatter: Dict.getNameForList("take_type"),
+    }, {
+        field: 'receiver',
+        title: '收件人',
+        search: true
+    }, {
+        field: 'reMobile',
+        title: '收件人电话',
         search: true
     }, {
         field: 'promptTimes',
         title: '催货次数'
+    }, {
+        field: 'applyDatetime',
+        title: '下单时间',
+        formatter: dateTimeFormat,
+        // field1: 'dateStart',
+        // title1: '下单时间',
+        // type: 'date',
+        // field2: 'dateEnd',
+        // twoDate: true,
+        // search: true,
+    }, {
+        title: "下单时间",
+        field: "dateStart",
+        type: "date",
+        search: true,
+        visible: false,
+    }, {
+        title: "~",
+        field: "dateEnd",
+        type: "date",
+        search: true,
+        visible: false,
+    }, {
+        field: "payDatetime",
+        title: "支付时间",
+        formatter: dateTimeFormat,
+        // field1: 'payDatetimeStart',
+        // title1: '支付时间',
+        // type: 'date',
+        // field2: 'payDatetimeEnd',
+        // twoDate: true,
+        // search: true,
     }, {
         field: 'status',
         title: '订单状态',
@@ -78,24 +121,17 @@ $(function() {
         },
         search: true,
     }, {
-        field: 'applyDatetime',
-        title: '下单时间',
-        formatter: dateTimeFormat,
-        field1: 'dateStart',
-        title1: '下单时间',
-        type: 'date',
-        field2: 'dateEnd',
-        twoDate: true,
-        search: true,
-    }, {
         title: "支付时间",
-        formatter: dateTimeFormat,
-        field1: 'payDatetimeStart',
-        title1: '支付时间',
-        type: 'date',
-        field2: 'payDatetimeEnd',
-        twoDate: true,
+        field: "payDatetimeStart",
+        type: "date",
         search: true,
+        visible: false,
+    }, {
+        title: "~",
+        field: "payDatetimeEnd",
+        type: "date",
+        search: true,
+        visible: false,
     }, {
         title: "备注",
         field: "remark"
@@ -105,6 +141,7 @@ $(function() {
         pageCode: '810055',
         singleSelect: false,
         searchParams: {
+            takeType: '2',
             companyCode: OSS.company,
             statusList: ["7", "8", "9", "91", "92", "93"]
         },
@@ -116,5 +153,13 @@ $(function() {
             }
         }
     });
-
+    //流水查询
+    $("#ledgerBtn").click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.warning("请选择记录");
+            return;
+        };
+        window.location.href = "order_ledger.html?refNo=" + selRecords[0].code;
+    });
 });

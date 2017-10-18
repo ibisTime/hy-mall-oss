@@ -111,7 +111,7 @@ $(function() {
     }, {
         title: "附件",
         field: "takePdf",
-        type:"img"
+        type: "img"
     }, {
         field: 'remark',
         title: '备注',
@@ -161,6 +161,6 @@ $(function() {
                 sucDetail();
             });
         }
-    })
+    });
 
 });

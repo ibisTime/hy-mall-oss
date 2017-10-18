@@ -10,6 +10,20 @@ $(function() {
         readonly: view,
         mobile: true
     }, {
+        title: "昵称",
+        field: "nickname",
+        readonly: view,
+    }, {
+        title: "性别",
+        field: "gender",
+        type: "select",
+        data: {
+            "0": "未知",
+            "1": "男",
+            "2": "女"
+        },
+        readonly: view,
+    }, {
         field: 'idKind',
         title: '证件类型',
         type: 'select',

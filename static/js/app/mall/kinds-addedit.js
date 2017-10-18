@@ -10,7 +10,7 @@ $(function() {
         keyName: "code",
         valueName: "name",
         searchName: "name",
-        searchParams: {
+        params: {
             type: "1",
             parentCode: "0",
             status: "1"

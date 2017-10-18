@@ -17,7 +17,7 @@ $(function() {
     }, {
         field: 'orderNo',
         title: '次序',
-        sortable: true,
+        // sortable: true,
     }];
 
     buildList({
@@ -26,7 +26,9 @@ $(function() {
         searchParams: {
             type: "1",
             companyCode: OSS.company,
-            parentCode: "0"
+            parentCode: "0",
+            "orderColumn": "order_no",
+            "orderDir": "asc"
         }
     });
 

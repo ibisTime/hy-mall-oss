@@ -11,16 +11,16 @@ $(function() {
         title: '目的省份',
         readonly: !!code,
     }, {
+        field: 'startWeight',
+        title: '首重重量(kg)',
+        number: true,
+        required: true,
+        readonly: view
+    }, {
         title: "首重价格(元)",
         field: "startPrice",
         amount: true,
         formatter: moneyFormat,
-        required: true,
-        readonly: view
-    }, {
-        field: 'startWeight',
-        title: '首重质量(kg)',
-        number: true,
         required: true,
         readonly: view
     }, {
