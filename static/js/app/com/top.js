@@ -1,7 +1,8 @@
 $('title', window.parent.document).html(OSS.systemName);
 $(function() {
     if (!sessionStorage.getItem('token')) {
-        location.href = 'signin.html?kind=' + (sessionStorage.getItem('loginKind') || 'P')
+        var kind = document.domain.substr(0, 1) == 'z' ? 'PA' : (sessionStorage.getItem('loginKind') || 'P')
+        location.href = 'signin.html?kind=' + kind;
         return;
     }
 

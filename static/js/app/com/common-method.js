@@ -674,28 +674,22 @@ function buildList(options) {
     for (var i = 0, len = dateTimeList.length; i < len; i++) {
         (function(i) {
             var item = dateTimeList[i];
-            var start = {
-                elem: '#' + item.field1,
-                min: item.minDate1 ? item.minDate1 : '',
-                istime: item.type == 'datetime',
-                format: item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD',
-                choose: function(datas) {
-                    end.min = datas; //开始日选好后，重置结束日的最小日期
-                    end.start = datas //将结束日的初始值设定为开始日
-                }
-            };
-            var end = {
-                elem: '#' + item.field2,
-                min: item.minDate2 ? item.minDate2 : '',
-                istime: item.type == 'datetime',
-                format: item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD',
-                choose: function(datas) {
-                    start.max = datas; //结束日选好后，重置开始日的最大日期
-                }
-            };
-
-            laydate(start);
-            laydate(end);
+            $('#' + item.field1).click(function() {
+                var end = $('#' + item.field2).val();
+                var obj = {
+                    elem: '#' + item.field1
+                };
+                end && (obj.max = end);
+                laydate(obj);
+            });
+            $('#' + item.field2).click(function() {
+                var start = $('#' + item.field1).val();
+                var obj = {
+                    elem: '#' + item.field2
+                };
+                start && (obj.min = start);
+                laydate(obj);
+            });
         })(i);
     }
     // 单个日期搜索框

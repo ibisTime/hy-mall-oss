@@ -1,6 +1,4 @@
 $(function() {
-    var kind = getQueryString('k') || "";
-
     var columns = [{
         field: '',
         title: '',
@@ -71,10 +69,16 @@ $(function() {
         title: '订单状态',
         type: "select",
         data: {
-            "1": "待支付",
-            "2": "已支付待发货",
             "3": "已发货待收货",
-            "4": "已收货体验中"
+            "4": "已收货体验中",
+            "5": "已归还，待确认",
+            "6": "逾期中",
+            "7": "已结算",
+            "8": "不归还",
+            "9": "已评论",
+            "91": "用户异常",
+            "92": "商户异常",
+            "93": "商户异常",
         },
         // key: "rorder_status",
         // formatter: Dict.getNameForList("rorder_status"),
@@ -104,96 +108,18 @@ $(function() {
         field: "remark"
     }];
     buildList({
+        router: "leaseStoreOrder",
         columns: columns,
         pageCode: '810055',
         singleSelect: false,
         searchParams: {
             takeType: "1",
-            toUser: kind ? "" : getUserId(),
+            toUser: getUserId(),
             companyCode: OSS.company,
-            statusList: kind ? ["1", "2", "3", "4", "5", "6", "7", "8", "9", "91", "92", "93"] : ["1", "2", "3", "4"]
+            statusList: ["3", "4", "5", "6", "7", "8", "9", "91", "92", "93"]
         }
     });
-    //现场发货
-    $("#formStoresBtnBtn").off('click').click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.warning("请选择记录");
-            return;
-        }
-        if (selRecords.length > 1) {
-            toastr.warning("请选择一条记录");
-            return;
-        }
-        if (selRecords[0].status != 2) {
-            toastr.warning("不是可以发货的状态");
-            return;
-        }
-        if (selRecords[0].takeType == "2") {
-            toastr.warning("不是可以现场发货的订单");
-            return;
-        }
-        window.location.href = "./leaseStoreOrder_Shipment.html?code=" + selRecords[0].code;
 
-
-    });
-    //取消订单
-    $("#cancelBtn").click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.warning("请选择记录");
-            return;
-        }
-        var codeList = []
-
-        for (var i = 0; i < selRecords.length; i++) {
-            codeList.push(selRecords[i].code)
-            if (selRecords[i].status == 1 || selRecords[i].status == 4 || selRecords[i].status == 5 || selRecords[i].status == 6 || selRecords[i].status == 7) {
-                toastr.warning(selRecords[i].code + "不是能取消订单的状态!,只有已支付待发货和已发货待收货的状态才可以取消订单");
-                return;
-            }
-        }
-        var dw = dialog({
-            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">取消订单</li>' +
-                '<li><label>备注：</label><input id="remark" name="remark" class="control-def"></input></li>' +
-                '<li><input id="subBtn" name="subBtn"type="button" class="btn margin-left-100 submit" value="确定"><li><input id="goBackBtn" name="goBackBtn" type="button" class=" btn margin-left-20 goBack" value="返回"></ul>' +
-                '</form>'
-        });
-        dw.showModal();
-        $(document).on('click', '#subBtn', function() {
-            $('#popForm').validate({
-                // 'rules': {
-                //     remark: {
-                //         required: true,
-                //         maxlength: 255
-                //     }
-                // }
-            });
-            if ($('#popForm').valid()) {
-                var data = $('#popForm').serializeObject();
-                data.codeList = codeList;
-                data.remark = $("#remark").val();
-                reqApi({
-                    code: "810047",
-                    json: data
-                }).done(function() {
-                    toastr.info("操作成功");
-                    $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
-                    setTimeout(function() {
-                        dw.close().remove();
-                    }, 500)
-                });
-            }
-        });
-        $(document).on('click', '#goBackBtn', function() {
-            setTimeout(function() {
-                dw.close().remove();
-            }, 500)
-
-        });
-        dw.__center();
-    });
     // 确认归还
     $("#returnBtn").click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -209,7 +135,6 @@ $(function() {
             toastr.warning("不是可以确认归还的状态");
             return;
         }
-
         confirm("确认该商品已经归还了？").then(function() {
             reqApi({
                 code: '810050',

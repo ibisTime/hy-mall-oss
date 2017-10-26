@@ -64,6 +64,12 @@ $(function() {
             field: 'name',
             title: '规格名称',
         }, {
+            title: "图片",
+            field: "pic11",
+            formatter: function(v, data) {
+                return data.pic && '<img  style="width:40px;height:40px" src="' + OSS.picBaseUrl + '/' + data.pic + '" >' || "-"
+            }
+        }, {
             field: 'originalPrice',
             title: '原价/市场价',
             amount: true,

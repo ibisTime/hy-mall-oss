@@ -17,7 +17,7 @@ $(function() {
     }, {
         field: 'orderNo',
         title: '次序',
-        // sortable: true,
+        sortable: true,
     }];
 
     buildList({

@@ -7,21 +7,9 @@ $(function() {
     var codeInd = 0;
     var paramIndex = 0;
 
-    var provinceData = {};
     var typeData = {};
     var productSpecsFields = [];
     var fields = [];
-
-    $.get(__uri('../../lib/province_data.xml'), function(xml) {
-
-        var docXml = xml;
-        var $provinceXml = $(docXml).find("province")
-
-        $provinceXml.each(function(i, d) {
-            provinceData[$(d).attr("name")] = $(d).attr("name");
-        });
-
-    });
 
     //商品类别
     //积分商品修改
@@ -61,6 +49,12 @@ $(function() {
             title: '规格名称',
             required: true,
         }, {
+            title: "图片",
+            field: "pic11",
+            type: 'img',
+            single: true,
+            required: true
+        }, {
             field: 'originalPrice',
             title: '原价/市场价',
             required: true,
@@ -86,9 +80,7 @@ $(function() {
         }, {
             field: 'province',
             title: '产地',
-            type: 'select',
-            onlyProvince: true,
-            data: provinceData,
+            maxlength: 255,
             required: true,
         }, {
             field: 'weight',
@@ -181,6 +173,12 @@ $(function() {
                 field: 'name',
                 title: '规格名称',
             }, {
+                title: "图片",
+                field: "pic11",
+                formatter: function(v, data) {
+                    return data.pic && '<img  style="width:40px;height:40px" src="' + OSS.picBaseUrl + '/' + data.pic + '" >' || "-"
+                }
+            }, {
                 field: 'originalPrice',
                 title: '原价/市场价',
                 amount: true,
@@ -239,11 +237,44 @@ $(function() {
             buttons: [{
                 title: '保存',
                 handler: function() {
-
                     if ($('#popForm').valid()) {
                         var data = $('#popForm').serializeObject();
+                        $('#popForm').find('.btn-file [type=file]').parent().next().each(function(i, el) {
+                            var values = [];
+                            var imgs = $(el).find('.img-ctn');
+                            imgs.each(function(index, img) {
+                                values.push($(img).attr('data-src') || $(img).find('img').attr('data-src'));
+                            });
+                            data[el.id] = values.join('||');
+                        });
+                        if ($('#popForm').find('#province')[0]) {
+                            var province = $('#province').val();
+                            var city = $('#city').val();
+                            var area = $('#area').val();
+                            if (!city) {
+                                data['city'] = province;
+                                data['area'] = province;
+                            } else if (!area) {
+                                data['city'] = province;
+                                data['area'] = city;
+                            }
+                        }
+                        for (var i = 0, len = fields.length; i < len; i++) {
+                            var item = fields[i];
+                            if (item.equal && (!$('#' + item.field).is(':hidden') || !$('#' + item.field + 'Img').is(':hidden'))) {
+                                data[item.equal] = $('#' + item.field).val() || $('#' + item.field).attr('src');
+                            } else if (item.emptyValue && !data[item.field]) {
+                                data[item.field] = item.emptyValue;
+                            } else if (item.readonly && item.pass) {
+                                data[item.field] = $('#' + item.field).attr('data-value') || $('#' + item.field).html();
+                            }
+                            if (item.type == 'select' && item.passValue) {
+                                data[item.field] = $('#' + item.field).find('option:selected').html();
+                            }
+                        }
+                        data.pic = data.pic11;
+                        delete data.pic11;
                         data.code = codeInd++;
-
                         $('#tableList').bootstrapTable('insertRow', {
                             index: data.code,
                             row: data
@@ -259,6 +290,7 @@ $(function() {
                 }
             }]
         });
+        $("#pic11").css("margin-left", "100px");
         dw.__center();
     })
 
@@ -302,11 +334,35 @@ $(function() {
 
                     if ($('#popForm').valid()) {
                         var data = $('#popForm').serializeObject();
+                        $('#popForm').find('.btn-file [type=file]').parent().next().each(function(i, el) {
+                            var values = [];
+                            var imgs = $(el).find('.img-ctn');
+                            imgs.each(function(index, img) {
+                                values.push($(img).attr('data-src') || $(img).find('img').attr('data-src'));
+                            });
+                            data[el.id] = values.join('||');
+                        });
 
+                        for (var i = 0, len = fields.length; i < len; i++) {
+                            var item = fields[i];
+                            if (item.equal && (!$('#' + item.field).is(':hidden') || !$('#' + item.field + 'Img').is(':hidden'))) {
+                                data[item.equal] = $('#' + item.field).val() || $('#' + item.field).attr('src');
+                            } else if (item.emptyValue && !data[item.field]) {
+                                data[item.field] = item.emptyValue;
+                            } else if (item.readonly && item.pass) {
+                                data[item.field] = $('#' + item.field).attr('data-value') || $('#' + item.field).html();
+                            }
+                            if (item.type == 'select' && item.passValue) {
+                                data[item.field] = $('#' + item.field).find('option:selected').html();
+                            }
+                        }
+                        data.pic = data.pic11;
+                        delete data.pic11;
                         $('#tableList').bootstrapTable('updateRow', {
                             index: paramIndex,
                             row: data
                         })
+
                         toastr.info("修改成功");
                         $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
 
@@ -321,14 +377,39 @@ $(function() {
             }]
         });
 
-        $('#popForm #name').val(selRecords[0].name)
-        $('#popForm #originalPrice').val(moneyFormat(selRecords[0].originalPrice))
-        $('#popForm #price1').val(moneyFormat(selRecords[0].price1))
-        $('#popForm #price2').val(moneyFormat(selRecords[0].price2))
-        $('#popForm #quantity').val(selRecords[0].quantity)
-        $('#popForm #province').val(selRecords[0].province)
-        $('#popForm #weight').val(selRecords[0].weight)
-        $('#popForm #orderNo').val(selRecords[0].orderNo)
+        $('#popForm #name').val(selRecords[0].name);
+        $('#popForm #originalPrice').val(moneyFormat(selRecords[0].originalPrice));
+        $('#popForm #price1').val(moneyFormat(selRecords[0].price1));
+        $('#popForm #price2').val(moneyFormat(selRecords[0].price2));
+        $('#popForm #quantity').val(selRecords[0].quantity);
+        $('#popForm #province').val(selRecords[0].province);
+        $('#popForm #weight').val(selRecords[0].weight);
+        $('#popForm #orderNo').val(selRecords[0].orderNo);
+        $('#popForm #pic11').val(selRecords[0].pic);
+        var sp = selRecords[0].pic.split('||') || [];
+        var imgsHtml = '';
+        sp.length && sp.forEach(function(item) {
+            var suffix = item.slice(item.lastIndexOf('.') + 1);
+            var src = (item.indexOf('http://') > -1 ? item : (OSS.picBaseUrl + '/' + item));
+            var src1 = (item.indexOf('http://') > -1 ?
+                item.substring(item.lastIndexOf("/") + 1) :
+                item);
+            var name = src1.substring(0, src1.lastIndexOf("_")) + "." + suffix;
+            imgsHtml += '<div class="img-ctn"  data-src="' + src1 + '" style="display: inline-block;position: relative;">' + '<div class="center-img-wrap"  >' + '<img src="' + src + OSS.picShow + '" class="center-img" />' + '<i class="zmdi zmdi-close-circle-o zmdi-hc-fw"></i>' + '<i class="zmdi zmdi-download zmdi-hc-fw"></i>' + '</div>' + '<div class="t_3dot w100p" title="' + name + '">' + name + '</div>' + '</div>';
+        });
+        $('#pic11').html(imgsHtml);
+        setImgDisabled($('#pic11'));
+        $('#pic11').find('.zmdi-close-circle-o').on('click', function(e) {
+            var el = $(this).parent().parent(),
+                el_parent = el.parent();
+            el.remove();
+            el_parent[0].cfg.single && setImgDisabled(el_parent);
+        });
+        $('#pic11').find('.zmdi-download').on('click', function(e) {
+            var dSrc = OSS.picBaseUrl + '/' + $(this).parents("[data-src]").attr('data-src');
+            window.open(dSrc, '_blank');
+        });
+        $("#pic11").css("margin-left", "100px");
 
         dw.showModal();
         dw.__center();

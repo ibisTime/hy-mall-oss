@@ -30,16 +30,6 @@ $(function() {
         field: 'productName',
         title: '商品名称'
     }, {
-        title: "商品类型",
-        field: "productType",
-        formatter: function(v, data) {
-            if (data.productType == "J04") {
-                return "积分"
-            } else {
-                return "普通"
-            }
-        }
-    }, {
         field: 'payType',
         title: '买单方式',
         key: 'pay_type',
@@ -64,6 +54,27 @@ $(function() {
         type: "select",
         key: "take_type",
         formatter: Dict.getNameForList("take_type"),
+        search: true
+    }, {
+        field: 'takeStore',
+        title: '提货地',
+        formatter: function(v, data) {
+            if (data.takeType == "2") {
+                return "平台"
+            } else { return data.storeUser.realName; }
+        },
+        type: 'select',
+        search: true,
+        pageCode: '805120',
+        params: {
+            kind: 'PA',
+            updater: '',
+            companyCode: OSS.company
+        },
+        keyName: 'userId',
+        valueName: 'realName',
+        searchName: 'realName',
+        search: true
     }, {
         field: 'receiver',
         title: '收件人',
@@ -73,65 +84,62 @@ $(function() {
         title: '收件人电话',
         search: true
     }, {
-        field: 'promptTimes',
-        title: '催货次数'
-    }, {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
-        // field1: 'dateStart',
-        // title1: '下单时间',
-        // type: 'date',
-        // field2: 'dateEnd',
-        // twoDate: true,
-        // search: true,
-    }, {
-        title: "下单时间",
-        field: "dateStart",
-        type: "date",
+        field1: 'dateStart',
+        title1: '下单时间',
+        type: 'date',
+        field2: 'dateEnd',
+        twoDate: true,
         search: true,
-        visible: false,
-    }, {
-        title: "~",
-        field: "dateEnd",
-        type: "date",
-        search: true,
-        visible: false,
     }, {
         field: "payDatetime",
         title: "支付时间",
         formatter: dateTimeFormat,
-        // field1: 'payDatetimeStart',
-        // title1: '支付时间',
-        // type: 'date',
-        // field2: 'payDatetimeEnd',
-        // twoDate: true,
-        // search: true,
+        field1: 'payDatetimeStart',
+        title1: '支付时间',
+        type: 'date',
+        field2: 'payDatetimeEnd',
+        twoDate: true,
+        search: true,
     }, {
         field: 'status',
         title: '订单状态',
         type: "select",
-        data: {
-            "7": "已结算",
-            "8": "不归还",
-            "9": "已评论",
-            "91": "用户异常",
-            "92": '商户异常',
-            "93": "快递异常"
+        key: "rorder_status",
+        formatter: Dict.getNameForList("rorder_status"),
+        // data: {
+        //     "7": "已结算",
+        //     "8": "不归还",
+        //     "9": "已评论",
+        //     "91": "用户异常",
+        //     "92": '商户异常',
+        //     "93": "快递异常"
+        // },
+        search: true,
+    }, {
+        field: 'backStore',
+        title: '归还点',
+        formatter: function(v, data) {
+            if (v == "SYS_USER_HW") {
+                return "平台"
+            } else if (data.backStoreUser) {
+                return data.backStoreUser.realName;
+            }
         },
+        type: 'select',
         search: true,
-    }, {
-        title: "支付时间",
-        field: "payDatetimeStart",
-        type: "date",
-        search: true,
-        visible: false,
-    }, {
-        title: "~",
-        field: "payDatetimeEnd",
-        type: "date",
-        search: true,
-        visible: false,
+        pageCode: '805120',
+        params: {
+            kind: 'PA',
+            updater: '',
+            companyCode: OSS.company
+        },
+        keyName: 'userId',
+        valueName: 'realName',
+        searchName: 'realName',
+        search: true
     }, {
         title: "备注",
         field: "remark"
@@ -141,9 +149,9 @@ $(function() {
         pageCode: '810055',
         singleSelect: false,
         searchParams: {
-            takeType: '2',
+            // takeType: '2',
             companyCode: OSS.company,
-            statusList: ["7", "8", "9", "91", "92", "93"]
+            // statusList: ["7", "8", "9", "91", "92", "93"]
         },
         beforeDetail: function(data) {
             if (data.takeType == "2") {
@@ -162,4 +170,8 @@ $(function() {
         };
         window.location.href = "order_ledger.html?refNo=" + selRecords[0].code;
     });
+    $("#takeStore").append('<option value="SYS_USER_HW">平台</option>')
+        .trigger('chosen:updated');
+    $("#backStore").append('<option value="SYS_USER_HW">平台</option>')
+        .trigger('chosen:updated');
 });
