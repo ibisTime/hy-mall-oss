@@ -22,7 +22,7 @@ $(function() {
         title: '针对人群',
         type: 'select',
         key: 'user_kind',
-        keyCode:'805906',
+        // keyCode: '801907',
         readonly: view,
         required: true
     }, {

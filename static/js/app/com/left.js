@@ -16,9 +16,6 @@ $(function() {
 			json: data,
 			sync: true 
 		}, true).then(function(data) {
-			data = data.sort(function(d, d1){
-				return +d.orderNo - +d1.orderNo;
-			})
 			var html = '';
 			$.each(data, function(i, item) {
 				html += "<dd><div class=\"title\"><span><img src=\""+

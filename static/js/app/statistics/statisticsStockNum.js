@@ -9,9 +9,8 @@ $(function() {
             title: '日期',
 			field1: 'totalDatetimeStart',
 			title1: '日期',
-			type1: "date",
+			type: "date",
 			field2: 'totalDatetimeEnd',
-			type2: "date",
 			search: true,
 			formatter: function(v, data){
 				return dateFormat(v,'yyyy-MM-dd')
