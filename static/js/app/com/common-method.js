@@ -619,6 +619,7 @@ function objectArrayFilter(arr, keys) {
 function buildList(options) {
     options = options || {};
     var searchs = JSON.parse(sessionStorage.getItem('listSearchs') || '{}')[location.pathname];
+    var listStart = JSON.parse(sessionStorage.getItem('listStarts') || '{}')[location.pathname];
 
     if (options.type != 'o2m') {
         showPermissionControl();
@@ -800,6 +801,7 @@ function buildList(options) {
 
     $('#searchBtn').click(function() {
         updateListSearch();
+        updateListStart(1);
         $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
     });
 
@@ -966,7 +968,7 @@ function buildList(options) {
     if (options.tableId) {
         tableEl = $('#' + options.tableId);
     }
-
+	var bootstrapTableFlag = false;
     //表格初始化
     tableEl.bootstrapTable({
         method: "post",
@@ -980,8 +982,14 @@ function buildList(options) {
         detailFormatter: detailFormatter,
         queryParams: function(params) {
             var json = {};
-            json.start = params.offset / params.limit + 1;
+            if(bootstrapTableFlag){
+            	json.start = params.offset / params.limit + 1;
+            }else{
+            	json.start = listStart || 1;
+            	bootstrapTableFlag = true;
+            }
             json.limit = params.limit;
+            json.start==1?'':updateListStart(json.start)
             var searchFormParams = $('.search-form').serializeObject();
             for (var p in searchFormParams) {
                 if (!searchFormParams[p]) {
@@ -1015,12 +1023,14 @@ function buildList(options) {
         pagination: true,
         sidePagination: 'server',
         totalRows: 0,
-        pageNumber: 1,
+        pageNumber: listStart||1,
         pageSize: options.pageSize || 10,
         pageList: options.pageList || [10, 20, 30, 40, 50],
-        columns: options.columns
+        columns: options.columns,
+        onPageChange: function(number, size){
+            updateListStart(number)
+        }
     });
-
     chosen();
 }
 
@@ -2190,8 +2200,9 @@ function sleep(ms) {
 }
 
 function sucList() {
+    var listStart = JSON.parse(sessionStorage.getItem('listStarts') || '{}')[location.pathname];
     toastr.success('操作成功');
-    $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+    $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url,pageNumber: $('#tableList').bootstrapTable('getOptions').pageNumber });
 }
 
 function sucDetail() {
@@ -3672,4 +3683,11 @@ function updateListSearch() {
     var params = $('.search-form').serializeObject();
     searchs[pathName] = params;
     sessionStorage.setItem('listSearchs', JSON.stringify(searchs));
+}
+function updateListStart(start) {
+    var searchs = JSON.parse(sessionStorage.getItem('listStarts') || '{}');
+    var pathName = location.pathname;
+    var params = start;
+    searchs[pathName] = params;
+    sessionStorage.setItem('listStarts', JSON.stringify(searchs));
 }

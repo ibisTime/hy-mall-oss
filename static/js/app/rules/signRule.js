@@ -20,7 +20,7 @@ $(function() {
         columns: columns,
         pageCode: '805915',
         searchParams: {
-            type: 'gift',
+            type: 'sign',
             companyCode: OSS.company
         },
     });

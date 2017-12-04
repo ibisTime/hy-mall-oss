@@ -39,6 +39,9 @@ $(function() {
         title: '押金',
         formatter: moneyFormat
     }, {
+        field: 'quantity',
+        title: '库存',
+    }, {
         field: 'location',
         title: '位置',
         type: 'select',
@@ -65,6 +68,7 @@ $(function() {
         columns: columns,
         pageCode: '810025',
         searchParams: {
+        	status:'normal',
             companyCode: OSS.company
         }
     });

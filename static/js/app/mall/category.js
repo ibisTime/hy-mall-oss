@@ -47,8 +47,7 @@ $(function() {
                 code: '808003',
                 json: { "code": selRecords[0].code }
             }).then(function() {
-                toastr.info("操作成功");
-                $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+                sucList();
             });
         });
 
@@ -69,8 +68,7 @@ $(function() {
                 code: '808004',
                 json: { "code": selRecords[0].code }
             }).then(function() {
-                toastr.info("操作成功");
-                $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+                sucList();
             });
         });
     });

@@ -4,20 +4,21 @@ $(function() {
     var type = getQueryString('t');
 
     var fields = [{
-        title: '参数名',
+        title: '参数',
         field: 'ckey',
         readonly: true,
         required: true,
         maxlength: 20
     }, {
-        title: '参数值',
+        title: '规则名称',
+        field: 'remark',
+        readonly: true,
+        maxlength: 250
+    },{
+        title: '数值',
         field: 'cvalue',
         required: true,
         maxlength: 255
-    }, {
-        title: '备注',
-        field: 'remark',
-        maxlength: 250
     }];
 
     buildDetail({

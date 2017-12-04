@@ -76,6 +76,11 @@ $(function() {
         required: true,
         readonly: view
     }, {
+        field: 'quantity',
+        title: '库存',
+        required: true,
+        readonly: view
+    }, {
         field: 'minRentDays',
         title: '最小租赁天数',
         number: true,
