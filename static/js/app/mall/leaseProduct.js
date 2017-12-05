@@ -135,4 +135,27 @@ $(function() {
         window.location.href = "leaseProduct_addeditCopy.html?code=" + selRecords[0].code;
 
     });
+    
+    //回收
+    $('#goRecycleBinBtn').click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.info("请选择记录");
+            return;
+        }
+
+        if (selRecords[0].status != 4) {
+            toastr.info("该商品状态不可回收");
+            return;
+        }
+        confirm("确认回收？").then(function() {
+            reqApi({
+                code: '810015',
+                json: {"code": selRecords[0].code}
+            }).then(function() {
+            	sucList();
+            });
+        }, function() {});
+
+    });
 });

@@ -61,8 +61,11 @@ $(function() {
         title: '商品规格:',
         type: 'o2m',
         columns: [{
-            field: 'name',
-            title: '规格名称',
+            field: 'specsVal1',
+            title: '规格名称1',
+        }, {
+            field: 'specsVal2',
+            title: '规格名称2',
         }, {
             title: "图片",
             field: "pic11",

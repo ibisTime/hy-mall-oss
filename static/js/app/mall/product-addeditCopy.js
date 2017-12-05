@@ -47,11 +47,11 @@ $(function() {
         //规格1
         productSpecsFields1 = [{
             field: 'specsVal1',
-            title: '规格名称1'+$("#specsName1").val(),
+            title: '规格名称1',
             required: true,
         }, {
             field: 'specsVal2',
-            title: '规格名称2'+$("#specsName2").val(),
+            title: '规格名称2',
             type: "hidden",
         }, {
             title: "图片",
