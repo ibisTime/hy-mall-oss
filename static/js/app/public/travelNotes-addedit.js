@@ -2,12 +2,14 @@ $(function() {
 
     var code = getQueryString('code');
     var view = getQueryString('v');
+    
     var remarkNote = [{
         title: "审核说明",
         field: 'remark',
         maxlength: 255,
         readonly: false
     }];
+    
     var checkList = [{
         title: '审核人',
         field: 'approver',
@@ -31,60 +33,45 @@ $(function() {
         field: 'remark',
         readonly: true
     }];
+    
     var fields = [{
-        title: '商品名称',
-        field: 'entityName',
+        field: 'description',
+        title: '描述',
         readonly: true
     }, {
-        title: "评论内容",
-        field: "content",
+        field: "pic",
+        title: '图片',
+        type: "img",
+		single: true,
         readonly: true
     }, {
-        title: '评论人',
-        field: 'nickname',
-        readonly: true
-    }, {
-        title: "星级",
-        field: "score",
-        formatter: function(v, data) {
-            if (v == 1) {
-                return "1颗星"
-            } else if (v == 2) {
-                return "2颗星"
-            } else if (v == 3) {
-                return "3颗星"
-            } else if (v == 4) {
-                return "4颗星"
-            } else if (v == 5) {
-                return "5颗星"
-            }
-        },
-    }, {
-        title: '评论时间',
-        field: 'commentDatetime',
-        readonly: true,
-        formatter: dateTimeFormat
-    }, {
-        title: '状态',
         field: 'status',
-        readonly: true,
+        title: '状态',
         type: 'select',
-        data: {
-            "A": "已发布",
-            "B": "审批通过",
-            "C": "审批不通过",
-            "D": "被过滤"
-        }
+        key: "travel_status",
+        formatter: Dict.getNameForList("travel_status"),
+        readonly: true
+    }, {
+        field: 'publishDatetime',
+        title: '发布时间',
+        formatter: dateTimeFormat,
+        readonly: true
+    }, {
+        field: 'updateDatetime',
+        title: '更新时间',
+        formatter: dateTimeFormat,
+        readonly: true
     }];
+    
     if (view) {
         remarkNote = [];
-        fields = fields.concat(checkList),
-            buttons = [{
-                title: '返回',
-                handler: function() {
-                    goBack();
-                }
-            }];
+        fields = fields.concat(checkList);
+        buttons = [{
+            title: '返回',
+            handler: function() {
+                goBack();
+            }
+        }];
     } else {
         fields = fields.concat(remarkNote);
         var buttons = [{
@@ -92,11 +79,10 @@ $(function() {
             handler: function() {
                 if ($('#jsForm').valid()) {
                     var data = $('#jsForm').serializeObject();
-                    data.result = '1';
-                    data.approver = getUserName();
+                    data.approvelResult = '1';
                     data.code = code;
                     reqApi({
-                        code: '801021',
+                        code: '801053',
                         json: data
                     }).done(function(data) {
                         sucDetail();
@@ -108,11 +94,10 @@ $(function() {
             handler: function() {
                 if ($('#jsForm').valid()) {
                     var data = $('#jsForm').serializeObject();
-                    data.result = '0';
-                    data.approver = getUserName();
+                    data.approvelResult = '0';
                     data.code = code;
                     reqApi({
-                        code: '801021',
+                        code: '801053',
                         json: data
                     }).done(function(data) {
                         sucDetail();
@@ -126,12 +111,14 @@ $(function() {
             }
         }];
     }
+    
     var options = {
         fields: fields,
         code: code,
         view: true,
         buttons: buttons,
-        detailCode: '801026',
+        detailCode: '801056',
     };
+    
     buildDetail(options);
 });
