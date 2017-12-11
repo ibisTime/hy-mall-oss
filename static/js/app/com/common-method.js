@@ -1910,8 +1910,10 @@ function buildDetail(options) {
                 if (item.link) {
                     $('#' + item.field).html('<a target="_blank" href="' + displayValue + '">' + displayValue + '</a>');
                 }
-                if (item.type == 'textarea') {
+                if (item.type == 'textarea' && !item.normalArea) {
                     $('#' + item.field).css('width', '800px');
+                }else if (item.type == 'textarea' && item.normalArea) {
+                    $('#' + item.field).css('width', '600px');
                 }
                 if (item.afterSet) {
                     item.afterSet(displayValue, data);
