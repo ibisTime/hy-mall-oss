@@ -10,7 +10,7 @@ $(function() {
         readonly: view,
         mobile: true
     }, {
-        title: "昵称",
+        title: "户外昵称",
         field: "outName",
         required: true,
         readonly: view,

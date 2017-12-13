@@ -1,9 +1,9 @@
 $(function() {
     var code;
     reqApi({
-        code: '810917',
+        code: '805917',
         json: {
-            key: 'back_info'
+            ckey: 'act_mzsm'
         },
         sync: true
     }).then(function(data) {
@@ -14,7 +14,7 @@ $(function() {
     var fields = [{
         field: 'remark',
         type: 'hidden',
-        value: '归还信息'
+        value: '免责申明'
     }, {
         title: '内容',
         field: 'cvalue',
@@ -25,7 +25,8 @@ $(function() {
     buildDetail({
         fields: fields,
         code: code,
-        detailCode: '810916',
+        editCode: '805911',
+        detailCode: '805916',
         buttons: [{
             title: '保存',
             handler: function() {
@@ -33,7 +34,7 @@ $(function() {
                     var data = $('#jsForm').serializeObject();
                     data['id'] = data['code'];
                     reqApi({
-                        code: '810910',
+                        code: '805911',
                         json: data
                     }).done(function(data) {
                         toastr.success('操作成功');

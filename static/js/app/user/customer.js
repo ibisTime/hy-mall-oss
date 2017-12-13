@@ -5,6 +5,9 @@ $(function() {
         title: '',
         checkbox: true
     }, {
+        field: 'nickname',
+        title: '昵称'
+    }, {
         field: 'mobile',
         title: '手机号',
         search: true

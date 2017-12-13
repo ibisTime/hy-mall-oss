@@ -7,12 +7,17 @@ $(function() {
         field: 'name',
         title: '活动名称'
     }, {
+        field: 'userId',
+        title: '领队',
+        formatter: function(v, data) {
+            return data.user ? data.user.realName+"("+data.user.mobile+")" : v
+        }
+    }, {
         field: 'type',
         title: '类型',
         type: 'select',
         key: 'act_type',
         formatter: Dict.getNameForList('act_type'),
-        search: true
     }, {
         field: 'slogan',
         title: '广告语'
@@ -108,15 +113,11 @@ $(function() {
         type: 'textarea',
         normalArea: true
     }, {
-        field: 'userId',
-        title: '领队',
-    }, {
         field: 'status',
         title: '状态',
         type: 'select',
         key: 'act_status',
         formatter: Dict.getNameForList('act_status'),
-        search: true
     }, {
         field: 'updateDatetime',
         title: '更新时间',

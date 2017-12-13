@@ -1235,7 +1235,7 @@ function buildDetail(options) {
         var btnHtml = '<li>';
         for (var i = 0, len = options.buttons.length; i < len; i++) {
             var item = options.buttons[i];
-            var id = 'btn-' + i;
+            var id = item.field?item.field+"_btn" : 'btn-' + i;
             btnHandlers.push({ id: id, handler: item.handler });
             btnHtml += '<input id="' + id + '" type="button" class="btn margin-left-20" value="' + item.title + '"/>';
         }
@@ -2742,6 +2742,14 @@ function buildDetail1(options) {
                         if (item.useData) {
                             displayValue = $.isArray(item.useData) ? item.useData : (data || []);
                         }
+                        if (item._keys) {
+			                var _value = displayValue,
+			                    emptyObj = {};
+			                item._keys.forEach(function(key) {
+			                    _value = _value[key] == undefined ? emptyObj : _value[key];
+			                });
+			                displayValue = _value === emptyObj ? "" : _value;
+			            }
                         $('#' + item.field + "-model").html('<table id="' + item.field + 'List-model"></table>');
                         $('#' + item.field + 'List-model').bootstrapTable({
                             striped: true,

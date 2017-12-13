@@ -1,7 +1,153 @@
 $(function() {
 
     var code = getQueryString('code');
-
+    var orderData = !!getQueryString('orderData');
+    var rorderList = !!getQueryString('rorderList');
+    
+    var addressFields =[]
+    var orderDataFields =[]
+    var rorderListFields =[]
+    
+    //有选择商品
+    if(orderData){
+    	orderDataFields = [{
+	    	title: "商品信息",
+	        type: "title"
+	    }, {
+	        title: "商品信息",
+	        field: "productOrderList",
+	        type: "o2m",
+	        readonly: true,
+	        _keys: ['orderData','productOrderList'],
+	        columns: [{
+	            title: "订单编号",
+	            field: "code"
+	        }, {
+	            title: "商品名称",
+	            field: "name",
+	            formatter: function(v, data) {
+	                return data.product.name;
+	            }
+	        }, {
+	            title: "产品规格",
+	            field: "productSpecsName"
+	        }, {
+	            title: "商品价格",
+	            field: "price1",
+	            formatter: function(v, data) {
+	                return "￥"+moneyFormat(v)
+	            }
+	        }, {
+	            title: "数量",
+	            field: "quantity"
+	        }]
+        }]
+    }
+    
+    //有选择租赁
+    if(rorderList){
+    	rorderListFields = [{
+	    	title: "租赁信息",
+	        type: "title"
+	    }, {
+	        title: "租赁信息",
+	        field: "rorderList",
+	        type: "o2m",
+	        readonly: true,
+	        columns: [{
+	            title: "订单编号",
+	            field: "code"
+	        }, {
+	            title: "租赁名称",
+	            field: "name",
+	            formatter: function(v, data) {
+	                return data.rproduct.name;
+	            }
+	        }, {
+	            title: "租赁日期",
+	            field: "bookDatetime",
+	            formatter: dateTimeFormat,
+	        }, {
+	            title: "租赁天数",
+	            field: "rentDay"
+	        }, {
+	            title: "产品数量",
+	            field: "quantity"
+	        }, {
+	            title: "商品价格",
+	            field: "price1",
+	            formatter: function(v, data) {
+                    return "￥"+moneyFormat(v)
+	            }
+	        }, {
+	            title: "数量",
+	            field: "quantity"
+	        }, {
+	            title: "运费",
+	            field: "yunfei",
+	            formatter: function(v, data) {
+                    return "￥"+moneyFormat(v)
+	            }
+	        }]
+	    }];
+    }
+    
+    //有选择商品时地址取商品订单，只有租赁时取租赁
+    if(orderData){
+    	addressFields = [{
+	        title: "收货地址",
+	        type: "title"
+	    }, {
+	        field: 'receiver',
+	        title: '收件人',
+	        readonly: true,
+            formatter: function(v, data) {
+                return data.orderData.receiver
+            }
+	    }, {
+	        field: 'reMobile',
+	        title: '联系方式',
+	        readonly: true,
+            formatter: function(v, data) {
+                return data.orderData.reMobile
+            }
+	    }, {
+	        field: 'reAddress',
+	        title: '收货地址',
+	        readonly: true,
+            formatter: function(v, data) {
+                return data.orderData.reAddress
+            }
+	    }]
+    }else if(rorderList){
+    	addressFields = [{
+	        title: "收货地址",
+	        type: "title"
+	    }, {
+	        field: 'receiver',
+	        title: '收件人',
+	        readonly: true,
+            formatter: function(v, data) {
+                return data.rorderList.receiver
+            }
+	    }, {
+	        field: 'reMobile',
+	        title: '联系方式',
+	        readonly: true,
+            formatter: function(v, data) {
+                return data.rorderList.reMobile
+            }
+	    }, {
+	        field: 'reAddress',
+	        title: '收货地址',
+	        readonly: true,
+            formatter: function(v, data) {
+                return data.rorderList.reAddress
+            }
+	    }]
+    }
+    
+    
     var fields = [{
         title: "订单信息",
         type: "title"
@@ -11,18 +157,6 @@ $(function() {
         formatter: function(v, data) {
             return data.code;
         },
-        readonly: true,
-    }, {
-        field: 'receiver',
-        title: '收件人',
-        readonly: true,
-    }, {
-        field: 'reMobile',
-        title: '联系方式',
-        readonly: true,
-    }, {
-        field: 'reAddress',
-        title: '收货地址',
         readonly: true,
     }, {
         title: '下单人',
@@ -41,30 +175,18 @@ $(function() {
         formatter: dateTimeFormat,
         readonly: true
     }, {
-        field: 'payAmount3',
+        field: 'payAmount1',
         title: '实际支付总额',
         formatter: function(v, data) {
-            if (v != "0" && data.payAmount1 != "0" && data.payAmount2 != "0") {
-                return "人民币：" + moneyFormat(data.payAmount1) + "，积分" + moneyFormat(data.payAmount2) + "，小金库" + moneyFormat(data.payAmount3)
-            } else if (v == "0" && data.payAmount1 != "0" && data.payAmount2 != "0") {
-                return "人民币：" + moneyFormat(data.payAmount1) + "，积分" + moneyFormat(data.payAmount2);
-            } else if (v != "0" && data.payAmount1 != "0" && data.payAmount2 == "0") {
-                return "人民币：" + moneyFormat(data.payAmount1) + "，小金库" + moneyFormat(data.payAmount3);
-            } else if (v != "0" && data.payAmount1 == "0" && data.payAmount2 != "0") {
-                return "积分" + moneyFormat(data.payAmount2) + "，小金库" + moneyFormat(data.payAmount3);
-            } else if (v == "0" && data.payAmount1 == "0" && data.payAmount2 != "0") {
-                return "积分" + moneyFormat(data.payAmount2);
-            } else if (v != "0" && data.payAmount1 == "0" && data.payAmount2 == "0") {
-                return "小金库" + moneyFormat(data.payAmount3);
-            } else if (v == "0" && data.payAmount1 != "0" && data.payAmount2 == "0") {
-                return "人民币" + moneyFormat(data.payAmount1);
-            }
+            return "￥"+moneyFormat(v)
         },
         readonly: true
     }, {
         title: "运费",
-        field: "yunfei",
-        formatter: moneyFormat,
+        field: "totalYunfei",
+        formatter: function(v, data) {
+            return "￥"+moneyFormat(v)
+        },
         readonly: true
     }, {
         field: 'payDatetime',
@@ -72,134 +194,19 @@ $(function() {
         formatter: dateTimeFormat,
         readonly: true
     }, {
-        field: 'promptTimes',
-        title: '催货次数',
-        readonly: true,
-        formatter: function(v, data) {
-            return data.promptTimes
-        }
-    }, {
         field: 'remark',
         title: '备注',
         readonly: true
-    }, {
-        title: "商品信息",
-        type: "title"
-    }, {
-        title: "商品信息",
-        field: "productOrderList",
-        type: "o2m",
-        readonly: true,
-        columns: [{
-            title: "商品名称",
-            field: "name",
-            formatter: function(v, data) {
-                return data.product.name;
-            }
-        }, {
-            title: "产品规格",
-            field: "productSpecsName"
-        }, {
-            title: "商品价格",
-            field: "price1",
-            formatter: function(v, data) {
-                if (v) {
-                    return moneyFormat(v) + "人民币"
-                } else if (data.price2) {
-                    return moneyFormat(data.price2) + "积分"
-                }
-            }
-        }, {
-            title: "数量",
-            field: "quantity"
-        }]
-    }, {
-        title: "发货信息",
-        type: "title"
-    }, {
-        title: '物流公司',
-        field: 'logisticsCompany',
-        type: 'select',
-        key: 'kd_company',
-        readonly: true,
-
-    }, {
-        title: '物流单号',
-        field: 'logisticsCode',
-        readonly: true,
-        formatter: function(v, data) {
-            if (v) {
-                return v
-            } else {
-                $("#logisticsCompany").parent().hide();
-                $("#logisticsCode").parent().hide();
-                $("#deliverer").parent().hide();
-                $("#deliveryDatetime").parent().hide();
-                $("#pdf").parent().hide();
-            }
-        }
-    }, {
-        field: 'deliverer',
-        title: '发货人',
-        readonly: true,
-    }, {
-        field: 'deliveryDatetime',
-        title: '发货时间',
-        formatter: dateTimeFormat,
-        readonly: true,
-    }, {
-        field: 'pdf',
-        title: '物流单',
-        type: "img",
-        readonly: true
-    }, {
-        title: "评论信息",
-        type: "title"
-    }, {
-        title: "评论信息",
-        field: "productOrderListCom",
-        type: "o2m",
-        pageCode: '801025',
-        o2mvalue: {
-            orderCode: code,
-            limit: 100,
-            start: 0,
-            companyCode: OSS.company
-        },
-        readonly: true,
-        columns: [{
-            title: "商品名称",
-            field: "entityName",
-        }, {
-            title: "内容",
-            field: "content"
-        }, {
-            title: "星级",
-            field: "score",
-            formatter: function(v, data) {
-                if (v == 1) {
-                    return "1颗星"
-                } else if (v == 2) {
-                    return "2颗星"
-                } else if (v == 3) {
-                    return "3颗星"
-                } else if (v == 4) {
-                    return "4颗星"
-                } else if (v == 5) {
-                    return "5颗星"
-                }
-            },
-        }, {
-            title: "评论时间",
-            field: "commentDatetime",
-            formatter: dateTimeFormat
-        }]
     }];
-
+	
+	fields = fields.concat(orderDataFields)
+	fields = fields.concat(rorderListFields)
+	fields = fields.concat(addressFields)
+	
     buildDetail({
         fields: fields,
         code: code,
-        detailCode: '808066',
+        detailCode: '808736',
         view: true
     });
 

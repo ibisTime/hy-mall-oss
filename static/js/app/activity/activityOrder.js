@@ -14,7 +14,7 @@ $(function() {
         title: '下单用户',
         search: true,
         formatter: function(v, data) {
-            return data.user.mobile;
+            return data.user?data.user.mobile:v;
         },
         type: 'select',
         search: true,
@@ -35,25 +35,20 @@ $(function() {
         type: 'select',
         search: true,
     }, {
-        field: 'amount1',
-        title: '人民币总价',
+        field: 'totalAmount',
+        title: '总价',
         formatter: moneyFormat
     }, {
-        field: 'amount2',
-        title: '积分总价',
-        formatter: moneyFormat
-    }, {
-        field: 'yunfei',
+        field: 'totalYunfei',
         title: '运费',
         formatter: moneyFormat
     }, {
-        field: 'receiver',
-        title: '收件人',
-        search: true
-    }, {
-        field: 'reMobile',
-        title: '收件人电话',
-        search: true
+        field: 'status',
+        title: '订单状态',
+        type: "select",
+        key: 'act_order_status',
+        formatter: Dict.getNameForList("act_order_status"),
+        search: true,
     }, {
         field: 'applyDatetime',
         title: '下单时间',
@@ -75,21 +70,6 @@ $(function() {
         twoDate: true,
         search: true,
     }, {
-        field: 'status',
-        title: '订单状态',
-        type: "select",
-        data: {
-            "1": "待支付",
-            "2": "待发货",
-            "3": "待收货",
-            "4": "待评价",
-        },
-        search: true,
-    }, {
-        field: 'promptTimes',
-        title: '催货次数',
-        readonly: true
-    }, {
         title: "备注",
         field: "remark"
     }];
@@ -98,7 +78,15 @@ $(function() {
         pageCode: '808735',
         singleSelect: false,
         searchParams: {
-            toUser: OSS.SYS_USER,
+            companyCode: OSS.company
+        },
+        beforeDetail: function(){
+        	var selRecords = $('#tableList').bootstrapTable('getSelections');
+        	
+		    var orderData = selRecords[0].orderData?"1":"";
+		    var rorderList = selRecords[0].rorderList?"1":"";
+		    
+        	window.location.href = "activityOrder_addedit.html?code=" + selRecords[0].code+"&orderData="+orderData+"&rorderList="+rorderList;
         }
     });
     //物流发货

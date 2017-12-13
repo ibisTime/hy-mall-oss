@@ -21,6 +21,9 @@ $(function() {
         keyName: 'userId',
         valueName: 'mobile',
         searchName: 'mobile',
+        formatter: function(v, data) {
+            return data.user ? data.user.realName+"("+data.user.mobile+")" : v
+        }
     }, {
         field: 'type',
         title: '类型',
@@ -59,11 +62,11 @@ $(function() {
             return;
         }
 
-        if (selRecords[0].status != 3) {
+        if (selRecords[0].status != 0) {
             toastr.info("不是可审核的状态");
             return;
         }
 
-        window.location.href = "activity_examine.html?userId=" + selRecords[0].userId;
+        window.location.href = "activity_examine.html?code=" + selRecords[0].code+"&userId=" + selRecords[0].userId;
     })
 });

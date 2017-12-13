@@ -5,20 +5,18 @@ $(function() {
         title: '',
         checkbox: true
     }, {
+        field: 'outName',
+        title: '户外昵称'
+    }, {
         field: 'mobile',
         title: '手机号',
         search: true
     }, {
-        field: 'outName',
-        title: '昵称'
-    }, {
         field: 'realName',
-        title: '姓名',
-        search: true
+        title: '姓名'
     }, {
         field: 'idNo',
-        title: '证件号码',
-        search: true
+        title: '证件号码'
     }, {
         field: 'status',
         title: '状态',
