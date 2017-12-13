@@ -12,7 +12,7 @@ $(function() {
         field: 'type',
         title: '类型',
         type: 'select',
-        listCode: '810007',
+        listCode: '808007',
         params: {
             type: '4',
             // parentCode: 0,

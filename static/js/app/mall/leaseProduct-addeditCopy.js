@@ -6,7 +6,7 @@ $(function() {
         field: 'type',
         title: '类别',
         type: 'select',
-        listCode: '810007',
+        listCode: '808007',
         params: {
             parentCode: "0",
             type: "4",

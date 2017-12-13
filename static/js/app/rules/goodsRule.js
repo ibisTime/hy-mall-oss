@@ -16,11 +16,10 @@ $(function() {
         title: '参数值'
     }];
     buildList({
-        // router: "userRule",
         columns: columns,
         pageCode: '808915',
         searchParams: {
-            // type: 'gift',
+        	type:'mall,O',
             companyCode: OSS.company
         },
     });

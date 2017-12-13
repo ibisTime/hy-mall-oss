@@ -27,8 +27,8 @@ $(function() {
             type: "1",
             companyCode: OSS.company,
             parentCode: "0",
-            "orderColumn": "order_no",
-            "orderDir": "asc"
+            orderColumn: "order_no",
+            orderDir: "asc"
         }
     });
 
