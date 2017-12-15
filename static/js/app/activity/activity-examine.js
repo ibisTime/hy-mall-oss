@@ -160,7 +160,7 @@ $(function() {
     	var dw = dialog({
     		fixed: true,
             content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"></ul>' +
+                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">设置位置</li></ul>' +
                 '</form>'
         });
 
@@ -186,19 +186,6 @@ $(function() {
                 handler: function() {
                     if ($('#popForm').valid()) {
                         var data = $('#popForm').serializeObject();
-                        for (var i = 0, len = fields.length; i < len; i++) {
-                            var item = fields[i];
-                            if (item.equal && (!$('#' + item.field).is(':hidden') || !$('#' + item.field + 'Img').is(':hidden'))) {
-                                data[item.equal] = $('#' + item.field).val() || $('#' + item.field).attr('src');
-                            } else if (item.emptyValue && !data[item.field]) {
-                                data[item.field] = item.emptyValue;
-                            } else if (item.readonly && item.pass) {
-                                data[item.field] = $('#' + item.field).attr('data-value') || $('#' + item.field).html();
-                            }
-                            if (item.type == 'select' && item.passValue) {
-                                data[item.field] = $('#' + item.field).find('option:selected').html();
-                            }
-                        }
         				data.remark = $("#remark").val()
                         data.approveResult = '1';
 		                data.approver = getUserName();
@@ -224,5 +211,7 @@ $(function() {
         dw.__center();
         
     })
+    
+    
 	
 });

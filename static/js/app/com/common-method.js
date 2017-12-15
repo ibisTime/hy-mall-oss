@@ -1133,7 +1133,7 @@ function buildDetail(options) {
         }
         if (item.type == 'title') {
             html += '<div ' + (item.field ? 'id="' + item.field + '"' : '') +
-                ' style="' + (item.hidden ? 'display:none;' : '') + '" class="form-title">' + item.title + '</div>';
+                ' style="' + (item.hidden ? 'display:none;' : '') + '" class="form-title"><span>' + item.title + '</span></div>';
         } else if (item.type == 'hidden') {
             html = '<input type="hidden" id="' + item.field + '" name="' + item.field + '"/>' + html;
         } else if (item.readonly) {

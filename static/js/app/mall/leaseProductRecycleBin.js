@@ -69,6 +69,9 @@ $(function() {
         searchParams: {
         	status:'9',
             companyCode: OSS.company
+        },
+        beforeDetail: function(data) {
+            window.location.href = "./leaseProduct_addedit.html?Code=" + data.code + "&v=1";
         }
     });
     //还原

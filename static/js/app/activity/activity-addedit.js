@@ -119,6 +119,17 @@ $(function() {
         key: 'act_status',
         formatter: Dict.getNameForList('act_status'),
     }, {
+        field: 'location',
+        title: '位置',
+        type: 'select',
+        data:{
+        	"0": "普通",
+        	"1": "置顶"
+        },
+    }, {
+        field: 'orderNo',
+        title: '序号',
+    }, {
         field: 'updateDatetime',
         title: '更新时间',
         formatter: dateTimeFormat,

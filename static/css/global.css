@@ -980,26 +980,6 @@ input[type=file] {
     border: 1px solid transparent;
     border-radius: 4px;
 }
-
-.pop-form .form-info li label {
-    width: 90px;
-}
-
-.pop-form .form-info .btn {
-    margin-left: 10px;
-}
-.pop-form .form-info .btn:first-child{
-    margin-left: 40px;
-}
-
-.pop-form .form-body {
-    padding: 0px;
-}
-
-.pop-form .form-body .form-info {
-    padding: 0px;
-}
-
 .float-img {
     position: absolute;
     z-index: 10000;
@@ -1265,4 +1245,38 @@ svg circle:hover {
 }
 .search-form-li-date{
     min-width: 455px !important;
+}
+/*弹窗*/
+.pop-form .pop-form-title{
+	text-align: center;
+	font-size: 15px;
+	margin-bottom: 25px;
+}
+.pop-form .form-info li{
+	position: relative;
+}
+.pop-form .form-info li label {
+    width: 100px;
+}
+.pop-form .form-info .btn {
+    margin-left: 10px;
+}
+.pop-form .form-info .btn:first-child{
+    margin-left: 40px;
+}
+.pop-form .form-info span.error{
+	display: table;
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+.pop-form .form-body {
+    padding: 0px;
+}
+
+.pop-form .form-body .form-info {
+    padding: 0px;
+}
+.pop-form .chosen-container-single .chosen-single{
+	text-align: left;
 }

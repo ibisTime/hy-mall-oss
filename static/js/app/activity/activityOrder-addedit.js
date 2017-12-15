@@ -189,6 +189,12 @@ $(function() {
         },
         readonly: true
     }, {
+        field: 'payType',
+        title: '买单方式',
+        key: 'pay_type',
+        formatter: Dict.getNameForList("pay_type"),
+        type: 'select',
+    }, {
         field: 'payDatetime',
         title: '支付时间',
         formatter: dateTimeFormat,
@@ -197,6 +203,51 @@ $(function() {
         field: 'remark',
         title: '备注',
         readonly: true
+    },{
+    	title: "活动信息",
+        type: "title"
+    },{
+        field: 'actName',
+        title: '名称',
+        formatter: function(v, data) {
+            return data.activity.name;
+        },
+        readonly: true,
+    }, {
+        field: 'actAmount',
+        title: '费用',
+        formatter: function(v, data) {
+            return "￥"+moneyFormat(data.activity.amount);
+        },
+        readonly: true,
+    }, {
+        field: 'actDate',
+        title: '日期',
+        formatter: function(v, data) {
+            return dateFormat(data.activity.startDatetime,"yyyy-MM-dd")+"至"+dateFormat(data.activity.endDatetime,"yyyy-MM-dd");
+        },
+        readonly: true,
+    }, {
+        field: 'actEnrollEndDatetime',
+        title: '报名截止日期',
+        formatter: function(v, data) {
+            return dateFormat(data.activity.enrollEndDatetime,"yyyy-MM-dd");
+        },
+        readonly: true,
+    }, {
+        field: 'actPlaceDest',
+        title: '目的地',
+        formatter: function(v, data) {
+            return data.activity.placeDest;
+        },
+        readonly: true,
+    }, {
+        field: 'actPlaceAsse',
+        title: '集合地',
+        formatter: function(v, data) {
+            return data.activity.placeAsse;
+        },
+        readonly: true,
     }];
 	
 	fields = fields.concat(orderDataFields)
