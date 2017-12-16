@@ -61,6 +61,6 @@ $(function() {
         window.location.href = "../finance/ledger.html?&a=1&accountCode=" + selRecords[0].accountNumber;
     });
     $('#goBackBtn').click(function() {
-        window.location.href = "customer.html"
+        window.location.href = "activityLeader.html"
     });
 });
