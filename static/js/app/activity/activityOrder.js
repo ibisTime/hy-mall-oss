@@ -35,12 +35,8 @@ $(function() {
         type: 'select',
         search: true,
     }, {
-        field: 'totalAmount',
+        field: 'totalAmount1',
         title: '总价',
-        formatter: moneyFormat
-    }, {
-        field: 'totalYunfei',
-        title: '运费',
         formatter: moneyFormat
     }, {
         field: 'status',
@@ -85,8 +81,12 @@ $(function() {
         	
 		    var orderData = selRecords[0].orderData?"1":"";
 		    var rorderList = selRecords[0].rorderList?"1":"";
+		    var toUser = '';
+		    if(orderData=='1'&&rorderList=='1'){
+		    	toUser = orderData=='1'?selRecords[0].orderData.toUser:selRecords[0].rorderList[0].takeStore;
+		    }
 		    
-        	window.location.href = "activityOrder_addedit.html?code=" + selRecords[0].code+"&orderData="+orderData+"&rorderList="+rorderList;
+        	window.location.href = "activityOrder_addedit.html?code=" + selRecords[0].code+"&orderData="+orderData+"&rorderList="+rorderList+"&toUser="+toUser;
         }
     });
     //流水查询
