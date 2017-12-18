@@ -56,8 +56,8 @@ $(function() {
                 companyCode: OSS.company
             },
             keyName: 'userId',
-            valueName: 'mobile',
-            searchName: 'mobile',
+	        valueName: '{{nickname.DATA}}-{{mobile.DATA}}',
+	        searchName: 'keywords',
         }, {
             title: "提货方式",
             field: "takeType",

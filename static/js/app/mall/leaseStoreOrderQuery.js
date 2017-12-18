@@ -25,8 +25,8 @@ $(function() {
             companyCode: OSS.company
         },
         keyName: 'userId',
-        valueName: 'mobile',
-        searchName: 'mobile',
+        valueName: '{{nickname.DATA}}-{{mobile.DATA}}',
+        searchName: 'keywords',
     }, {
         field: 'productName',
         title: '商品名称'

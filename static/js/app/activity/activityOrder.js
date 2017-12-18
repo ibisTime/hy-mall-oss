@@ -25,8 +25,8 @@ $(function() {
             companyCode: OSS.company
         },
         keyName: 'userId',
-        valueName: 'mobile',
-        searchName: 'mobile',
+        valueName: '{{nickname.DATA}}-{{mobile.DATA}}',
+        searchName: 'keywords',
     }, {
         field: 'payType',
         title: '买单方式',
@@ -86,7 +86,8 @@ $(function() {
 		    	toUser = orderData=='1'?selRecords[0].orderData.toUser:selRecords[0].rorderList[0].takeStore;
 		    }
 		    
-        	window.location.href = "activityOrder_addedit.html?code=" + selRecords[0].code+"&orderData="+orderData+"&rorderList="+rorderList+"&toUser="+toUser;
+        	window.location.href = "activityOrder_addedit.html?code=" + selRecords[0].code+"&orderData="+orderData
+        					+"&rorderList="+rorderList+"&toUser="+toUser+"&status="+selRecords[0].status;
         }
     });
     //流水查询

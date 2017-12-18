@@ -58,7 +58,14 @@ $(function() {
         formatter: dateTimeFormat,
     },{
         field: 'remark',
-        title: '备注'
+        title: '备注',
+        formatter: function(v, data){
+        	var description = v;
+        	if(description.length>20){
+				description = description.substring(0,20)+"...";
+        	}
+        	return description;
+        }
     }];
     buildList({
         columns: columns,

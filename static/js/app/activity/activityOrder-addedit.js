@@ -4,6 +4,8 @@ $(function() {
     var orderData = !!getQueryString('orderData');
     var rorderList = !!getQueryString('rorderList');
     var toUser = !!getQueryString('toUser');
+    var amountType = getQueryString('status');
+    amountType = amountType=='0'?true:false
     
     var addressFields =[]
     var orderDataFields =[]
@@ -294,11 +296,13 @@ $(function() {
         readonly: true,
     },{
         title: "下单人信息",
-        type: "title"
+        type: "title",
+        hidden: amountType,
     },{
         title: '户外昵称',
         field: 'outName',
         readonly: true,
+        hidden: amountType,
         formatter: function(v, data) {
             return data.user.outName;
         }
@@ -306,6 +310,7 @@ $(function() {
         title: '联系电话',
         field: 'usermobile',
         readonly: true,
+        hidden: amountType,
         formatter: function(v, data) {
             return data.user.mobile;
         }
@@ -313,6 +318,7 @@ $(function() {
         title: '真实姓名',
         field: 'realName',
         readonly: true,
+        hidden: amountType,
         formatter: function(v, data) {
             return data.user.realName;
         }
@@ -320,6 +326,7 @@ $(function() {
         title: '身份证号',
         field: 'idNo',
         readonly: true,
+        hidden: amountType,
         formatter: function(v, data) {
             return data.user.idNo;
         }

@@ -39,8 +39,8 @@ $(function() {
             updater: ""
         },
         keyName: "userId",
-        valueName: "{{mobile.DATA}}--{{nickname.DATA}}",
-        searchName: "mobile",
+        valueName: '{{nickname.DATA}}-{{mobile.DATA}}',
+        searchName: 'keywords',
         search: true,
         visible: false
     }, {
