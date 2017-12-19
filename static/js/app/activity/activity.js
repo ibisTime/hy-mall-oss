@@ -53,6 +53,9 @@ $(function() {
         },
         search: true
     }, {
+        field: 'orderNo',
+        title: '序号',
+    }, {
         field: 'updateDatetime',
         title: '更新时间',
         formatter: dateTimeFormat,
@@ -60,7 +63,7 @@ $(function() {
         field: 'remark',
         title: '备注',
         formatter: function(v, data){
-        	var description = v;
+        	var description = v!=''&&v?v:'';
         	if(description.length>20){
 				description = description.substring(0,20)+"...";
         	}

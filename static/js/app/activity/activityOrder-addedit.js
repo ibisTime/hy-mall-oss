@@ -4,7 +4,7 @@ $(function() {
     var orderData = !!getQueryString('orderData');
     var rorderList = !!getQueryString('rorderList');
     var toUser = !!getQueryString('toUser');
-    var amountType = getQueryString('status');
+    var amountType = getQueryString('amount');
     amountType = amountType=='0'?true:false
     
     var addressFields =[]
@@ -224,14 +224,14 @@ $(function() {
         field: 'totalAmount1',
         title: '总额',
         formatter: function(v, data) {
-            return "￥"+moneyFormat(v)
+            return v!=''&&v?"￥"+moneyFormat(v):'0'
         },
         readonly: true
     }, {
         field: 'payAmount1',
         title: '实际支付总额',
         formatter: function(v, data) {
-            return "￥"+moneyFormat(v)
+            return v!=''&&v?"￥"+moneyFormat(v):'0'
         },
         readonly: true
     }, {
@@ -260,6 +260,12 @@ $(function() {
         },
         readonly: true,
     }, {
+        title: "领队",
+        type: "leaderMobile",
+        formatter: function(v, data) {
+            return data.activity.user.outName+"("+data.activity.user.mobile+")";
+        }
+    },{
         field: 'actAmount',
         title: '费用',
         formatter: function(v, data) {
@@ -294,6 +300,12 @@ $(function() {
             return data.activity.placeAsse;
         },
         readonly: true,
+    },{
+        title: "联系电话",
+        type: "leadertitle",
+        formatter: function(v, data) {
+            return data.activity.user.outName;
+        }
     },{
         title: "下单人信息",
         type: "title",

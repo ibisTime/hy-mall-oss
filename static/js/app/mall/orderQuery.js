@@ -110,8 +110,16 @@ $(function() {
         field: 'status',
         title: '订单状态',
         type: "select",
-        key: "order_status",
-        formatter: Dict.getNameForList("order_status"),
+        data: {
+            "1": "待支付",
+            "2": "待发货",
+            "3": "待收货",
+            "4": "待评价",
+            "5": "已完成",
+            "91": "用户异常",
+            "92": "商户异常",
+            "93": "快递异常",
+        },
         search: true,
     }, {
         field: 'promptTimes',
@@ -124,6 +132,9 @@ $(function() {
     buildList({
         columns: columns,
         pageCode: '808065',
+        searchParams: {
+            statusList: ["1", "2", "3", "4", "5", "91", "92", "93"]
+        },
         beforeDetail: function(data) {
             if (data.toUser == OSS.SYS_USER) {
                 window.location.href = "order_addedit.html?&v=1&code=" + data.code;

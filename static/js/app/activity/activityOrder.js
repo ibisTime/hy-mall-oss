@@ -87,7 +87,7 @@ $(function() {
 		    }
 		    
         	window.location.href = "activityOrder_addedit.html?code=" + selRecords[0].code+"&orderData="+orderData
-        					+"&rorderList="+rorderList+"&toUser="+toUser+"&status="+selRecords[0].status;
+        					+"&rorderList="+rorderList+"&toUser="+toUser+"&amount="+selRecords[0].activity.amountType;
         }
     });
     //流水查询

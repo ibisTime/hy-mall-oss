@@ -24,18 +24,30 @@ $(function() {
     }, {
         field: 'startDatetime',
         title: '开始时间',
-        formatter: dateTimeFormat,
+        formatter: dateFormatData,
     },{
         field: 'endDatetime',
         title: '结束时间',
-        formatter: dateTimeFormat,
+        formatter: dateFormatData,
     },{
         field: 'enrollEndDatetime',
         title: '报名截止时间',
-        formatter: dateTimeFormat,
+        formatter: dateFormatData,
     },{
+        field: 'placeDestProvince',
+        title: '目的地所在市',
+        formatter: function(v, data){
+        	return data.placeDestProvince + " "+ data.placeDestCity
+        },
+    }, {
         field: 'placeDest',
         title: '目的地'
+    }, {
+        field: 'placeAsseProvince',
+        title: '集合地所在市',
+        formatter: function(v, data){
+        	return data.placeAsseProvince + " "+ data.placeAsseCity
+        },
     }, {
         field: 'placeAsse',
         title: '集合地'

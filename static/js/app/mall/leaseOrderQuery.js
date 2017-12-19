@@ -107,16 +107,20 @@ $(function() {
         field: 'status',
         title: '订单状态',
         type: "select",
-        key: "rorder_status",
-        formatter: Dict.getNameForList("rorder_status"),
-        // data: {
-        //     "7": "已结算",
-        //     "8": "不归还",
-        //     "9": "已评论",
-        //     "91": "用户异常",
-        //     "92": '商户异常',
-        //     "93": "快递异常"
-        // },
+       data: {
+           "1": "待支付",
+           "2": "已支付待发货",
+           "3": "已发货待收货",
+           "4": "已收货体验中",
+           "5": "已归还，待确认",
+           "6": "逾期中",
+           "7": "已结算",
+           "8": "不归还",
+           "9": "已评论",
+           "91": "用户异常",
+           "92": '商户异常',
+           "93": "快递异常"
+       },
         search: true,
     }, {
         field: 'backStore',
@@ -151,7 +155,7 @@ $(function() {
         searchParams: {
             // takeType: '2',
             companyCode: OSS.company,
-            // statusList: ["7", "8", "9", "91", "92", "93"]
+        	statusList: [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "91", "92", "93"]
         },
         beforeDetail: function(data) {
             if (data.takeType == "2") {

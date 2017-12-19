@@ -48,6 +48,15 @@ function dateTimeFormat(date) {
     return date.format(format);
 }
 
+function dateFormatData(date) {
+    if (date == '' || typeof(date) == 'undefined') {
+        return '-';
+    }
+    format = "yyyy-MM-dd";
+    date = new Date(date);
+    return date.format(format);
+}
+
 /**
  * 金额格式转化
  * @param money

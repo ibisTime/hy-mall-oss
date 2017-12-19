@@ -6,6 +6,12 @@ $(function() {
         field: 'name',
         title: '活动名称'
     }, {
+        field: 'userId',
+        title: '领队',
+        formatter: function(v, data) {
+            return data.user ? data.user.realName+"("+data.user.mobile+")" : v
+        }
+    }, {
         field: 'type',
         title: '类型',
         type: 'select',
@@ -17,18 +23,30 @@ $(function() {
     }, {
         field: 'startDatetime',
         title: '开始时间',
-        formatter: dateTimeFormat,
+        formatter: dateFormatData,
     },{
         field: 'endDatetime',
         title: '结束时间',
-        formatter: dateTimeFormat,
+        formatter: dateFormatData,
     },{
         field: 'enrollEndDatetime',
         title: '报名截止时间',
-        formatter: dateTimeFormat,
+        formatter: dateFormatData,
     },{
+        field: 'placeDestProvince',
+        title: '目的地所在市',
+        formatter: function(v, data){
+        	return data.placeDestProvince + " "+ data.placeDestCity
+        },
+    }, {
         field: 'placeDest',
         title: '目的地'
+    }, {
+        field: 'placeAsseProvince',
+        title: '集合地所在市',
+        formatter: function(v, data){
+        	return data.placeAsseProvince + " "+ data.placeAsseCity
+        },
     }, {
         field: 'placeAsse',
         title: '集合地'
@@ -105,9 +123,6 @@ $(function() {
         title: '装备建议',
         type: 'textarea',
         normalArea: true
-    }, {
-        field: 'userId',
-        title: '领队',
     }, {
         field: 'status',
         title: '状态',

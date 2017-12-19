@@ -58,7 +58,7 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-        window.location.href = "customer_account.html?&c=1&userId=" + selRecords[0].userId;
+        window.location.href = "activityLeader_account.html?&c=1&userId=" + selRecords[0].userId;
     });
 
 });

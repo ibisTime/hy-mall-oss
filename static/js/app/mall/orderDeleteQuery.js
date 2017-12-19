@@ -112,7 +112,6 @@ $(function() {
         type: "select",
         key: "order_status",
         formatter: Dict.getNameForList("order_status"),
-        search: true,
     }, {
         field: 'promptTimes',
         title: '催货次数',

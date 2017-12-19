@@ -117,7 +117,6 @@ $(function() {
         //     "92": '商户异常',
         //     "93": "快递异常"
         // },
-        search: true,
     }, {
         field: 'backStore',
         title: '归还点',
