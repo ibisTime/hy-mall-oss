@@ -27,12 +27,12 @@ $(function() {
         code: code,
         editCode: "805911",
         detailCode: '805916',
-        // beforeSubmit: function(data) {
-        //     data.remark = $('#remark').html();
-        //     data.type = type;
+        beforeSubmit: function(data) {
+        	data.remark = $('#remark').html();
+        	data.type = type;
 
-        //     return data;
-        // }
+        	return data;
+        }
     });
 
 });

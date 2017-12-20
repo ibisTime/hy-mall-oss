@@ -1,8 +1,11 @@
 $('title', window.parent.document).html(OSS.systemName);
 $(function() {
+	
+	var timestamp = new Date().getTime()
+	
     if (!sessionStorage.getItem('token')) {
         var kind = document.domain.substr(0, 1) == 'z' ? 'PA' : (sessionStorage.getItem('loginKind') || 'P')
-        location.href = 'signin.html?kind=' + kind;
+        location.href = 'signin.html?kind=' + kind+'&timestamp=' + timestamp;
         return;
     }
 
@@ -74,7 +77,7 @@ $(function() {
                 window.sessionStorage.setItem('userName', '');
                 window.sessionStorage.setItem('roleCode', '');
                 window.sessionStorage.setItem('qiniuUrl', '');
-                location.href = 'signin.html?kind=' + (sessionStorage.getItem('loginKind') || 'P')
+                location.href = 'signin.html?kind=' + (sessionStorage.getItem('loginKind') || 'P')+'&timestamp=' + timestamp;
             }
         });
     });

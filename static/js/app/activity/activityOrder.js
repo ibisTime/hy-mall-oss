@@ -10,6 +10,18 @@ $(function() {
         title: '订单编号',
         search: true
     }, {
+        field: 'actName',
+        title: '活动名称',
+        formatter: function(v, data) {
+            return data.activity.name;
+        },
+        type: 'select',
+        search: true,
+        pageCode: '808705',
+        keyName: 'name',
+        valueName: '{{name.DATA}}',
+        searchName: 'name',
+    }, {
         field: 'applyUser',
         title: '下单用户',
         search: true,

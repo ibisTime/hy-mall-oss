@@ -1,4 +1,6 @@
 $('title').html(OSS.systemName);
+var timestamp = new Date().getTime()
+
 function getQueryString(name) {
     var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
     var r = window.location.search.substr(1).match(reg);
@@ -58,7 +60,7 @@ $(function() {
                 json: data,
 				sync: true
             }).then(function(data) {
-                location.href = "main.html";
+                location.href = "main.html?timestamp=" + timestamp;
                 window.sessionStorage.setItem('token', data.token || data.userId);
                 window.sessionStorage.setItem('userId', data.userId);
             });

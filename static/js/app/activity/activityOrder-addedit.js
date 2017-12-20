@@ -3,7 +3,7 @@ $(function() {
     var code = getQueryString('code');
     var orderData = !!getQueryString('orderData');
     var rorderList = !!getQueryString('rorderList');
-    var toUser = !!getQueryString('toUser');
+    var toUser = getQueryString('toUser');
     var amountType = getQueryString('amount');
     amountType = amountType=='0'?true:false
     
@@ -24,7 +24,7 @@ $(function() {
 	        _keys: ['orderData','productOrderList'],
 	        columns: [{
 	            title: "订单编号",
-	            field: "code"
+	            field: "orderCode"
 	        }, {
 	            title: "商品名称",
 	            field: "name",
@@ -43,16 +43,6 @@ $(function() {
 	        }, {
 	            title: "数量",
 	            field: "quantity"
-	        }, {
-	            title: "运输方式",
-	            field: "toUser",
-	            formatter: function(v, data) {
-	            	if(v == OSS.SYS_USER){
-	            		return '邮寄'
-	            	}else{
-	            		return '自提'
-	            	}
-	            }
 	        }]
         }]
     }
@@ -79,7 +69,7 @@ $(function() {
 	        }, {
 	            title: "租赁日期",
 	            field: "bookDatetime",
-	            formatter: dateTimeFormat,
+	            formatter: dateFormatData,
 	        }, {
 	            title: "租赁天数",
 	            field: "rentDay"
@@ -93,18 +83,14 @@ $(function() {
                     return "￥"+moneyFormat(v)
 	            }
 	        }, {
+	            title: "押金",
+	            field: "realDeposit",
+	            formatter: function(v, data) {
+                    return "￥"+moneyFormat(v)
+	            }
+	        }, {
 	            title: "数量",
 	            field: "quantity"
-	        }, {
-	            title: "运输方式",
-	            field: "toUser",
-	            formatter: function(v, data) {
-	            	if(v == OSS.SYS_USER){
-	            		return '邮寄'
-	            	}else{
-	            		return '自提'
-	            	}
-	            }
 	        }]
 	    }];
     }
@@ -246,6 +232,16 @@ $(function() {
         formatter: dateTimeFormat,
         readonly: true
     }, {
+        title: "运输方式",
+        field: "orderToUser",
+        formatter: function(v, data) {
+        	if(toUser == OSS.SYS_USER){
+        		return '邮寄'
+        	}else{
+        		return '自提'
+        	}
+        }
+    }, {
         field: 'remark',
         title: '备注',
         readonly: true
@@ -260,10 +256,10 @@ $(function() {
         },
         readonly: true,
     }, {
+        field: "leaderMobile",
         title: "领队",
-        type: "leaderMobile",
         formatter: function(v, data) {
-            return data.activity.user.outName+"("+data.activity.user.mobile+")";
+            return data.leadUser.outName+"("+data.leadUser.mobile+")";
         }
     },{
         field: 'actAmount',
@@ -300,12 +296,6 @@ $(function() {
             return data.activity.placeAsse;
         },
         readonly: true,
-    },{
-        title: "联系电话",
-        type: "leadertitle",
-        formatter: function(v, data) {
-            return data.activity.user.outName;
-        }
     },{
         title: "下单人信息",
         type: "title",
