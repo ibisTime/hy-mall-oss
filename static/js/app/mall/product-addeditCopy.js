@@ -347,6 +347,7 @@ $(function() {
                         data.pic = data.pic11;
                         delete data.pic11;
                         data.code = codeInd++;
+                        
                         $('#tableList').bootstrapTable('insertRow', {
                             index: data.code,
                             row: data
@@ -430,6 +431,8 @@ $(function() {
                         }
                         data.pic = data.pic11;
                         delete data.pic11;
+                        
+                        
                         $('#tableList').bootstrapTable('updateRow', {
                             index: paramIndex,
                             row: data
@@ -519,12 +522,15 @@ $(function() {
             data['id'] = data['code'];
             data.productSpecsList = $('#tableList').bootstrapTable("getData", { useCurrentPage: true });
 
-            if (!code && data.category == 'J01') {
-                data.productSpecsList.each(function(v, i) {
-                    data.productSpecsList[i].price2 = data.productSpecsList[i].price1;
+            data.productSpecsList.each(function(v, i) {
+            	if(data.specsName2==""&&!data.specsName2){
+            		delete data.productSpecsList[i].specsVal2;
+            	}
+            	if (!code &&data.category == 'J01') {
+            		data.productSpecsList[i].price2 = data.productSpecsList[i].price1;
                     data.productSpecsList[i].price1 = 0;
-                })
-            }
+            	}
+            })
 
             reqApi({
                 code: '808010',
