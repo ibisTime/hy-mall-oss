@@ -27,8 +27,8 @@ $(function() {
             companyCode: OSS.company
         },
         keyName: 'userId',
-        valueName: 'mobile',
-        searchName: 'mobile',
+        valueName: '{{nickname.DATA}}-{{mobile.DATA}}',
+        searchName: 'keywords',
         visible: false
     }, {
         field: 'realName',
@@ -61,15 +61,15 @@ $(function() {
             }
         },
     }, {
-        field: 'status',
-        title: '状态',
-        type: 'select',
-        data: {
-            "0": "删除",
-            "1": "有效"
-        },
-        search: true
-    }, {
+//      field: 'status',
+//      title: '状态',
+//      type: 'select',
+//      data: {
+//          "0": "删除",
+//          "1": "有效"
+//      },
+//      search: true
+//  }, {
         field: 'createDatetime11',
         title: '注册时间',
         formatter: function(v, data) {
@@ -84,6 +84,7 @@ $(function() {
         columns: columns,
         pageCode: '805245',
         searchParams: {
+        	status:"1",
             companyCode: OSS.company
         },
         beforeDetail: function(data) {

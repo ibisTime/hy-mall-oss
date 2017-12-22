@@ -18,7 +18,7 @@ $(function() {
     buildList({
         router: "leaseRule",
         columns: columns,
-        pageCode: '810915',
+        pageCode: '808915',
         searchParams: {
             companyCode: OSS.company,
             type: "myj"

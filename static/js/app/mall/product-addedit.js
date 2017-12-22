@@ -8,7 +8,8 @@ $(function() {
     var paramIndex = 0;
 
     var typeData = {};
-    var productSpecsFields = [];
+    var productSpecsFields1 = [];
+    var productSpecsFields2 = [];
     var fields = [];
 
 
@@ -44,10 +45,70 @@ $(function() {
 
 
     function setFields() {
-        //规格
-        productSpecsFields = [{
-            field: 'name',
-            title: '规格名称',
+        //规格1
+        productSpecsFields1 = [{
+            field: 'specsVal1',
+            title: '规格名称1',
+            required: true,
+        }, {
+            field: 'specsVal2',
+            title: '规格名称2',
+            type: "hidden",
+        }, {
+            title: "图片",
+            field: "pic11",
+            required: true,
+            type: "img",
+            single: true,
+            _keys: ['pic']
+        }, {
+            field: 'originalPrice',
+            title: '原价/市场价',
+            required: true,
+            amount: true,
+            formatter: moneyFormat,
+        }, category == OSS.JFProductCategory ? {
+            field: 'price2',
+            title: '价格',
+            amount: true,
+            formatter: moneyFormat,
+            required: true,
+        } : {
+            field: 'price1',
+            title: '价格',
+            amount: true,
+            formatter: moneyFormat,
+            required: true,
+        }, {
+            field: 'quantity',
+            title: '库存',
+            required: true,
+            number: true
+        }, {
+            field: 'province',
+            title: '产地',
+            required: true,
+            maxlength: 255
+        }, {
+            field: 'weight',
+            title: '重量（kg）',
+            required: true,
+            number: true
+        }, {
+            field: 'orderNo',
+            title: '序号',
+            required: true,
+            number: true
+        }]
+        
+        //规格1，规格2
+        productSpecsFields2 = [{
+            field: 'specsVal1',
+            title: '规格名称1'+$("#specsName1").val(),
+            required: true,
+        }, {
+            field: 'specsVal2',
+            title: '规格名称2'+$("#specsName2").val(),
             required: true,
         }, {
             title: "图片",
@@ -97,7 +158,7 @@ $(function() {
         }]
 
 
-        //详情
+        //商品详情
         fields = [{
             field: 'kind',
             type: 'hidden',
@@ -153,6 +214,13 @@ $(function() {
             type: 'textarea',
             required: true,
         }, {
+            field: 'specsName1',
+            title: '规格名称1',
+            required: true,
+        }, {
+            field: 'specsName2',
+            title: '规格名称2',
+        }, {
             field: 'remark',
             title: '备注',
         }];
@@ -172,9 +240,12 @@ $(function() {
                 title: '',
                 checkbox: true
             }, {
-                field: 'name',
-                title: '规格名称',
-            }, {
+	            field: 'specsVal1',
+	            title: '规格名称1',
+	        }, {
+	            field: 'specsVal2',
+	            title: '规格名称2',
+	        }, {
                 title: "图片",
                 field: "pic11",
                 formatter: function(v, data) {
@@ -226,74 +297,81 @@ $(function() {
     //添加
     $("#addBtn").click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
-        var dw = dialog({
-            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"></ul>' +
-                '</form>'
-        });
-
-        dw.showModal();
-        buildDetail({
-            fields: productSpecsFields,
-            container: $('#formContainer'),
-            buttons: [{
-                title: '保存',
-                handler: function() {
-                    if ($('#popForm').valid()) {
-                        var data = $('#popForm').serializeObject();
-                        $('#popForm').find('.btn-file [type=file]').parent().next().each(function(i, el) {
-                            var values = [];
-                            var imgs = $(el).find('.img-ctn');
-                            imgs.each(function(index, img) {
-                                values.push($(img).attr('data-src') || $(img).find('img').attr('data-src'));
-                            });
-                            data[el.id] = values.join('||');
-                        });
-                        if ($('#popForm').find('#province')[0]) {
-                            var province = $('#province').val();
-                            var city = $('#city').val();
-                            var area = $('#area').val();
-                            if (!city) {
-                                data['city'] = province;
-                                data['area'] = province;
-                            } else if (!area) {
-                                data['city'] = province;
-                                data['area'] = city;
-                            }
-                        }
-                        for (var i = 0, len = fields.length; i < len; i++) {
-                            var item = fields[i];
-                            if (item.equal && (!$('#' + item.field).is(':hidden') || !$('#' + item.field + 'Img').is(':hidden'))) {
-                                data[item.equal] = $('#' + item.field).val() || $('#' + item.field).attr('src');
-                            } else if (item.emptyValue && !data[item.field]) {
-                                data[item.field] = item.emptyValue;
-                            } else if (item.readonly && item.pass) {
-                                data[item.field] = $('#' + item.field).attr('data-value') || $('#' + item.field).html();
-                            }
-                            if (item.type == 'select' && item.passValue) {
-                                data[item.field] = $('#' + item.field).find('option:selected').html();
-                            }
-                        }
-                        data.pic = data.pic11;
-                        delete data.pic11;
-                        data.code = codeInd++;
-                        $('#tableList').bootstrapTable('insertRow', {
-                            index: data.code,
-                            row: data
-                        });
-                        toastr.info("添加成功");
-                        dw.close().remove();
-                    }
-                }
-            }, {
-                title: '取消',
-                handler: function() {
-                    dw.close().remove();
-                }
-            }]
-        });
-        $("#pic11").css("margin-left", "100px");
-        dw.__center();
+        var productData = $('#jsForm').serializeObject();
+        
+        if($('#jsForm').valid()){
+        	var dw = dialog({
+	            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
+	                '<ul class="form-info" id="formContainer"></ul>' +
+	                '</form>'
+	        });
+	
+	        dw.showModal();
+	        buildDetail({
+	            fields: $("#specsName2").val()?productSpecsFields2:productSpecsFields1,
+	            container: $('#formContainer'),
+	            buttons: [{
+	                title: '保存',
+	                handler: function() {
+	                    if ($('#popForm').valid()) {
+	                        var data = $('#popForm').serializeObject();
+	                        $('#popForm').find('.btn-file [type=file]').parent().next().each(function(i, el) {
+	                            var values = [];
+	                            var imgs = $(el).find('.img-ctn');
+	                            imgs.each(function(index, img) {
+	                                values.push($(img).attr('data-src') || $(img).find('img').attr('data-src'));
+	                            });
+	                            data[el.id] = values.join('||');
+	                        });
+	                        if ($('#popForm').find('#province')[0]) {
+	                            var province = $('#province').val();
+	                            var city = $('#city').val();
+	                            var area = $('#area').val();
+	                            if (!city) {
+	                                data['city'] = province;
+	                                data['area'] = province;
+	                            } else if (!area) {
+	                                data['city'] = province;
+	                                data['area'] = city;
+	                            }
+	                        }
+	                        for (var i = 0, len = fields.length; i < len; i++) {
+	                            var item = fields[i];
+	                            if (item.equal && (!$('#' + item.field).is(':hidden') || !$('#' + item.field + 'Img').is(':hidden'))) {
+	                                data[item.equal] = $('#' + item.field).val() || $('#' + item.field).attr('src');
+	                            } else if (item.emptyValue && !data[item.field]) {
+	                                data[item.field] = item.emptyValue;
+	                            } else if (item.readonly && item.pass) {
+	                                data[item.field] = $('#' + item.field).attr('data-value') || $('#' + item.field).html();
+	                            }
+	                            if (item.type == 'select' && item.passValue) {
+	                                data[item.field] = $('#' + item.field).find('option:selected').html();
+	                            }
+	                        }
+	                        data.pic = data.pic11;
+	                        delete data.pic11;
+	                        data.code = codeInd++;
+	                        $('#tableList').bootstrapTable('insertRow', {
+	                            index: data.code,
+	                            row: data
+	                        });
+	                        toastr.info("添加成功");
+	                        dw.close().remove();
+	                    }
+	                }
+	            }, {
+	                title: '取消',
+	                handler: function() {
+	                    dw.close().remove();
+	                }
+	            }]
+	        });
+	        $("#pic11").css("margin-left", "100px");
+	        dw.__center();
+        }else{
+            toastr.info("请先填写商品信息");
+        }
+        
     })
 
     //删除
@@ -326,7 +404,7 @@ $(function() {
         });
 
         buildDetail({
-            fields: productSpecsFields,
+            fields: $("#specsName2").val()?productSpecsFields2:productSpecsFields1,
             container: $('#formContainer'),
             buttons: [{
                 title: '保存',
@@ -377,7 +455,8 @@ $(function() {
             }]
         });
 
-        $('#popForm #name').val(selRecords[0].name);
+        $('#popForm #specsVal1').val(selRecords[0].specsVal1);
+        $('#popForm #specsVal2').val(selRecords[0].specsVal2);
         $('#popForm #originalPrice').val(moneyFormat(selRecords[0].originalPrice));
         $('#popForm #price1').val(moneyFormat(selRecords[0].price1));
         $('#popForm #price2').val(moneyFormat(selRecords[0].price2));
@@ -442,13 +521,16 @@ $(function() {
             }
             data['id'] = data['code'];
             data.productSpecsList = $('#tableList').bootstrapTable("getData", { useCurrentPage: true });
-
-            if (!code && data.category == 'J01') {
-                data.productSpecsList.each(function(v, i) {
-                    data.productSpecsList[i].price2 = data.productSpecsList[i].price1;
+			
+			data.productSpecsList.each(function(v, i) {
+            	if(data.specsName2==""&&!data.specsName2){
+            		delete data.productSpecsList[i].specsVal2;
+            	}
+            	if (!code &&data.category == 'J01') {
+            		data.productSpecsList[i].price2 = data.productSpecsList[i].price1;
                     data.productSpecsList[i].price1 = 0;
-                })
-            }
+            	}
+            })
 
             reqApi({
                 code: code ? '808012' : '808010',

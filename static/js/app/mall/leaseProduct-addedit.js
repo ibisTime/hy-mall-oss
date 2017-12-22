@@ -6,7 +6,7 @@ $(function() {
         field: 'type',
         title: '类别',
         type: 'select',
-        listCode: '810007',
+        listCode: '808007',
         params: {
             parentCode: "0",
             type: "4",
@@ -73,6 +73,11 @@ $(function() {
         field: 'deposit',
         title: '押金',
         amount: true,
+        required: true,
+        readonly: view
+    }, {
+        field: 'quantity',
+        title: '库存',
         required: true,
         readonly: view
     }, {

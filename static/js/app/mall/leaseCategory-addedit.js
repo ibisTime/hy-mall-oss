@@ -24,7 +24,6 @@ $(function() {
         title: "状态",
         field: "status",
         key: "category_status",
-
         formatter: Dict.getNameForList("category_status")
     }];
     if (view) {
@@ -33,9 +32,9 @@ $(function() {
     buildDetail({
         fields: fields,
         code: code,
-        detailCode: '810006',
-        addCode: '810000',
-        editCode: '810002',
+        detailCode: '808006',
+        addCode: '808000',
+        editCode: '808002',
         view: view,
         beforeSubmit: function(data) {
             data.parentCode = 0;

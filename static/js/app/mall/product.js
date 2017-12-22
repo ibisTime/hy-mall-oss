@@ -74,6 +74,7 @@ $(function() {
         pageCode: '808025',
         deleteCode: '808011',
         searchParams: {
+        	status:'normal',
             companyCode: OSS.company
         },
         beforeDetail: function(data) {
@@ -95,11 +96,6 @@ $(function() {
             return;
         }
 
-        if (selRecords.length > 1) {
-            toastr.info("不能多选");
-            return;
-        }
-
         if (selRecords[0].status != 1 && selRecords[0].status != 4) {
             toastr.info("该商品状态不可上架");
             return;
@@ -111,11 +107,6 @@ $(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
             toastr.info("请选择记录");
-            return;
-        }
-
-        if (selRecords.length > 1) {
-            toastr.info("不能多选");
             return;
         }
 
@@ -141,11 +132,30 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-        if (selRecords.length > 1) {
-            toastr.info("不能多选");
+        window.location.href = "product_addeditCopy.html?code=" + selRecords[0].code + '&category=' + selRecords[0].category;
+    });
+    
+    //回收
+    $('#goRecycleBinBtn').click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.info("请选择记录");
             return;
         }
-        window.location.href = "product_addeditCopy.html?code=" + selRecords[0].code + '&category=' + selRecords[0].category;
+
+        if (selRecords[0].status != 4) {
+            toastr.info("该商品状态不可回收");
+            return;
+        }
+        confirm("确认回收？").then(function() {
+            reqApi({
+                code: '808015',
+                json: {"code": selRecords[0].code}
+            }).then(function() {
+            	sucList();
+            });
+        }, function() {});
+
     });
 
 });

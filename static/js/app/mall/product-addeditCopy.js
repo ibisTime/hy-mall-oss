@@ -8,7 +8,8 @@ $(function() {
     var paramIndex = 0;
 
     var typeData = {};
-    var productSpecsFields = [];
+    var productSpecsFields1 = [];
+    var productSpecsFields2 = [];
     var fields = [];
 
     //商品类别
@@ -43,17 +44,22 @@ $(function() {
 
 
     function setFields() {
-        //规格
-        productSpecsFields = [{
-            field: 'name',
-            title: '规格名称',
+        //规格1
+        productSpecsFields1 = [{
+            field: 'specsVal1',
+            title: '规格名称1',
             required: true,
+        }, {
+            field: 'specsVal2',
+            title: '规格名称2',
+            type: "hidden",
         }, {
             title: "图片",
             field: "pic11",
-            type: 'img',
+            required: true,
+            type: "img",
             single: true,
-            required: true
+            _keys: ['pic']
         }, {
             field: 'originalPrice',
             title: '原价/市场价',
@@ -80,8 +86,64 @@ $(function() {
         }, {
             field: 'province',
             title: '产地',
-            maxlength: 255,
             required: true,
+            maxlength: 255
+        }, {
+            field: 'weight',
+            title: '重量（kg）',
+            required: true,
+            number: true
+        }, {
+            field: 'orderNo',
+            title: '序号',
+            required: true,
+            number: true
+        }]
+        
+        //规格1，规格2
+        productSpecsFields2 = [{
+            field: 'specsVal1',
+            title: '规格名称1'+$("#specsName1").val(),
+            required: true,
+        }, {
+            field: 'specsVal2',
+            title: '规格名称2'+$("#specsName2").val(),
+            required: true,
+        }, {
+            title: "图片",
+            field: "pic11",
+            required: true,
+            type: "img",
+            single: true,
+            _keys: ['pic']
+        }, {
+            field: 'originalPrice',
+            title: '原价/市场价',
+            required: true,
+            amount: true,
+            formatter: moneyFormat,
+        }, category == OSS.JFProductCategory ? {
+            field: 'price2',
+            title: '价格',
+            amount: true,
+            formatter: moneyFormat,
+            required: true,
+        } : {
+            field: 'price1',
+            title: '价格',
+            amount: true,
+            formatter: moneyFormat,
+            required: true,
+        }, {
+            field: 'quantity',
+            title: '库存',
+            required: true,
+            number: true
+        }, {
+            field: 'province',
+            title: '产地',
+            required: true,
+            maxlength: 255
         }, {
             field: 'weight',
             title: '重量（kg）',
@@ -151,6 +213,13 @@ $(function() {
             type: 'textarea',
             required: true,
         }, {
+            field: 'specsName1',
+            title: '规格名称1',
+            required: true,
+        }, {
+            field: 'specsName2',
+            title: '规格名称2',
+        }, {
             field: 'remark',
             title: '备注',
         }];
@@ -170,9 +239,12 @@ $(function() {
                 title: '',
                 checkbox: true
             }, {
-                field: 'name',
-                title: '规格名称',
-            }, {
+	            field: 'specsVal1',
+	            title: '规格名称1',
+	        }, {
+	            field: 'specsVal2',
+	            title: '规格名称2',
+	        }, {
                 title: "图片",
                 field: "pic11",
                 formatter: function(v, data) {
@@ -232,7 +304,7 @@ $(function() {
 
         dw.showModal();
         buildDetail({
-            fields: productSpecsFields,
+            fields: $("#specsName2").val()?productSpecsFields2:productSpecsFields1,
             container: $('#formContainer'),
             buttons: [{
                 title: '保存',
@@ -275,6 +347,7 @@ $(function() {
                         data.pic = data.pic11;
                         delete data.pic11;
                         data.code = codeInd++;
+                        
                         $('#tableList').bootstrapTable('insertRow', {
                             index: data.code,
                             row: data
@@ -326,7 +399,7 @@ $(function() {
         });
 
         buildDetail({
-            fields: productSpecsFields,
+            fields: $("#specsName2").val()?productSpecsFields2:productSpecsFields1,
             container: $('#formContainer'),
             buttons: [{
                 title: '保存',
@@ -358,6 +431,8 @@ $(function() {
                         }
                         data.pic = data.pic11;
                         delete data.pic11;
+                        
+                        
                         $('#tableList').bootstrapTable('updateRow', {
                             index: paramIndex,
                             row: data
@@ -377,6 +452,8 @@ $(function() {
             }]
         });
 
+        $('#popForm #specsVal1').val(selRecords[0].specsVal1);
+        $('#popForm #specsVal2').val(selRecords[0].specsVal2);
         $('#popForm #name').val(selRecords[0].name);
         $('#popForm #originalPrice').val(moneyFormat(selRecords[0].originalPrice));
         $('#popForm #price1').val(moneyFormat(selRecords[0].price1));
@@ -445,12 +522,15 @@ $(function() {
             data['id'] = data['code'];
             data.productSpecsList = $('#tableList').bootstrapTable("getData", { useCurrentPage: true });
 
-            if (!code && data.category == 'J01') {
-                data.productSpecsList.each(function(v, i) {
-                    data.productSpecsList[i].price2 = data.productSpecsList[i].price1;
+            data.productSpecsList.each(function(v, i) {
+            	if(data.specsName2==""&&!data.specsName2){
+            		delete data.productSpecsList[i].specsVal2;
+            	}
+            	if (!code &&data.category == 'J01') {
+            		data.productSpecsList[i].price2 = data.productSpecsList[i].price1;
                     data.productSpecsList[i].price1 = 0;
-                })
-            }
+            	}
+            })
 
             reqApi({
                 code: '808010',

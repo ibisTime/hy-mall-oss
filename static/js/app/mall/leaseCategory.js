@@ -22,7 +22,7 @@ $(function() {
 
     buildList({
         columns: columns,
-        pageCode: '810005',
+        pageCode: '808005',
         searchParams: {
             type: "4",
             companyCode: OSS.company
@@ -41,7 +41,7 @@ $(function() {
         }
         confirm("确认上架？").then(function() {
             reqApi({
-                code: '810003',
+                code: '808003',
                 json: { "code": selRecords[0].code }
             }).then(function() {
                 toastr.info("操作成功");
@@ -63,7 +63,7 @@ $(function() {
         }
         confirm("确认下架？").then(function() {
             reqApi({
-                code: '810004',
+                code: '808004',
                 json: { "code": selRecords[0].code }
             }).then(function() {
                 toastr.info("操作成功");

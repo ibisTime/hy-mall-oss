@@ -56,8 +56,8 @@ $(function() {
                 companyCode: OSS.company
             },
             keyName: 'userId',
-            valueName: 'mobile',
-            searchName: 'mobile',
+	        valueName: '{{nickname.DATA}}-{{mobile.DATA}}',
+	        searchName: 'keywords',
         }, {
             title: "提货方式",
             field: "takeType",
@@ -175,44 +175,45 @@ $(function() {
             }
         }
         var dw = dialog({
-            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">取消订单</li>' +
-                '<li><label>备注：</label><input id="remark" name="remark" class="control-def"></input></li>' +
-                '<li><input id="subBtn" name="subBtn"type="button" class="btn margin-left-100 submit" value="确定"><li><input id="goBackBtn" name="goBackBtn" type="button" class=" btn margin-left-20 goBack" value="返回"></ul>' +
+            content: '<form class="pop-form" id="popForm"">' +
+                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">取消订单</li></ul>' +
                 '</form>'
         });
-        dw.showModal();
-        $(document).on('click', '#subBtn', function() {
-            $('#popForm').validate({
-                // 'rules': {
-                //     remark: {
-                //         required: true,
-                //         maxlength: 255
-                //     }
-                // }
-            });
-            if ($('#popForm').valid()) {
-                var data = $('#popForm').serializeObject();
-                data.codeList = codeList;
-                data.remark = $("#remark").val();
-                reqApi({
-                    code: "810047",
-                    json: data
-                }).done(function() {
-                    toastr.info("操作成功");
-                    $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
-                    setTimeout(function() {
-                        dw.close().remove();
-                    }, 500)
-                });
-            }
-        });
-        $(document).on('click', '#goBackBtn', function() {
-            setTimeout(function() {
-                dw.close().remove();
-            }, 500)
 
+        dw.showModal();
+
+        buildDetail({
+            container: $('#formContainer'),
+            fields: [{
+                field: 'remark1',
+                title: '备注',
+                required: true
+            }],
+            buttons: [ {
+                title: '关闭',
+                handler: function() {
+                    dw.close().remove();
+                }
+            },{
+                title: '取消订单',
+                handler: function() {
+                    if ($('#popForm').valid()) {
+                        var popFormData = $('#popForm').serializeObject();
+                        var data ={};
+		                data.codeList = codeList;
+		                data.remark = popFormData.remark;
+		                reqApi({
+		                    code: "810047",
+		                    json: data
+		                }).done(function() {
+                            dw.close().remove();
+                            sucList()
+		                });
+                    }
+                }
+            }]
         });
+
         dw.__center();
     });
     // 确认收货

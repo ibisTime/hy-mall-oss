@@ -1,4 +1,7 @@
 $(function() {
+	
+	var timestamp = new Date().getTime()
+	
 	function initMenu(parentCode){
 		$('.left-top').removeClass('collapse');
 		
@@ -47,7 +50,7 @@ $(function() {
 							}
 							html += "<li class='"+(url.indexOf('*') > -1 && 'disabled')+
 								"' id=\""+nextItem.code+"\"><cite></cite><a id=\"child_menu_"+i+"\" href=\""
-								+url + "\" target=\"rightFrame\">"+nextItem.name+"</a><i></i></li>"
+								+url+'?timestamp=' + timestamp + "\" target=\"rightFrame\">"+nextItem.name+"</a><i></i></li>"
 				        });
 						$(me).parent().next().html(html);
 						$(me).attr('data-loaded', '1');

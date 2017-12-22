@@ -63,6 +63,15 @@ function dateTimeFormat(date) {
     return format;
 }
 
+function dateFormatData(date) {
+    if (date == '' || typeof(date) == 'undefined') {
+        return '-';
+    }
+    format = "yyyy-MM-dd";
+    date = new Date(date);
+    return date.format(format);
+}
+
 /**
  * 金额格式转化
  * @param money
@@ -637,6 +646,7 @@ function objectArrayFilter(arr, keys) {
 function buildList(options) {
     options = options || {};
     var searchs = JSON.parse(sessionStorage.getItem('listSearchs') || '{}')[location.pathname];
+    var listStart = JSON.parse(sessionStorage.getItem('listStarts') || '{}')[location.pathname];
 
     if (options.type != 'o2m') {
         showPermissionControl();
@@ -824,6 +834,7 @@ function buildList(options) {
 
     $('#searchBtn').click(function() {
         updateListSearch();
+        updateListStart(1);
         $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
     });
 
@@ -990,7 +1001,7 @@ function buildList(options) {
     if (options.tableId) {
         tableEl = $('#' + options.tableId);
     }
-
+	var bootstrapTableFlag = false;
     //表格初始化
     tableEl.bootstrapTable({
         method: "post",
@@ -1004,8 +1015,14 @@ function buildList(options) {
         detailFormatter: detailFormatter,
         queryParams: function(params) {
             var json = {};
-            json.start = params.offset / params.limit + 1;
+            if(bootstrapTableFlag){
+            	json.start = params.offset / params.limit + 1;
+            }else{
+            	json.start = listStart || 1;
+            	bootstrapTableFlag = true;
+            }
             json.limit = params.limit;
+            json.start==1?'':updateListStart(json.start)
             var searchFormParams = $('.search-form').serializeObject();
             for (var p in searchFormParams) {
                 if (!searchFormParams[p]) {
@@ -1039,12 +1056,14 @@ function buildList(options) {
         pagination: true,
         sidePagination: 'server',
         totalRows: 0,
-        pageNumber: 1,
+        pageNumber: listStart||1,
         pageSize: options.pageSize || 10,
         pageList: options.pageList || [10, 20, 30, 40, 50],
-        columns: options.columns
+        columns: options.columns,
+        onPageChange: function(number, size){
+            updateListStart(number)
+        }
     });
-
     chosen();
 }
 
@@ -1147,7 +1166,7 @@ function buildDetail(options) {
         }
         if (item.type == 'title') {
             html += '<div ' + (item.field ? 'id="' + item.field + '"' : '') +
-                ' style="' + (item.hidden ? 'display:none;' : '') + '" class="form-title">' + item.title + '</div>';
+                ' style="' + (item.hidden ? 'display:none;' : '') + '" class="form-title"><span>' + item.title + '</span></div>';
         } else if (item.type == 'hidden') {
             html = '<input type="hidden" id="' + item.field + '" name="' + item.field + '"/>' + html;
         } else if (item.readonly) {
@@ -1249,7 +1268,7 @@ function buildDetail(options) {
         var btnHtml = '<li>';
         for (var i = 0, len = options.buttons.length; i < len; i++) {
             var item = options.buttons[i];
-            var id = 'btn-' + i;
+            var id = item.field?item.field+"_btn" : 'btn-' + i;
             btnHandlers.push({ id: id, handler: item.handler });
             btnHtml += '<input id="' + id + '" type="button" class="btn margin-left-20" value="' + item.title + '"/>';
         }
@@ -1924,8 +1943,10 @@ function buildDetail(options) {
                 if (item.link) {
                     $('#' + item.field).html('<a target="_blank" href="' + displayValue + '">' + displayValue + '</a>');
                 }
-                if (item.type == 'textarea') {
+                if (item.type == 'textarea' && !item.normalArea) {
                     $('#' + item.field).css('width', '800px');
+                }else if (item.type == 'textarea' && item.normalArea) {
+                    $('#' + item.field).css('width', '600px');
                 }
                 if (item.afterSet) {
                     item.afterSet(displayValue, data);
@@ -2214,8 +2235,9 @@ function sleep(ms) {
 }
 
 function sucList() {
+    var listStart = JSON.parse(sessionStorage.getItem('listStarts') || '{}')[location.pathname];
     toastr.success('操作成功');
-    $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+    $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url,pageNumber: $('#tableList').bootstrapTable('getOptions').pageNumber });
 }
 
 function sucDetail() {
@@ -2750,6 +2772,14 @@ function buildDetail1(options) {
                         if (item.useData) {
                             displayValue = $.isArray(item.useData) ? item.useData : (data || []);
                         }
+                        if (item._keys) {
+			                var _value = displayValue,
+			                    emptyObj = {};
+			                item._keys.forEach(function(key) {
+			                    _value = _value[key] == undefined ? emptyObj : _value[key];
+			                });
+			                displayValue = _value === emptyObj ? "" : _value;
+			            }
                         $('#' + item.field + "-model").html('<table id="' + item.field + 'List-model"></table>');
                         $('#' + item.field + 'List-model').bootstrapTable({
                             striped: true,
@@ -3693,4 +3723,11 @@ function updateListSearch() {
     var params = $('.search-form').serializeObject();
     searchs[pathName] = params;
     sessionStorage.setItem('listSearchs', JSON.stringify(searchs));
+}
+function updateListStart(start) {
+    var searchs = JSON.parse(sessionStorage.getItem('listStarts') || '{}');
+    var pathName = location.pathname;
+    var params = start;
+    searchs[pathName] = params;
+    sessionStorage.setItem('listStarts', JSON.stringify(searchs));
 }

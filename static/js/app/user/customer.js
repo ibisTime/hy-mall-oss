@@ -5,6 +5,9 @@ $(function() {
         title: '',
         checkbox: true
     }, {
+        field: 'nickname',
+        title: '昵称'
+    }, {
         field: 'mobile',
         title: '手机号',
         search: true
@@ -36,8 +39,8 @@ $(function() {
             updater: ""
         },
         keyName: "userId",
-        valueName: "{{mobile.DATA}}--{{nickname.DATA}}",
-        searchName: "mobile",
+        valueName: '{{nickname.DATA}}-{{mobile.DATA}}',
+        searchName: 'keywords',
         search: true,
         visible: false
     }, {
