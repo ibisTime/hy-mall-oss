@@ -6,6 +6,13 @@ $(function() {
         title: '',
         checkbox: true
     }, {
+        field: 'type',
+        title: '类型',
+        type: 'select',
+        key: 'comment_type',
+        formatter: Dict.getNameForList('comment_type'),
+        search: true
+    }, {
         title: '商品名称',
         field: 'entityName',
         search: true

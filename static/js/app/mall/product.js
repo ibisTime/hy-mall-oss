@@ -143,7 +143,7 @@ $(function() {
             return;
         }
 
-        if (selRecords[0].status != 4) {
+        if (selRecords[0].status != 4&&selRecords[0].status != 1) {
             toastr.info("该商品状态不可回收");
             return;
         }

@@ -16,13 +16,6 @@ $(function() {
         	return description;
         }
     }, {
-        field: 'status',
-        title: '状态',
-        type: 'select',
-        key: "travel_status",
-        formatter: Dict.getNameForList("travel_status"),
-        search: true
-    }, {
         field: 'publishDatetime',
         title: '发布时间',
         formatter: dateTimeFormat
@@ -40,15 +33,7 @@ $(function() {
         searchParams: {
             companyCode: OSS.company,
         },
-        //审核
-        beforeEdit: function(data) {
-            if (data.status == "0") {
-                window.location.href = './travelNotes_addedit.html?code=' + data.code;
-            } else {
-                toastr.warning("不是待审核的状态")
-            }
-
-        },
+        deleteCode:'801051',
         //详情
         beforeDetail: function(data) {
             window.location.href = './travelNotes_addedit.html?code=' + data.code+"&v=1";
