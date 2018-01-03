@@ -45,20 +45,8 @@ $(function() {
 		single: true,
         readonly: true
     }, {
-        field: 'status',
-        title: '状态',
-        type: 'select',
-        key: "travel_status",
-        formatter: Dict.getNameForList("travel_status"),
-        readonly: true
-    }, {
         field: 'publishDatetime',
         title: '发布时间',
-        formatter: dateTimeFormat,
-        readonly: true
-    }, {
-        field: 'updateDatetime',
-        title: '更新时间',
         formatter: dateTimeFormat,
         readonly: true
     }];

@@ -20,10 +20,6 @@ $(function() {
         title: '发布时间',
         formatter: dateTimeFormat
     }, {
-        field: 'updateDatetime',
-        title: '更新时间',
-        formatter: dateTimeFormat
-    }, {
         field: 'remark',
         title: '备注',
     }];

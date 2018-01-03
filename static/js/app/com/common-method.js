@@ -1252,9 +1252,14 @@ function buildDetail(options) {
                 html += '<input id="' + item.field1 + '" name="' + item.field1 + '" class="lay-input lay-input1"/>'
                 		+'&nbsp;&nbsp;至&nbsp;&nbsp;<input id="' + item.field2 + '" name="' + item.field2 + '" class="lay-input lay-input1"/></li>';
                 
-                rules[item.field1] = { required: true };
-        		rules[item.field2]  = { required: true };
-        		
+                if(item.type=="date"){
+                	rules[item.field1] = { required: true, dataformat1: true };
+        			rules[item.field2]  = { required: true, dataformat1: true  };
+                }else{
+                	rules[item.field1] = { required: true};
+        			rules[item.field2]  = { required: true};
+                }
+                
                 // 单个日期搜索框
             } else if (item.type == 'datetime' || item.type == 'date') {
                 dateTimeList1.push(item);
@@ -1861,10 +1866,10 @@ function buildDetail(options) {
                     		$('#' + item.field).html(displayValue);
                     	}
                     } else {
-                        if (displayValue) {
-                            $('#' + item.field).html(((item.amount || item.amount1) ?
+                        if (displayValue==0||displayValue) {
+                            $('#' + item.field).html((item.amount || item.amount1) ?
                                 moneyFormat(displayValue) :
-                                displayValue) || '-');
+                                displayValue);
                         } else {
                             $('#' + item.field).html('-');
                         }
@@ -2015,9 +2020,12 @@ function buildDetail(options) {
                         		$('#' + item.field).val(item.formatter(displayValue, data));
                         	}
                         } else {
-                            $('#' + item.field).val((item.amount || item.amount1) ?
+                        	if(displayValue==0||displayValue){
+                        		$('#' + item.field).val((item.amount || item.amount1) ?
                                 moneyFormat(displayValue) :
                                 displayValue);
+                        	}
+                            
                         }
                     }
                 }
