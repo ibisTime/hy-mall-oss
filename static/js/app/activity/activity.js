@@ -102,22 +102,6 @@ $(function() {
         },
     });
     
-	//审核
-	$("#examineBtn").click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-
-        if (selRecords[0].status != 0) {
-            toastr.info("不是可审核的状态");
-            return;
-        }
-
-        window.location.href = "activity_examine.html?code=" + selRecords[0].code+"&userId=" + selRecords[0].userId+"&timestamp="+new Date().getTime();;
-    })
-	
 	
 	//取消
     $('#cancelBtn').click(function() {
@@ -243,5 +227,21 @@ $(function() {
         dw.__center();
         
     })
+	
+	//报名查询
+    $("#querySignInBtn").on('click', function(){
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.info("请选择记录");
+            return;
+        }
+        
+        if(selRecords[0].status == "0"){
+            toastr.info("活动状态不可查询");
+            return;
+        }
+        
+		window.location.href = "activitySignInQuery.html?code="+selRecords[0].code;
+	})
 	
 });

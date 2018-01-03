@@ -71,31 +71,50 @@ $(function() {
     }, {
         title: "运费",
         field: "yunfei",
-        formatter: moneyFormat,
-        readonly: true
-    }, {
-        field: 'amount2',
-        title: '订单金额',
-        formatter: function(v, data) {
-            if (v) {
-                return "人民币：" + moneyFormat(data.amount1) + ",积分" + moneyFormat(v)
-            } else if (data.amount1) {
-                return "人民币：" + moneyFormat(data.amount1);
-            }
+        formatter: function(v, data){
+        	return "￥"+moneyFormat(v)
         },
         readonly: true
     }, {
-        field: 'receiver',
-        title: '收件人',
-        readonly: true,
+        field: 'totalAmount',
+        title: '订单总额',
+        formatter: function(v,data){
+        	if(data.amount1&&!data.amount2){
+        		return "￥" + moneyFormat(data.amount1+data.yunfei)+"(含运费：￥"+moneyFormat(data.yunfei)+")"
+        	}else if(data.amount2&&!data.amount1&&data.yunfei&&data.yunfei!=0){
+        		return "￥" + moneyFormat(data.yunfei)+","+moneyFormat(data.amount2) + "积分"
+        	}else if(data.amount2&&!data.amount1&&!data.yunfei){
+        		return moneyFormat(data.amount2) + "积分"
+        	}
+        },
+        readonly: true
     }, {
-        field: 'reMobile',
-        title: '联系方式',
-        readonly: true,
-    }, {
-        field: 'reAddress',
-        title: '收货地址',
-        readonly: true,
+        field: 'payAmount3',
+        title: '实际支付总额',
+        formatter: function(v, data) {
+        	var html ='';
+            if (v != "0" && data.payAmount1 != "0" && data.payAmount2 != "0") {
+                html = "￥" + moneyFormat(data.payAmount1) + "，积分：" + moneyFormat(data.payAmount2) + "，小金库：" + moneyFormat(data.payAmount3)
+            } else if (v == "0" && data.payAmount1 != "0" && data.payAmount2 != "0") {
+                html = "￥" + moneyFormat(data.payAmount1) + "，积分：" + moneyFormat(data.payAmount2);
+            } else if (v != "0" && data.payAmount1 != "0" && data.payAmount2 == "0") {
+                html = "￥" + moneyFormat(data.payAmount1) + "，小金库：" + moneyFormat(data.payAmount3);
+            } else if (v != "0" && data.payAmount1 == "0" && data.payAmount2 != "0") {
+                html = "积分：" + moneyFormat(data.payAmount2) + "，小金库：" + moneyFormat(data.payAmount3);
+            } else if (v == "0" && data.payAmount1 == "0" && data.payAmount2 != "0") {
+                html = "积分：" + moneyFormat(data.payAmount2);
+            } else if (v != "0" && data.payAmount1 == "0" && data.payAmount2 == "0") {
+                html = "小金库：" + moneyFormat(data.payAmount3);
+            } else if (v == "0" && data.payAmount1 != "0" && data.payAmount2 == "0") {
+                html = "￥" + moneyFormat(data.payAmount1);
+            }
+            
+            if(data.dkAmount&&data.dkAmount!='0'){
+            	html+= "(已使用" + moneyFormat(data.dkJfAmount) + "积分抵扣"+moneyFormat(data.dkAmount)+"人民币)"
+            }
+            return html;
+        },
+        readonly: true
     }, {
         title: '下单人',
         field: 'applyUser',
@@ -111,27 +130,6 @@ $(function() {
         field: 'applyDatetime',
         title: '下单时间',
         formatter: dateTimeFormat,
-        readonly: true
-    }, {
-        field: 'payAmount3',
-        title: '实际支付总额',
-        formatter: function(v, data) {
-            if (v != "0" && data.payAmount1 != "0" && data.payAmount2 != "0") {
-                return "人民币：" + moneyFormat(data.payAmount1) + "，积分" + moneyFormat(data.payAmount2) + "，小金库" + moneyFormat(data.payAmount3)
-            } else if (v == "0" && data.payAmount1 != "0" && data.payAmount2 != "0") {
-                return "人民币：" + moneyFormat(data.payAmount1) + "，积分" + moneyFormat(data.payAmount2);
-            } else if (v != "0" && data.payAmount1 != "0" && data.payAmount2 == "0") {
-                return "人民币：" + moneyFormat(data.payAmount1) + "，小金库" + moneyFormat(data.payAmount3);
-            } else if (v != "0" && data.payAmount1 == "0" && data.payAmount2 != "0") {
-                return "积分" + moneyFormat(data.payAmount2) + "，小金库" + moneyFormat(data.payAmount3);
-            } else if (v == "0" && data.payAmount1 == "0" && data.payAmount2 != "0") {
-                return "积分" + moneyFormat(data.payAmount2);
-            } else if (v != "0" && data.payAmount1 == "0" && data.payAmount2 == "0") {
-                return "小金库" + moneyFormat(data.payAmount3);
-            } else if (v == "0" && data.payAmount1 != "0" && data.payAmount2 == "0") {
-                return "人民币" + moneyFormat(data.payAmount1);
-            }
-        },
         readonly: true
     }, {
         field: 'payDatetime',
@@ -159,6 +157,18 @@ $(function() {
         type: "select",
         readonly: true,
         key: "rorder_status",
+    }, {
+    	field: 'receiver',
+        title: '收件人',
+        readonly: true,
+    }, {
+        field: 'reMobile',
+        title: '联系方式',
+        readonly: true,
+    }, {
+        field: 'reAddress',
+        title: '收货地址',
+        readonly: true,
     }, {
         field: 'promptTimes',
         title: '催货次数',
