@@ -6,7 +6,14 @@ $(function() {
         title: '',
         checkbox: true
     }, {
-        title: '商品名称',
+        field: 'type',
+        title: '类型',
+        type: 'select',
+        key: 'comment_type',
+        formatter: Dict.getNameForList('comment_type'),
+        search: true
+    }, {
+        title: '名称',
         field: 'entityName',
         search: true
     }, {
@@ -59,11 +66,22 @@ $(function() {
         //审核
         beforeEdit: function(data) {
             if (data.status == "D") {
-                window.location.href = 'comment_addedit.html?code=' + data.code;
+            	if(data.entityCode==data.parentCode){
+            		window.location.href = 'comment_addedit.html?code=' + data.code;
+            	}else{
+            		window.location.href = 'comment_addedit2.html?code=' + data.code;
+            	}
+                
             } else {
                 toastr.warning("不是待审核的状态")
             }
-
+        },
+        beforeDetail: function(data){
+        	if(data.entityCode==data.parentCode){
+        		window.location.href = 'comment_addedit.html?v=1&code=' + data.code;
+        	}else{
+        		window.location.href = 'comment_addedit2.html?v=1&code=' + data.code;
+        	}
         }
     });
 

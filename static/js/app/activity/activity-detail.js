@@ -6,12 +6,6 @@ $(function() {
         field: 'name',
         title: '活动名称'
     }, {
-        field: 'userId',
-        title: '领队',
-        formatter: function(v, data) {
-            return data.user ? data.user.realName+"("+data.user.mobile+")" : v
-        }
-    }, {
         field: 'type',
         title: '类型',
         type: 'select',
@@ -77,7 +71,7 @@ $(function() {
         formatter: function(v, data){
         	var start = ''
         	for (var i=1; i<=v; i++) {
-        		start+='<i class="star"></i>'
+        		start+='<i class="star active"></i>'
         	}
         	return '<p class="starWrap" id="indexQd">'+start+'</p>';
         }
@@ -87,7 +81,7 @@ $(function() {
         formatter: function(v, data){
         	var start = ''
         	for (var i=1; i<=v; i++) {
-        		start+='<i class="star"></i>'
+        		start+='<i class="star active"></i>'
         	}
         	return '<p class="starWrap" id="indexQd">'+start+'</p>';
         }
@@ -97,7 +91,7 @@ $(function() {
         formatter: function(v, data){
         	var start = ''
         	for (var i=1; i<=v; i++) {
-        		start+='<i class="star"></i>'
+        		start+='<i class="star active"></i>'
         	}
         	return '<p class="starWrap" id="indexQd">'+start+'</p>';
         }
@@ -128,13 +122,23 @@ $(function() {
         key: 'act_status',
         formatter: Dict.getNameForList('act_status'),
     }, {
+        field: 'location',
+        title: '位置',
+        type: 'select',
+        data:{
+        	"0": "普通",
+        	"1": "置顶"
+        },
+    }, {
+        field: 'orderNo',
+        title: '序号',
+    }, {
         field: 'updateDatetime',
         title: '更新时间',
         formatter: dateTimeFormat,
     },{
         field: 'remark',
-        title: '审核意见',
-        readonly: false,
+        title: '备注'
     }];
 
     buildDetail({
@@ -142,89 +146,6 @@ $(function() {
         code: code,
         detailCode: '808706',
         view: true,
-        buttons : [{
-	        title: '通过',
-        	field: 'yes',
-	    }, {
-	        title: '不通过',
-	        handler: function() {
-	        	
-                var data = {};
-                data.remark = $("#remark").val()
-                data.approveResult = '0';
-                data.approver = getUserName();
-                data.code = code;
-                reqApi({
-                    code: '808703',
-                    json: data
-                }).done(function(data) {
-                    sucDetail();
-                });
-	        }
-	    }, {
-	        title: '返回',
-	        handler: function() {
-	            goBack();
-	        }
-	    }]
     });
     
-    $("#yes_btn").on("click",function(){
-    	var dw = dialog({
-    		fixed: true,
-            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">设置位置</li></ul>' +
-                '</form>'
-        });
-
-        dw.showModal();
-        buildDetail({
-            fields: [{
-		        field: 'location',
-		        title: '位置',
-		        type: 'select',
-		        value: '0',
-		        data:{
-		        	"0": "普通",
-		        	"1": "置顶"
-		        }
-		    }, {
-		        field: 'orderNo',
-		        title: '序号',
-		    }],
-            container: $('#formContainer'),
-            buttons: [{
-                title: '确定',
-        		field: 'confirm',
-                handler: function() {
-                    if ($('#popForm').valid()) {
-                        var data = $('#popForm').serializeObject();
-        				data.remark = $("#remark").val()
-                        data.approveResult = '1';
-		                data.approver = getUserName();
-                		data.code = code;
-		                reqApi({
-		                    code: '808703',
-		                    json: data
-		                }).done(function(data) {
-		                	
-                    		dw.close().remove();
-		                    sucDetail();
-		                });
-                    }
-                }
-            }, {
-                title: '取消',
-        		field: 'cancel',
-                handler: function() {
-                    dw.close().remove();
-                }
-            }]
-        });
-        dw.__center();
-        
-    })
-    
-    
-	
 });

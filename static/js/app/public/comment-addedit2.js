@@ -37,35 +37,55 @@ $(function() {
         readonly: true
     }, {
         title: "评论内容",
+        field: "parentCommentContent",
+        readonly: true,
+        formatter: function(v, data){
+        	return data.parentComment.content
+        }
+    }, {
+        title: '评论人',
+        field: 'parentCommentNickname',
+        readonly: true,
+        formatter: function(v, data){
+        	return data.parentComment.nickname
+        }
+    }, {
+        title: '评论时间',
+        field: 'parentCommentCommentDatetime',
+        readonly: true,
+        formatter: function(v, data){
+        	return dateTimeFormat(data.parentComment.commentDatetime)
+        }
+    }, {
+        title: '状态',
+        field: 'parentCommentStatus',
+        readonly: true,
+        formatter: function(v, data){
+        	if(data.parentComment.status=="A"){
+        		return '已发布'
+        	}else if(data.parentComment.status=="B"){
+        		return '审批通过'
+        	}else if(data.parentComment.status=="C"){
+        		return '审批不通过'
+        	}else if(data.parentComment.status=="D"){
+        		return '被过滤'
+        	}
+        }
+    }, {
+        title: "回复内容",
         field: "content",
         readonly: true
     }, {
-        title: '评论人',
+        title: '回复人',
         field: 'nickname',
         readonly: true
     }, {
-        title: "星级",
-        field: "score",
-        formatter: function(v, data) {
-            if (v == 1) {
-                return "1颗星"
-            } else if (v == 2) {
-                return "2颗星"
-            } else if (v == 3) {
-                return "3颗星"
-            } else if (v == 4) {
-                return "4颗星"
-            } else if (v == 5) {
-                return "5颗星"
-            }
-        },
-    }, {
-        title: '评论时间',
+        title: '回复时间',
         field: 'commentDatetime',
         readonly: true,
         formatter: dateTimeFormat
     }, {
-        title: '状态',
+        title: '回复状态',
         field: 'status',
         readonly: true,
         type: 'select',

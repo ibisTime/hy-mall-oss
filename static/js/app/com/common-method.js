@@ -1067,6 +1067,7 @@ function buildDetail(options) {
         rules = {},
         textareaList = [];
     var dateTimeList = [],
+    	dateTimeList1 = [],
         imgList = [];
 
     //页面构造
@@ -1147,7 +1148,17 @@ function buildDetail(options) {
             html = '<input type="hidden" id="' + item.field + '" name="' + item.field + '"/>' + html;
         } else if (item.readonly) {
             if (item.type == "citySelect") {
-                html += '<li class="clearfix" style="display:inline-block;"><label>' + item.title + ':</label>' + '<span id="province" name="province" style="display: inline-block;"></span>' + '<span id="city" name="city" style="display: inline-block;padding: 0 8px;"></span>' + '<span id="area" name="area" style="display: inline-block;"></span></li>'
+            	//只有省市 没有区
+            	if(item.noArea){
+            		html += '<li class="clearfix" style="display:inline-block;"><label>' + item.title + ':</label>' 
+                	+ '<span id="'+item.provinceField+'" name="'+item.provinceField+'" style="display: inline-block;">'+item.provinceField+'</span>' + 
+                		'<span id="'+item.cityField+'" name="'+item.cityField+'" style="display: inline-block;padding: 0 8px;">'+item.cityField+'</span></li>'
+            	}else{
+            		html += '<li class="clearfix" style="display:inline-block;"><label>' + item.title + ':</label>' 
+                	+ '<span id="province" name="province" style="display: inline-block;"></span>' + 
+                		'<span id="city" name="city" style="display: inline-block;padding: 0 8px;"></span>' + 
+                		'<span id="area" name="area" style="display: inline-block;"></span></li>'
+            	}
             } else if (item.type == 'o2m') {
                 html += '<li class="clearfix" type="' + (item.amount ? 'amount' : '') +
                     '" style="' + (item.width ? ('width: ' + item.width + ';display:inline-block;') : '') +
@@ -1206,17 +1217,26 @@ function buildDetail(options) {
                 textareaList.push({ field: item.field });
                 html += '<div style="width:800px;float:left;"><textarea style="height:300px;" id="' + item.field + '" name="' + item.field + '"></textarea></div></li>';
             } else if (item.type == 'textarea' && item.normalArea) {
-                html += '<div style="width:400px;float:left;"><textarea style="height:200px;width: 320px;border: 1px solid #e0e0e0;padding: 8px;" id="' + item.field + '" name="' + item.field + '"></textarea></div></li>';
+                html += '<div style="width:400px;float:left;"><textarea style="resize:none;height:200px;width: 320px;border: 1px solid #e0e0e0;padding: 8px;" id="' + item.field + '" name="' + item.field + '"></textarea></div></li>';
             } else if (item.type == 'citySelect') {
                 if (item.onlyProvince) {
                     html += '<div id="city-group" data-only-prov="' + item.onlyProvince + '"><select id="province" name="province" class="control-def prov"><option value="">请选择</option></select></div></li>';
+                } else if(item.noArea){
+                    html += '<div class="city-group-spec" ><select id="' + item.provinceField + '" name="' + item.provinceField + '" class="control-def prov"><option value="">请选择</option></select>' 
+                    	+ '<select id="' + item.cityField + '" name="' + item.cityField + '" class="control-def city"><option value="">请选择</option></select></div></li>';
                 } else {
                     html += '<div id="city-group"><select id="province" name="province" class="control-def prov"><option value="">请选择</option></select>' + '<select id="city" name="city" class="control-def city"><option value="">请选择</option></select>' + '<select id="area" name="area" class="control-def dist"><option value="">请选择</option></select></div></li>';
                 }
                 if (item.required) {
-                    rules.province = { required: true };
-                    rules.city = { required: true };
-                    rules.area = { required: true };
+                	
+                	if(item.provinceField&&item.cityField){
+                		rules[item.provinceField] = { required: true };
+                		rules[item.cityField]  = { required: true };
+                	}else{
+                		rules.province = { required: true };
+	                    rules.city = { required: true };
+	                    rules.area = { required: true };
+                	}
                 } else {
                     rules.province = { required: true };
                 }
@@ -1226,11 +1246,44 @@ function buildDetail(options) {
                 html += '<div class="city-group-spec" data-only-prov="' + item.onlyProvince + '"><select id="' + item.field + '"  name="' + item.field + '" class="control-def prov"><option value="">请选择</option></select></div></li>';
                 //控制必填
                 rules[item.field] = { required: true };
-            } else if (item.type == 'datetime' || item.type == 'date') {
+                //两个日期框
+            } else if (item.twoDate) {
                 dateTimeList.push(item);
+                html += '<input id="' + item.field1 + '" name="' + item.field1 + '" class="lay-input lay-input1"/>'
+                		+'&nbsp;&nbsp;至&nbsp;&nbsp;<input id="' + item.field2 + '" name="' + item.field2 + '" class="lay-input lay-input1"/></li>';
+                
+                if(item.type=="date"){
+                	rules[item.field1] = { required: true, dataformat1: true };
+        			rules[item.field2]  = { required: true, dataformat1: true  };
+                }else{
+                	rules[item.field1] = { required: true};
+        			rules[item.field2]  = { required: true};
+                }
+                
+                // 单个日期搜索框
+            } else if (item.type == 'datetime' || item.type == 'date') {
+                dateTimeList1.push(item);
                 html += '<input id="' + item.field + '" name="' + item.field + '" class="lay-input"/></li>';
             } else if (item.type == "o2m") {
                 html += '<div id="' + item.field + '" style="display: inline-block;"></div>';
+                
+                //显示星级
+            } else if(item.type=="start"){
+            	html += '<p class="starWrap" id="'+item.field+'" data-score="1" >'
+            		+'<i class="star active" data-score="1" ></i>'
+            		+'<i class="star" data-score="2"></i>'
+            		+'<i class="star" data-score="3"></i>'
+            		+'<i class="star" data-score="4"></i>'
+            		+'<i class="star" data-score="5"></i></p>';
+            		
+            	//星星点击
+			    $("#jsForm").on('click',"#"+item.field+" .star",function(){
+		    		var _this = $(this);
+		    		var _starWrap = _this.parent('.starWrap');
+		    		var _thisIndex = _this.index()+1
+		    		
+		    		startActive(_starWrap,_thisIndex);
+		    	})
             } else {
                 html += '<input id="' + item.field + '" name="' + item.field + '" class="control-def" ' + (item.placeholder ?
                     ('placeholder="' + item.placeholder + '"') :
@@ -1322,6 +1375,9 @@ function buildDetail(options) {
                 }
                 if (item.type == 'select' && item.passValue) {
                     data[item.field] = $('#' + item.field).find('option:selected').html();
+                }
+                if(item.type == 'start'){
+                	data[item.field] = $('#' + item.field).attr("data-score")
                 }
             }
             data['id'] = data['code'];
@@ -1485,24 +1541,52 @@ function buildDetail(options) {
         }
 
     }
-
+	
+	// 两个日期框
     for (var i = 0, len = dateTimeList.length; i < len; i++) {
-        var item = dateTimeList[i];
+        (function(i) {
+            var item = dateTimeList[i];
+            $('#' + item.field1).click(function() {
+                var end = $('#' + item.field2).val();
+                var obj = {
+                	min: item.minDate ? item.minDate : '',//设定最小日期
+                    elem: '#' + item.field1,
+	                istime: item.type == 'datetime',
+	                format: item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
+                };
+                end && (obj.max = end);
+                laydate(obj);
+            });
+            $('#' + item.field2).click(function() {
+                var start = $('#' + item.field1).val();
+                var obj = {
+                	min: item.minDate ? item.minDate : '',//设定最小日期
+                    elem: '#' + item.field2,
+	                istime: item.type == 'datetime',
+	                format: item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
+                };
+                start && (obj.min = start);
+                laydate(obj);
+            });
+        })(i);
+    }
+    // 一个日期框
+    for (var i = 0, len = dateTimeList1.length; i < len; i++) {
+        var item = dateTimeList1[i];
         if (item.dateOption) {
             laydate(item.dateOption);
         } else {
             laydate({
                 elem: '#' + item.field,
-                min: item.minDate ?
-                    item.minDate : '',
+                min: item.minDate ? item.minDate : '',
                 istime: item.type == 'datetime',
                 format: item.type == 'datetime' ?
                     'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
             });
         }
     }
-
-    var _cityGroup = $("#city-group");
+    
+	var _cityGroup = $("#city-group");
     _cityGroup.citySelect && _cityGroup.citySelect({
         required: false
     }, _cityGroup.attr("data-only-prov"));
@@ -1513,6 +1597,7 @@ function buildDetail(options) {
             required: false
         }, _this.attr("data-only-prov"));
     });
+
     for (var i = 0, len = fields.length; i < len; i++) {
         var item = fields[i];
         (function(j) {
@@ -1772,11 +1857,19 @@ function buildDetail(options) {
                         $('#province').html(data.province);
                         data.city && $('#city').html(data.city);
                         data.area && $('#area').html(data.area);
+                    }else if(item.type == 'datetime' || item.type == 'date'){
+                    	//两个日期框
+                    	if(item.twoDate){
+                    		$('#' + item.field1).html(displayValue);
+                    		$('#' + item.field2).html(displayValue);
+                    	}else{
+                    		$('#' + item.field).html(displayValue);
+                    	}
                     } else {
-                        if (displayValue) {
-                            $('#' + item.field).html(((item.amount || item.amount1) ?
+                        if (displayValue==0||displayValue) {
+                            $('#' + item.field).html((item.amount || item.amount1) ?
                                 moneyFormat(displayValue) :
-                                displayValue) || '-');
+                                displayValue);
                         } else {
                             $('#' + item.field).html('-');
                         }
@@ -1865,9 +1958,21 @@ function buildDetail(options) {
                     } else if (item.type == 'textarea' && item.normalArea) {
                         $('#' + item.field).val(displayValue);
                     } else if (item.type == 'citySelect') {
-                        $('#province').val(data.province);
-                        $('#province').trigger('change');
-                        if (!item.onlyProvince) {
+                        
+                        //只选省市，不选区
+                        if(item.noArea){
+                        	$('#' + item.provinceField).val(data[item.provinceField]);
+                    		$('#' + item.provinceField).trigger('change');
+                        	$('#' + item.cityField).val(data[item.cityField]);
+                    		$('#' + item.cityField).trigger('change');
+                        
+                        //只选省
+                		} else if (item.onlyProvince) {
+                        	$('#province').val(data.province);
+                        	$('#province').trigger('change');
+                        }else{
+                			$('#province').val(data.province);
+                        	$('#province').trigger('change');
                             $('#city').val(data.city);
                             $('#city').trigger('change');
                             $('#area').val(data.area);
@@ -1892,14 +1997,35 @@ function buildDetail(options) {
                             data: displayValue || []
                         });
                     } else if (item.type == 'datetime' || item.type == 'date') {
-                        $('#' + item.field).val((item.type == 'datetime' ? dateTimeFormat : dateFormat)(displayValue));
+                    	//两个日期框
+                    	if(item.twoDate){
+                    		$('#' + item.field1).val((item.type == 'datetime' ? dateTimeFormat : dateFormatData)(data[item.field1]));
+                    		$('#' + item.field2).val((item.type == 'datetime' ? dateTimeFormat : dateFormatData)(data[item.field2]));
+                    	}else{
+                    		$('#' + item.field).val((item.type == 'datetime' ? dateTimeFormat : dateFormatData)(displayValue));
+                    	}
+                        
+                        // 星级选中
+                    } else if(item.type=="start"){
+                    	startActive($('#' + item.field),displayValue)
                     } else {
                         if (item.formatter) {
-                            $('#' + item.field).val(item.formatter(displayValue, data));
+                        	if(item.type=='select'){
+                        		if(item.pageCode || item.listCode || item.detailCode){
+                        			$('#' + item.field).val(item.formatter(displayValue, data));
+                        		}else{
+                        			$('#' + item.field).val(displayValue)
+                        		}
+                        	}else{
+                        		$('#' + item.field).val(item.formatter(displayValue, data));
+                        	}
                         } else {
-                            $('#' + item.field).val((item.amount || item.amount1) ?
+                        	if(displayValue==0||displayValue){
+                        		$('#' + item.field).val((item.amount || item.amount1) ?
                                 moneyFormat(displayValue) :
                                 displayValue);
+                        	}
+                            
                         }
                     }
                 }
@@ -1963,8 +2089,9 @@ function buildDetail(options) {
         $('.form-title').hide();
         $('.btn').hide();
     }
-
+	
     chosen();
+    
 }
 
 $(document).ajaxStart(function() {
@@ -3447,7 +3574,7 @@ $(function() {
         clearTimeout(validTimer);
         validTimer = setTimeout(function() {
             sessionStorage.setItem('token', '');
-            location.href = '../signin.html?kind=' + (sessionStorage.getItem('loginKind') || '01');
+            location.href = '../signin.html?kind=' + sessionStorage.getItem('loginKind');
         }, +OSS.userValidTime * 60 * 1000);
     });
 });
@@ -3709,4 +3836,30 @@ function updateListStart(start) {
     var params = start;
     searchs[pathName] = params;
     sessionStorage.setItem('listStarts', JSON.stringify(searchs));
+}
+//星级选中
+function startActive(starWrap,thisIndex){
+	var _starWrap = starWrap,
+		_thisIndex = thisIndex-1,
+		score = 1;
+	_starWrap.children('.star').removeClass("active")	
+	_starWrap.children('.star').each(function(i, d){
+		if(i<=_thisIndex){
+			score = i+1;
+			$(this).addClass('active')
+		}
+	})
+	_starWrap.attr('data-score', score);
+}
+function count(el, second) {
+    el.prop('disabled', true);
+    var timer = setInterval(function() {
+        second--;
+        el.val('重新发送(' + second + ')');
+        if (second == 0) {
+            el.val('获取验证码');
+            el.prop('disabled', false);
+            clearInterval(timer);
+        }
+    }, 1000);
 }
