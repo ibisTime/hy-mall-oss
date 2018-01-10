@@ -100,7 +100,7 @@ $(function() {
             required: true,
             number: true
         }]
-        
+
         //规格1，规格2
         productSpecsFields2 = [{
             field: 'specsVal1',
@@ -298,14 +298,14 @@ $(function() {
     $("#addBtn").click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         var productData = $('#jsForm').serializeObject();
-        
+
         if($('#jsForm').valid()){
         	var dw = dialog({
 	            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
 	                '<ul class="form-info" id="formContainer"></ul>' +
 	                '</form>'
 	        });
-	
+
 	        dw.showModal();
 	        buildDetail({
 	            fields: $("#specsName2").val()?productSpecsFields2:productSpecsFields1,
@@ -371,7 +371,7 @@ $(function() {
         }else{
             toastr.info("请先填写商品信息");
         }
-        
+
     })
 
     //删除
@@ -441,8 +441,7 @@ $(function() {
                             row: data
                         })
 
-                        toastr.info("修改成功");
-                        $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+                        sucList();
 
                         dw.close().remove();
                     }
@@ -521,7 +520,7 @@ $(function() {
             }
             data['id'] = data['code'];
             data.productSpecsList = $('#tableList').bootstrapTable("getData", { useCurrentPage: true });
-			
+
 			data.productSpecsList.each(function(v, i) {
             	if(data.specsName2==""&&!data.specsName2){
             		delete data.productSpecsList[i].specsVal2;

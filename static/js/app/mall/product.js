@@ -119,8 +119,7 @@ $(function() {
                 code: '808014',
                 json: { "code": selRecords[0].code }
             }).then(function() {
-                toastr.info("操作成功");
-                $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+                sucList();
             });
         }, function() {});
 
@@ -134,7 +133,7 @@ $(function() {
         }
         window.location.href = "product_addeditCopy.html?code=" + selRecords[0].code + '&category=' + selRecords[0].category;
     });
-    
+
     //回收
     $('#goRecycleBinBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');

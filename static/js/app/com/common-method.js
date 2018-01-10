@@ -810,7 +810,6 @@ function buildList(options) {
 
     $('#searchBtn').click(function() {
         updateListSearch();
-        updateListStart(1);
         $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
     });
 
@@ -977,7 +976,10 @@ function buildList(options) {
     if (options.tableId) {
         tableEl = $('#' + options.tableId);
     }
-	var bootstrapTableFlag = false;
+    tableEl.on('load-success.bs.table', function () {
+      updateTableInfo('tableList');
+    });
+    var tableInfo = JSON.parse(sessionStorage.getItem('tableInfo') || '{}')[location.pathname] || {};
     //表格初始化
     tableEl.bootstrapTable({
         method: "post",
@@ -991,14 +993,8 @@ function buildList(options) {
         detailFormatter: detailFormatter,
         queryParams: function(params) {
             var json = {};
-            if(bootstrapTableFlag){
-            	json.start = params.offset / params.limit + 1;
-            }else{
-            	json.start = listStart || 1;
-            	bootstrapTableFlag = true;
-            }
+            json.start = params.offset / params.limit + 1;
             json.limit = params.limit;
-            json.start==1?'':updateListStart(json.start)
             var searchFormParams = $('.search-form').serializeObject();
             for (var p in searchFormParams) {
                 if (!searchFormParams[p]) {
@@ -1032,13 +1028,10 @@ function buildList(options) {
         pagination: true,
         sidePagination: 'server',
         totalRows: 0,
-        pageNumber: listStart||1,
-        pageSize: options.pageSize || 10,
+        pageNumber: tableInfo.pageNumber || 1,
+        pageSize: tableInfo.pageSize || options.pageSize || 10,
         pageList: options.pageList || [10, 20, 30, 40, 50],
-        columns: options.columns,
-        onPageChange: function(number, size){
-            updateListStart(number)
-        }
+        columns: options.columns
     });
     chosen();
 }
@@ -1150,13 +1143,13 @@ function buildDetail(options) {
             if (item.type == "citySelect") {
             	//只有省市 没有区
             	if(item.noArea){
-            		html += '<li class="clearfix" style="display:inline-block;"><label>' + item.title + ':</label>' 
-                	+ '<span id="'+item.provinceField+'" name="'+item.provinceField+'" style="display: inline-block;">'+item.provinceField+'</span>' + 
+            		html += '<li class="clearfix" style="display:inline-block;"><label>' + item.title + ':</label>'
+                	+ '<span id="'+item.provinceField+'" name="'+item.provinceField+'" style="display: inline-block;">'+item.provinceField+'</span>' +
                 		'<span id="'+item.cityField+'" name="'+item.cityField+'" style="display: inline-block;padding: 0 8px;">'+item.cityField+'</span></li>'
             	}else{
-            		html += '<li class="clearfix" style="display:inline-block;"><label>' + item.title + ':</label>' 
-                	+ '<span id="province" name="province" style="display: inline-block;"></span>' + 
-                		'<span id="city" name="city" style="display: inline-block;padding: 0 8px;"></span>' + 
+            		html += '<li class="clearfix" style="display:inline-block;"><label>' + item.title + ':</label>'
+                	+ '<span id="province" name="province" style="display: inline-block;"></span>' +
+                		'<span id="city" name="city" style="display: inline-block;padding: 0 8px;"></span>' +
                 		'<span id="area" name="area" style="display: inline-block;"></span></li>'
             	}
             } else if (item.type == 'o2m') {
@@ -1222,13 +1215,13 @@ function buildDetail(options) {
                 if (item.onlyProvince) {
                     html += '<div id="city-group" data-only-prov="' + item.onlyProvince + '"><select id="province" name="province" class="control-def prov"><option value="">请选择</option></select></div></li>';
                 } else if(item.noArea){
-                    html += '<div class="city-group-spec" ><select id="' + item.provinceField + '" name="' + item.provinceField + '" class="control-def prov"><option value="">请选择</option></select>' 
+                    html += '<div class="city-group-spec" ><select id="' + item.provinceField + '" name="' + item.provinceField + '" class="control-def prov"><option value="">请选择</option></select>'
                     	+ '<select id="' + item.cityField + '" name="' + item.cityField + '" class="control-def city"><option value="">请选择</option></select></div></li>';
                 } else {
                     html += '<div id="city-group"><select id="province" name="province" class="control-def prov"><option value="">请选择</option></select>' + '<select id="city" name="city" class="control-def city"><option value="">请选择</option></select>' + '<select id="area" name="area" class="control-def dist"><option value="">请选择</option></select></div></li>';
                 }
                 if (item.required) {
-                	
+
                 	if(item.provinceField&&item.cityField){
                 		rules[item.provinceField] = { required: true };
                 		rules[item.cityField]  = { required: true };
@@ -1251,7 +1244,7 @@ function buildDetail(options) {
                 dateTimeList.push(item);
                 html += '<input id="' + item.field1 + '" name="' + item.field1 + '" class="lay-input lay-input1"/>'
                 		+'&nbsp;&nbsp;至&nbsp;&nbsp;<input id="' + item.field2 + '" name="' + item.field2 + '" class="lay-input lay-input1"/></li>';
-                
+
                 if(item.type=="date"){
                 	rules[item.field1] = { required: true, dataformat1: true };
         			rules[item.field2]  = { required: true, dataformat1: true  };
@@ -1259,14 +1252,14 @@ function buildDetail(options) {
                 	rules[item.field1] = { required: true};
         			rules[item.field2]  = { required: true};
                 }
-                
+
                 // 单个日期搜索框
             } else if (item.type == 'datetime' || item.type == 'date') {
                 dateTimeList1.push(item);
                 html += '<input id="' + item.field + '" name="' + item.field + '" class="lay-input"/></li>';
             } else if (item.type == "o2m") {
                 html += '<div id="' + item.field + '" style="display: inline-block;"></div>';
-                
+
                 //显示星级
             } else if(item.type=="start"){
             	html += '<p class="starWrap" id="'+item.field+'" data-score="1" >'
@@ -1275,13 +1268,13 @@ function buildDetail(options) {
             		+'<i class="star" data-score="3"></i>'
             		+'<i class="star" data-score="4"></i>'
             		+'<i class="star" data-score="5"></i></p>';
-            		
+
             	//星星点击
 			    $("#jsForm").on('click',"#"+item.field+" .star",function(){
 		    		var _this = $(this);
 		    		var _starWrap = _this.parent('.starWrap');
 		    		var _thisIndex = _this.index()+1
-		    		
+
 		    		startActive(_starWrap,_thisIndex);
 		    	})
             } else {
@@ -1541,7 +1534,7 @@ function buildDetail(options) {
         }
 
     }
-	
+
 	// 两个日期框
     for (var i = 0, len = dateTimeList.length; i < len; i++) {
         (function(i) {
@@ -1585,7 +1578,7 @@ function buildDetail(options) {
             });
         }
     }
-    
+
 	var _cityGroup = $("#city-group");
     _cityGroup.citySelect && _cityGroup.citySelect({
         required: false
@@ -1958,14 +1951,14 @@ function buildDetail(options) {
                     } else if (item.type == 'textarea' && item.normalArea) {
                         $('#' + item.field).val(displayValue);
                     } else if (item.type == 'citySelect') {
-                        
+
                         //只选省市，不选区
                         if(item.noArea){
                         	$('#' + item.provinceField).val(data[item.provinceField]);
                     		$('#' + item.provinceField).trigger('change');
                         	$('#' + item.cityField).val(data[item.cityField]);
                     		$('#' + item.cityField).trigger('change');
-                        
+
                         //只选省
                 		} else if (item.onlyProvince) {
                         	$('#province').val(data.province);
@@ -2004,7 +1997,7 @@ function buildDetail(options) {
                     	}else{
                     		$('#' + item.field).val((item.type == 'datetime' ? dateTimeFormat : dateFormatData)(displayValue));
                     	}
-                        
+
                         // 星级选中
                     } else if(item.type=="start"){
                     	startActive($('#' + item.field),displayValue)
@@ -2025,7 +2018,7 @@ function buildDetail(options) {
                                 moneyFormat(displayValue) :
                                 displayValue);
                         	}
-                            
+
                         }
                     }
                 }
@@ -2089,9 +2082,9 @@ function buildDetail(options) {
         $('.form-title').hide();
         $('.btn').hide();
     }
-	
+
     chosen();
-    
+
 }
 
 $(document).ajaxStart(function() {
@@ -2338,9 +2331,9 @@ function sleep(ms) {
 }
 
 function sucList() {
-    var listStart = JSON.parse(sessionStorage.getItem('listStarts') || '{}')[location.pathname];
-    toastr.success('操作成功');
-    $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url,pageNumber: $('#tableList').bootstrapTable('getOptions').pageNumber });
+  toastr.success('操作成功');
+  var option = $('#tableList').bootstrapTable('getOptions');
+  $('#tableList').bootstrapTable('refreshOptions', { pageNumber: option.pageNumber, pageSize: option.pageSize });
 }
 
 function sucDetail() {
@@ -3830,19 +3823,20 @@ function updateListSearch() {
     searchs[pathName] = params;
     sessionStorage.setItem('listSearchs', JSON.stringify(searchs));
 }
-function updateListStart(start) {
-    var searchs = JSON.parse(sessionStorage.getItem('listStarts') || '{}');
-    var pathName = location.pathname;
-    var params = start;
-    searchs[pathName] = params;
-    sessionStorage.setItem('listStarts', JSON.stringify(searchs));
+function updateTableInfo(id) {
+  var searchs = JSON.parse(sessionStorage.getItem('tableInfo') || '{}');
+  var pathName = location.pathname;
+  var option = $('#' + id).bootstrapTable('getOptions');
+  var params = {pageNumber:option.pageNumber,pageSize:option.pageSize};
+  searchs[pathName] = params;
+  sessionStorage.setItem('tableInfo', JSON.stringify(searchs));
 }
 //星级选中
 function startActive(starWrap,thisIndex){
 	var _starWrap = starWrap,
 		_thisIndex = thisIndex-1,
 		score = 1;
-	_starWrap.children('.star').removeClass("active")	
+	_starWrap.children('.star').removeClass("active")
 	_starWrap.children('.star').each(function(i, d){
 		if(i<=_thisIndex){
 			score = i+1;

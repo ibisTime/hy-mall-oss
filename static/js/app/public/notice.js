@@ -45,22 +45,21 @@ $(function() {
             fromSystemCode: OSS.system
         }
     });
-    
+
     $('#pushBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
             toastr.info("请选择记录");
             return;
         }
-        
+
         var msg = selRecords[0].status == 1 ? "确定撤下该消息？" : "确定发布该消息？";
         confirm(msg).then(function() {
             reqApi({
                 code: '804036',
                 json: { 'id': selRecords[0].id }
             }).then(function() {
-                toastr.info("操作成功");
-                $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+                sucList();
             });
         }, function(){});
     });

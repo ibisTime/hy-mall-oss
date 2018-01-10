@@ -140,8 +140,7 @@ $(function() {
                 code: '810050',
                 json: { "code": selRecords[0].code, "remark": "已经归还" }
             }).then(function() {
-                toastr.info("操作成功");
-                $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+                sucList();
             });
         }, function() {});
 

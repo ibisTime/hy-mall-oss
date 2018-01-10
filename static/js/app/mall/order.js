@@ -195,8 +195,7 @@ $(function() {
                     code: "808056",
                     json: data
                 }).done(function() {
-                    toastr.info("操作成功");
-                    $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+                    sucList();
                     setTimeout(function() {
                         dw.close().remove();
                     }, 500)

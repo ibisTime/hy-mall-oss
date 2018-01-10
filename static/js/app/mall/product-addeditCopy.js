@@ -99,7 +99,7 @@ $(function() {
             required: true,
             number: true
         }]
-        
+
         //规格1，规格2
         productSpecsFields2 = [{
             field: 'specsVal1',
@@ -347,7 +347,7 @@ $(function() {
                         data.pic = data.pic11;
                         delete data.pic11;
                         data.code = codeInd++;
-                        
+
                         $('#tableList').bootstrapTable('insertRow', {
                             index: data.code,
                             row: data
@@ -431,15 +431,14 @@ $(function() {
                         }
                         data.pic = data.pic11;
                         delete data.pic11;
-                        
-                        
+
+
                         $('#tableList').bootstrapTable('updateRow', {
                             index: paramIndex,
                             row: data
                         })
 
-                        toastr.info("修改成功");
-                        $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+                        sucList();
 
                         dw.close().remove();
                     }
