@@ -87,7 +87,7 @@ $(function() {
         required: true,
     }, {
         field: 'indexQd',
-        title: '强度系数',
+        title: '风景系数',
         type: 'start',
     }, {
         field: 'indexNd',
