@@ -44,11 +44,27 @@ $(function() {
         search: true,
         visible: false
     }, {
+        field: 'isLeader',
+        title: '是否是领队',
+        type: 'select',
+        data:{
+        	'0': '否',
+        	'1': '是'
+        },
+        search: true
+    }, {
         field: 'status',
         title: '状态',
         type: 'select',
         key: 'user_status',
         formatter: Dict.getNameForList('user_status'),
+        search: true
+    }, {
+        field: 'saleStatus',
+        title: '推客状态',
+        type: 'select',
+        key: 'sale_status',
+        formatter: Dict.getNameForList('sale_status'),
         search: true
     }, {
         field: 'createDatetime',
@@ -108,7 +124,7 @@ $(function() {
             return;
         }
 
-        if (selRecords[0].status == 2) {
+        if (selRecords[0].saleStatus == 1) {
             toastr.info("已注销");
             return;
         }
@@ -158,5 +174,37 @@ $(function() {
         }
 
         window.location.href = "bizman_identity.html?userId=" + selRecords[0].userId;
+    });
+    
+    
+    //推客身份启用/停用
+    $('#saleUpDownBtn').click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.info("请选择记录");
+            return;
+        }
+		
+		var msg = ''
+        if (selRecords[0].saleStatus == 1) {
+            msg = '是否停用推客身份?'
+        }else if(selRecords[0].saleStatus == 2){
+            msg = '是否启用推客身份?'
+        }else {
+            toastr.info("该用户未申请推客，不可操作！");
+            return;
+        }
+
+        confirm(msg).then(function() {
+            reqApi({
+                code: '805096',
+                json: {
+                    userId: selRecords[0].userId
+                }
+            }).then(function() {
+                sucList();
+            });
+
+        }, function() {})
     });
 });

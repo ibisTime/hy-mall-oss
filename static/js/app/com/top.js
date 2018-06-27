@@ -1,7 +1,7 @@
 $('title', window.parent.document).html(OSS.systemName);
 $(function() {
 	
-	var timestamp = new Date().getTime()
+	var timestamp = new Date().getTime();
 	
     if (!sessionStorage.getItem('token')) {
         var kind = document.domain.substr(0, 1) == 'z' ? 'PA' : (sessionStorage.getItem('loginKind') || 'P')
