@@ -51,11 +51,29 @@ $(function() {
         },
         required: true
     }, {
+        field: 'isLeader',
+        title: '是否是领队',
+        type: 'select',
+        data:{
+        	'0': '否',
+        	'1': '是'
+        },
+    }, {
         title: "状态",
         field: "status",
         type: "select",
         key: "user_status",
         formatter: Dict.getNameForList("user_status"),
+    }, {
+        field: 'saleStatus',
+        title: '推客状态',
+        type: 'select',
+        key: 'sale_status',
+        formatter: Dict.getNameForList('sale_status'),
+        search: true
+    }, {
+    	field: 'saleLeaderRefereeMobile',
+        title: '所属领队',
     }, {
         field: 'bankcardList',
         title: '银行卡信息:',

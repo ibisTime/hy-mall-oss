@@ -1,7 +1,13 @@
 $(function() {
 
     var code = getQueryString('code');
-    var view = getQueryString('v');
+    var view = !!getQueryString('v');
+    var category = getQueryString('category');
+    if(category == OSS.JFProductCategory){
+    	category = true
+    } else {
+    	category = false
+    }
 
     var typeData = {}
     reqApi({
@@ -133,6 +139,24 @@ $(function() {
         title: 'UI次序',
         number: true,
         readonly: true
+    }, {
+        field: 'leaderBackRate',
+        title: '领队返点比例',
+        required: true,
+        hidden: category,
+        value: category ? 0 : ''
+    }, {
+        field: 'oneBackRate',
+        title: '一级返点比例',
+        required: true,
+        hidden: category,
+        value: category ? 0 : ''
+    }, {
+        field: 'twoBackRate',
+        title: '二级返点比例',
+        required: true,
+        hidden: category,
+        value: category ? 0 : ''
     }]
     if (view) {
         fields = fields.concat(viewList)

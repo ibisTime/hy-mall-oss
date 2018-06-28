@@ -134,6 +134,51 @@ $(function() {
             field: "quantity"
         }]
     }, {
+    	title: "分销信息",
+        type: "title"
+    }, {
+        field: 'leaderUserName',
+        title: '领队分销人',
+        formatter: function(v, data) {
+            return data.leaderUser ? data.leaderUser.nickname + '('+data.leaderUser.mobile+')' : '-';
+        },
+        readonly: true,
+    }, {
+        field: 'leaderBackAmount',
+        title: '领队分销金额',
+        formatter: function(v, data){
+        	return v ? moneyFormat(v) : '-';
+        },
+        readonly: true,
+    }, {
+        field: 'oneUserName',
+        title: '一级分销人',
+        formatter: function(v, data) {
+            return data.oneUser ? data.oneUser.nickname + '('+data.oneUser.mobile+')' : '-';
+        },
+        readonly: true,
+    }, {
+        field: 'oneBackAmount',
+        title: '一级分销金额',
+        formatter: function(v, data){
+        	return v ? moneyFormat(v) : '-';
+        },
+        readonly: true,
+    }, {
+        field: 'twoUserName',
+        title: '二级分销人',
+        formatter: function(v, data) {
+            return data.twoUser ? data.twoUser.nickname + '('+data.twoUser.mobile+')' : '-';
+        },
+        readonly: true,
+    }, {
+        field: 'twoBackAmount',
+        title: '二级分销金额',
+        formatter: function(v, data){
+        	return v ? moneyFormat(v) : '-';
+        },
+        readonly: true,
+    }, {
         title: "发货信息",
         type: "title"
     }, {
@@ -142,7 +187,6 @@ $(function() {
         type: 'select',
         key: 'kd_company',
         readonly: true,
-
     }, {
         title: '物流单号',
         field: 'logisticsCode',

@@ -1,6 +1,12 @@
 $(function() {
 
     var code = getQueryString('code');
+    var category = getQueryString('category');
+    if(category == OSS.JFProductCategory){
+    	category = true
+    } else {
+    	category = false
+    }
 
     var fields = [{
         field: 'kind',
@@ -16,6 +22,33 @@ $(function() {
         field: 'orderNo',
         title: 'UI次序',
         required: true,
+    }, {
+        field: 'leaderBackRate',
+        title: '领队返点比例',
+        required: true,
+        hidden: category,
+        min: '0',
+        max: '1,
+        number: true,
+        value: category ? 0 : ''
+    }, {
+        field: 'oneBackRate',
+        title: '一级返点比例',
+        required: true,
+        hidden: category,
+        min: '0',
+        max: '1,
+        number: true,
+        value: category ? 0 : ''
+    }, {
+        field: 'twoBackRate',
+        title: '二级返点比例',
+        required: true,
+        hidden: category,
+        min: '0',
+        max: '1,
+        number: true,
+        value: category ? 0 : ''
     }, {
         field: 'remark',
         title: '备注',

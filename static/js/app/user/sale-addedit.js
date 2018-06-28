@@ -17,6 +17,9 @@ $(function() {
         key: 'sale_apply_status',
         formatter: Dict.getNameForList('sale_apply_status')
     }, {
+        field: 'applyUserName',
+        title: '申请人',
+    }, {
         field: 'applyDatetime',
         title: '申请时间',
         formatter: dateTimeFormat

@@ -2,7 +2,7 @@ $(function() {
 
     var code = getQueryString('code');
     var category = getQueryString('category')
-    var view = getQueryString('v');
+    var view = !!getQueryString('v');
     var pcode;
     var codeInd = 0;
     var paramIndex = 0;

@@ -6,7 +6,8 @@ $(function() {
         checkbox: true
     }, {
         field: 'nickname',
-        title: '昵称'
+        title: '昵称',
+        search: true
     }, {
         field: 'mobile',
         title: '手机号',
@@ -66,6 +67,23 @@ $(function() {
         key: 'sale_status',
         formatter: Dict.getNameForList('sale_status'),
         search: true
+    }, {
+    	field: 'saleLeaderReferee',
+        title: '所属领队',
+        type:'select',
+        pageCode: '805120',
+        params: {
+            kind: 'C',
+            updater: '',
+            companyCode: OSS.company
+        },
+        keyName: 'userId',
+        valueName: '{{nickname.DATA}}-{{mobile.DATA}}',
+        searchName: 'keywords',
+        search: true,
+        formatter: function(v, data) {
+            return data.saleLeaderRefereeMobile;
+        },
     }, {
         field: 'createDatetime',
         title: '注册时间',

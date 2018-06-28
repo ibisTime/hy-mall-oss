@@ -65,6 +65,15 @@ $(function() {
         formatter: Dict.getNameForList("product_status"),
         search: true
     }, {
+        field: 'leaderBackRate',
+        title: '领队返点比例',
+    }, {
+        field: 'oneBackRate',
+        title: '一级返点比例',
+    }, {
+        field: 'twoBackRate',
+        title: '二级返点比例',
+    }, {
         field: 'remark',
         title: '备注',
     }];
@@ -78,14 +87,14 @@ $(function() {
             companyCode: OSS.company
         },
         beforeDetail: function(data) {
-            window.location.href = "product_detail.html?Code=" + data.code + "&v=1";
+            window.location.href = "product_detail.html?code=" + data.code + "&v=1";
         },
         beforeEdit: function(data) {
             if (data.status == 3) {
                 toastr.info("已上架，不可修改");
                 return;
             }
-            window.location.href = "product_addedit.html?Code=" + data.code + '&category=' + data.category;
+            window.location.href = "product_addedit.html?code=" + data.code + '&category=' + data.category;
         }
     });
     //上架
@@ -100,7 +109,7 @@ $(function() {
             toastr.info("该商品状态不可上架");
             return;
         }
-        window.location.href = "product_up.html?Code=" + selRecords[0].code + "&v=1";
+        window.location.href = "product_up.html?v=1&code=" + selRecords[0].code + "&category=" + selRecords[0].category;
     });
     //下架
     $('#downBtn').click(function() {
@@ -156,5 +165,6 @@ $(function() {
         }, function() {});
 
     });
-
+    
+    
 });

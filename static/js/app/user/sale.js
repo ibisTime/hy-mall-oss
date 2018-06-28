@@ -20,6 +20,23 @@ $(function() {
         formatter: Dict.getNameForList('sale_apply_status'),
         search: true
     }, {
+        field: 'applyUser',
+        title: '申请人',
+        type:'select',
+        pageCode: '805120',
+        params: {
+            kind: 'C',
+            updater: '',
+            companyCode: OSS.company
+        },
+        keyName: 'userId',
+        valueName: '{{nickname.DATA}}-{{mobile.DATA}}',
+        searchName: 'keywords',
+        search: true,
+        formatter: function(v, data) {
+            return data.applyUserName;
+        },
+    }, {
         field: 'applyDatetime',
         title: '申请时间',
         formatter: dateTimeFormat,
@@ -43,12 +60,12 @@ $(function() {
             return;
         }
         
-        if(selRecords[0].status != 1){
+        if(selRecords[0].status != 0){
             toastr.info("不是待审核状态不可操作");
             return;
         }
 
-        window.location.href = "sale_addedit.html?isCheck=1&code=" + selRecords[0].code;
+        window.location.href = "sale_addedit.html?isCheck=1&v=1&code=" + selRecords[0].code;
     });
 
 });
