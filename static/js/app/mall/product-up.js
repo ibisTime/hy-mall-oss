@@ -28,27 +28,24 @@ $(function() {
         required: true,
         hidden: category,
         min: '0',
-        max: '1,
-        number: true,
-        value: category ? 0 : ''
+        max: '1',
+        number: true
     }, {
         field: 'oneBackRate',
         title: '一级返点比例',
         required: true,
         hidden: category,
         min: '0',
-        max: '1,
-        number: true,
-        value: category ? 0 : ''
+        max: '1',
+        number: true
     }, {
         field: 'twoBackRate',
         title: '二级返点比例',
         required: true,
         hidden: category,
         min: '0',
-        max: '1,
-        number: true,
-        value: category ? 0 : ''
+        max: '1',
+        number: true
     }, {
         field: 'remark',
         title: '备注',
@@ -67,6 +64,12 @@ $(function() {
                 var data = $('#jsForm').serializeObject();
                 data.code = code;
                 data.remark = $("#remark").val();
+                
+                if(category) {
+                	data.leaderBackRate = 0;
+                	data.oneBackRate = 0;
+                	data.twoBackRate = 0;
+                }
                 reqApi({
                     code: '808013',
                     json: data
