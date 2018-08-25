@@ -43,6 +43,9 @@ $(function() {
         minlength: 15,
         required: true,
     }, {
+        field: 'subbranch',
+        title: '银行支行',
+    }, {
         field: 'applyNote',
         title: '申请说明',
         maxlength: 255

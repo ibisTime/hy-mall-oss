@@ -121,6 +121,9 @@ $(function() {
         field: 'payCardInfo',
         title: '银行类型',
     }, {
+        field: 'subbranch',
+        title: '银行支行',
+    }, {
         field: 'payCardNo',
         title: '银行卡号',
     }, {

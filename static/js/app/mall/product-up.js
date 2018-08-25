@@ -2,6 +2,7 @@ $(function() {
 
     var code = getQueryString('code');
     var category = getQueryString('category');
+    var boughtCount = getQueryString('boughtCount') || '0';
     if(category == OSS.JFProductCategory){
     	category = true
     } else {
@@ -46,6 +47,13 @@ $(function() {
         min: '0',
         max: '1',
         number: true
+    }, {
+        field: 'boughtCount',
+        title: '销售量',
+        number: true,
+        required: true,
+        value: boughtCount,
+        'Z+': true
     }, {
         field: 'remark',
         title: '备注',

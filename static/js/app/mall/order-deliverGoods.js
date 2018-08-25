@@ -8,9 +8,6 @@ $(function() {
         value: code,
         required: true,
     }, {
-        title: "商品信息",
-        type: "title"
-    }, {
         title: "订单编号",
         field: "code1",
         formatter: function(v, data) {
