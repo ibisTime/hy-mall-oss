@@ -7,110 +7,48 @@ $(function() {
     }, {
         field: 'name',
         title: '商品名称',
-        search: true,
+        formatter: function(v, data){
+        	return data.product.name;
+        }
     }, {
-        field: 'category',
-        title: '大类',
-        type: 'select',
-        listCode: '808007',
-        params: {
-            type: '1',
-            parentCode: 0,
-        },
-        keyName: 'code',
-        valueName: 'name',
-        search: true,
-        onChange: function(v, data) {
-            if (v) {
-                $("#type").renderDropdown({
-                    listCode: "808007",
-                    params: {
-                        type: "1",
-                        parentCode: v,
-                    },
-                    keyName: "code",
-                    valueName: "name",
-                    searchName: "name"
-                });
-            }
-        },
+        field: 'quantity',
+        title: '数量',
     }, {
-        field: 'type',
-        title: '小类',
-        type: 'select',
-        listCode: '808007',
-        params: {
-            type: '1',
-            parentCode: "1",
-        },
-        keyName: 'code',
-        valueName: 'name',
-        search: true
-    }, {
-        field: 'location',
-        title: '位置',
-        type: 'select',
-        key: "product_location",
-        formatter: Dict.getNameForList("product_location"),
-        search: true,
-    }, {
-        field: 'orderNo',
-        title: '序号',
-        search: true
+        field: 'buyMaxCount',
+        title: '单人购买最大数量',
     }, {
         field: 'status',
         title: '状态',
         type: "select",
-        key: "product_status",
-        formatter: Dict.getNameForList("product_status"),
+        key: "product_group_code",
+        formatter: Dict.getNameForList("product_group_code"),
         search: true
     }, {
-        field: 'leaderBackRate',
-        title: '领队返点比例',
+        field: 'startDatetimeStart',
+        title: '开始时间',
+        type: 'date',
+        formatter: function(v, data){
+        	return dateTimeFormat(data.startDatetime);
+        },
+        search: true
     }, {
-        field: 'oneBackRate',
-        title: '一级返点比例',
-    }, {
-        field: 'twoBackRate',
-        title: '二级返点比例',
+        field: 'endDatetimeEnd',
+        title: '结束时间',
+        type: 'date',
+        formatter: function(v, data){
+        	return dateTimeFormat(data.endDatetime);
+        },
+        search: true
     }, {
         field: 'remark',
-        title: '备注',
+        title: '备注'
     }];
 
     buildList({
         columns: columns,
-        pageCode: '808025',
-        deleteCode: '808011',
-        searchParams: {
-        	status:'normal',
-            companyCode: OSS.company
-        },
-        beforeDetail: function(data) {
-            window.location.href = "product_detail.html?code=" + data.code + "&v=1";
-        },
-        beforeEdit: function(data) {
-            if (data.status == 3) {
-                toastr.info("已上架，不可修改");
-                return;
-            }
-            window.location.href = "product_addedit.html?code=" + data.code + '&category=' + data.category;
-        }
+        pageCode: '808095',
     });
-    //上架
-    $('#upBtn').click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-
-        if (selRecords[0].status != 1 && selRecords[0].status != 4) {
-            toastr.info("该商品状态不可上架");
-            return;
-        }
-        window.location.href = "product_up.html?v=1&code=" + selRecords[0].code + "&category=" + selRecords[0].category + '&boughtCount=' + selRecords[0].boughtCount;
-    });
+    
     //下架
     $('#downBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -119,52 +57,52 @@ $(function() {
             return;
         }
 
-        if (selRecords[0].status != 3) {
-            toastr.info("该商品状态不可下架");
+        if (selRecords[0].status != 0 && selRecords[0].status != 1) {
+            toastr.info("不是可撤下的状态");
             return;
         }
-        confirm("确认下架？").then(function() {
-            reqApi({
-                code: '808014',
-                json: { "code": selRecords[0].code }
-            }).then(function() {
-                sucList();
-            });
-        }, function() {});
+        
+        var dw = dialog({
+            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
+                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">撤下团购</li></ul>' +
+                '</form>'
+        });
+
+        dw.showModal();
+
+        buildDetail({
+            container: $('#formContainer'),
+            fields: [{
+                field: 'remark',
+                title: '备注',
+                value: selRecords[0].remark ? selRecords[0].remark : '',
+                required: true,
+            }],
+            buttons: [{
+                title: '通过',
+                handler: function() {
+                    if ($('#popForm').valid()) {
+                        var data = $('#popForm').serializeObject();
+                        data.code = selRecords[0].code;
+                        reqApi({
+                            code: '808091',
+                            json: data
+                        }).done(function(data) {
+                            dw.close().remove();
+                            sucList()
+                        });
+                    }
+                }
+            }, {
+                title: '取消',
+                handler: function() {
+                    dw.close().remove();
+                }
+            }]
+        });
+
+        dw.__center();
 
     });
-    //一键新增
-    $('#copyBtn').click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-        window.location.href = "product_addeditCopy.html?code=" + selRecords[0].code + '&category=' + selRecords[0].category;
-    });
-
-    //回收
-    $('#goRecycleBinBtn').click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-
-        if (selRecords[0].status != 4&&selRecords[0].status != 1) {
-            toastr.info("该商品状态不可回收");
-            return;
-        }
-        confirm("确认回收？").then(function() {
-            reqApi({
-                code: '808015',
-                json: {"code": selRecords[0].code}
-            }).then(function() {
-            	sucList();
-            });
-        }, function() {});
-
-    });
-    
     
 });

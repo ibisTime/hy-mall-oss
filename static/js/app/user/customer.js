@@ -54,6 +54,16 @@ $(function() {
         },
         search: true
     }, {
+        field: 'hasMobile',
+        title: '是否绑定手机',
+        type: 'select',
+        data:{
+        	'0': '否',
+        	'1': '是'
+        },
+        search: true,
+        visible: false
+    }, {
         field: 'status',
         title: '状态',
         type: 'select',

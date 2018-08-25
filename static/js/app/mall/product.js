@@ -83,7 +83,7 @@ $(function() {
         pageCode: '808025',
         deleteCode: '808011',
         searchParams: {
-        	status:'normal',
+        	status: 'normal',
             companyCode: OSS.company
         },
         beforeDetail: function(data) {
