@@ -11,6 +11,11 @@ $(function() {
         	return data.product.name;
         }
     }, {
+        field: 'price',
+        title: '价格',
+        amount: true,
+        formatter: moneyFormat
+    }, {
         field: 'quantity',
         title: '数量',
     }, {

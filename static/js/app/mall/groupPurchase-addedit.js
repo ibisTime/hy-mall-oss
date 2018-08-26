@@ -21,6 +21,11 @@ $(function() {
         searchName: 'name',
         required: true,
     }, {
+        field: 'price',
+        title: '价格',
+        amount: true,
+        formatter: moneyFormat
+    }, {
         field: 'quantity',
         title: '数量',
         required: true,
