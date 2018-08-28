@@ -16,6 +16,12 @@ $(function() {
         	return description;
         }
     }, {
+        field: 'runTeamList',
+        title: '跑团',
+        key: "run_team_list",
+        formatter: Dict.getNameForList("run_team_list"),
+        search: true,
+    }, {
         field: 'publishDatetime',
         title: '发布时间',
         formatter: dateTimeFormat
