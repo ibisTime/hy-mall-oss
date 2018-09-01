@@ -22,6 +22,9 @@ $(function() {
         field: 'buyMaxCount',
         title: '单人购买最大数量',
     }, {
+        field: 'nowQuantity',
+        title: '现团购人数',
+    }, {
         field: 'status',
         title: '状态',
         type: "select",

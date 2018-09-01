@@ -15,6 +15,7 @@ $(function() {
         pageCode: '808025',
         params: {
             status: "3",
+            category: 'NJ01'
         },
         keyName: 'code',
         valueName: 'name',
@@ -24,6 +25,7 @@ $(function() {
         field: 'price',
         title: '价格',
         amount: true,
+        required: true,
         formatter: moneyFormat
     }, {
         field: 'quantity',
@@ -41,6 +43,7 @@ $(function() {
         field1: 'startDatetime',
         field2: 'endDatetime',
         type : 'datetime',
+        dateFormat: 'YYYY-MM-DD hh:00:00',
         twoDate: true,
         required: true,
     }, {

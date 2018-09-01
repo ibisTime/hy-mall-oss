@@ -52,13 +52,25 @@ $(function() {
         field: 'productName',
         title: '商品名称',
         formatter: function(v, data) {
-            if (data.productOrderList[0].product) {
-                return data.productOrderList[0].product.name;
-            } else {
+        	if(data.productOrderList[0]){
+        		if (data.productOrderList[0].product) {
+	                return data.productOrderList[0].product.name;
+	            } 
+        	} else {
                 return ""
             }
 
         }
+    }, {
+    	field: 'groupCode',
+    	title: '团购商品',
+    	type: 'select',
+    	pageCode: '808095',
+        keyName: 'code',
+        valueName: '{{productName.DATA}}',
+        searchName: 'productName',
+        visible: false,
+        search: true
     }, {
         field: 'payType',
         title: '买单方式',
@@ -116,6 +128,9 @@ $(function() {
             "3": "待收货",
             "4": "待评价",
             "5": "已完成",
+            "6": "已支付待成团",
+            "7": "未成团",
+            "8": "已成团",
             "91": "用户异常",
             "92": "商户异常",
             "93": "快递异常",
@@ -133,7 +148,7 @@ $(function() {
         columns: columns,
         pageCode: '808065',
         searchParams: {
-            statusList: ["1", "2", "3", "4", "5", "91", "92", "93"]
+            statusList: ["1", "2", "3", "4", "5", "6", "7", "8", "91", "92", "93"]
         },
         beforeDetail: function(data) {
             if (data.toUser == OSS.SYS_USER) {

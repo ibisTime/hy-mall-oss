@@ -157,6 +157,9 @@ $(function() {
         required: true,
         hidden: category,
         value: category ? 0 : ''
+    }, {
+        field: 'boughtCount',
+        title: '销售量'
     }]
     if (view) {
         fields = fields.concat(viewList)

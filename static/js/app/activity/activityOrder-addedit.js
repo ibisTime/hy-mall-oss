@@ -11,6 +11,10 @@ $(function() {
     var orderDataFields =[]
     var rorderListFields =[]
     
+    var gendarDict={
+        "0":"未知","1":"男", "2":"女"
+    };
+    
     //有选择商品
     if(orderData){
     	orderDataFields = [{
@@ -346,6 +350,42 @@ $(function() {
         formatter: function(v, data) {
             return data.user.idNo;
         }
+    },{
+        title: "报名列表",
+        type: "title"
+    },{
+    	title: '&nbsp;',
+    	field: 'activityMemberList',
+    	type: 'o2m',
+    	columns: [{
+	        field: 'realName',
+	        title: '报名人',
+//	        formatter: function(v, data) {
+//	            return data.user?data.user.nickname+"("+data.user.mobile+")":v;
+//	        }
+	    }, {
+	        title:"性别",
+	        field:"gender",
+	        formatter:function(v,data){
+	            return gendarDict[data.gender]
+	        }
+	    }, {
+	        field: 'realName',
+	        title: '报名人真实姓名'
+	    }, {
+	        field: 'idNo',
+	        title: '报名人身份证号'
+	    }, {
+	        field: 'outName',
+	        title: '户外昵称'
+	    }, {
+	        field: 'applyDatetime',
+	        title: '报名时间',
+	        formatter: dateTimeFormat,
+	    }, {
+	        title: "备注",
+	        field: "remark"
+	    }]
     }];
 	
 	fields = fields.concat(orderDataFields)

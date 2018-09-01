@@ -38,6 +38,16 @@ $(function() {
 
         }
     }, {
+    	field: 'groupCode',
+    	title: '团购商品',
+    	type: 'select',
+    	pageCode: '808095',
+        keyName: 'code',
+        valueName: '{{productName.DATA}}',
+        searchName: 'productName',
+        visible: false,
+        search: true
+    }, {
         field: 'payType',
         title: '买单方式',
         key: 'pay_type',
@@ -93,6 +103,7 @@ $(function() {
             "2": "待发货",
             "3": "待收货",
             "4": "待评价",
+            "8": "已成团",
         },
         search: true,
     }, {
@@ -109,7 +120,7 @@ $(function() {
         singleSelect: false,
         searchParams: {
             toUser: OSS.SYS_USER,
-            statusList: ["1", "2", "3", "4"]
+            statusList: ["1", "2", "3", "4", "8"]
         }
     });
     //物流发货

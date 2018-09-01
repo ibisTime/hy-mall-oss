@@ -102,14 +102,77 @@ $(function() {
         					+"&rorderList="+rorderList+"&toUser="+toUser+"&amount="+selRecords[0].activity.amountType;
         }
     });
-    //流水查询
-    $("#ledgerBtn").click(function() {
+    
+    //审核
+    $("#returnCheckBtn").off('click').click(function(){
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
             toastr.warning("请选择记录");
             return;
         };
-        window.location.href = "order_ledger.html?refNo=" + selRecords[0].code;
-    });
+        
+        if (selRecords[0].status != '6') {
+            toastr.warning("不是申请退款中的记录");
+            return;
+        };
+        
+        var dw = dialog({
+            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
+                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">申请退款</li></ul>' +
+                '</form>'
+        });
+
+        dw.showModal();
+
+        buildDetail({
+            container: $('#formContainer'),
+            fields: [{
+                field: 'remark',
+                title: '备注',
+                required: true,
+            }],
+            buttons: [{
+                title: '通过',
+                handler: function() {
+                    if ($('#popForm').valid()) {
+                        var data = $('#popForm').serializeObject();
+                        data.code = selRecords[0].code;
+                        data.result = '1';
+                        reqApi({
+                            code: '808730',
+                            json: data
+                        }).done(function(data) {
+                            dw.close().remove();
+                            sucList()
+                        });
+                    }
+                }
+            }, {
+                title: '不通过',
+                handler: function() {
+                    if ($('#popForm').valid()) {
+                        var data = $('#popForm').serializeObject();
+                        data.code = selRecords[0].code;
+                        data.result = '0';
+                        reqApi({
+                            code: '808730',
+                            json: data
+                        }).done(function(data) {
+                            dw.close().remove();
+                            sucList()
+                        });
+                    }
+                }
+            }, {
+                title: '取消',
+                handler: function() {
+                    dw.close().remove();
+                }
+            }]
+        });
+
+        dw.__center();
+    })
+
 
 });

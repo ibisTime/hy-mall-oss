@@ -1545,7 +1545,7 @@ function buildDetail(options) {
                 	min: item.minDate ? item.minDate : '',//设定最小日期
                     elem: '#' + item.field1,
 	                istime: item.type == 'datetime',
-	                format: item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
+	                format: item.dateFormat ? item.dateFormat : item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
                 };
                 end && (obj.max = end);
                 laydate(obj);
@@ -1556,7 +1556,7 @@ function buildDetail(options) {
                 	min: item.minDate ? item.minDate : '',//设定最小日期
                     elem: '#' + item.field2,
 	                istime: item.type == 'datetime',
-	                format: item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
+	                format: item.dateFormat ? item.dateFormat : item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
                 };
                 start && (obj.min = start);
                 laydate(obj);

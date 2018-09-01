@@ -26,6 +26,9 @@ $(function() {
         title: '户名',
         search: true
     }, {
+        field: 'subbranch',
+        title: '银行支行',
+    }, {
         field: 'amount',
         title: '取现金额',
         formatter: moneyFormat
