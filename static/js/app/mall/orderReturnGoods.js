@@ -5,16 +5,15 @@ $(function() {
         title: '',
         checkbox: true
     }, {
-        field: 'code',
-        title: '订单编号',
-        search: true
+        field: 'orderCode',
+        title: '产品订单号'
     }, {
         field: 'userId',
         title: '下单用户',
         search: true,
-//      formatter: function(v, data) {
-//          return data.user.mobile;
-//      },
+        formatter: function(v, data) {
+            return data.user.mobile;
+        },
         type: 'select',
         search: true,
         pageCode: '805120',

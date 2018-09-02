@@ -378,13 +378,6 @@ $(function() {
 	    }, {
 	        field: 'outName',
 	        title: '户外昵称'
-	    }, {
-	        field: 'applyDatetime',
-	        title: '报名时间',
-	        formatter: dateTimeFormat,
-	    }, {
-	        title: "备注",
-	        field: "remark"
 	    }]
     }];
 	
