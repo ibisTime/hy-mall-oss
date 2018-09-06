@@ -59,6 +59,6 @@ $(function() {
         view: view
     });
     
-    $("#startDatetime").parent("li").append("<p style='padding-left: 194px; color: red; font-size: 12px; margin-top: 10px;'>截止时间请务必在当前时间一小时后，并且只要小时，分钟和秒设置为零</P>")
+    $("#startDatetime").parent("li").append("<p style='padding-left: 194px; color: red; font-size: 12px; margin-top: 10px;'>时间请务必在当前时间一小时后，并且只要小时，分钟和秒设置为零</P>")
         
 });

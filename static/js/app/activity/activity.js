@@ -243,5 +243,16 @@ $(function() {
         
 		window.location.href = "activitySignInQuery.html?code="+selRecords[0].code;
 	})
+    
+    //营销
+    $("#marketingBtn").on('click', function(){
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.info("请选择记录");
+            return;
+        }
+        
+		window.location.href = "activity_marketing.html?code="+selRecords[0].code;
+	})
 	
 });
